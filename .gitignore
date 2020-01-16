@@ -104,3 +104,9 @@ dist
 .tern-port
 
 dev.json
+
+lib
+
+.idea
+
+package-lock.json
