@@ -4,4 +4,5 @@ A bot giving recommended bets at Svenska Spels Europatipset and Stryktipset depe
 
 ## Dev
 Run with
-`npm run app`
+* `npm run app`
+* `NODE_ENV=dev && npm run app`

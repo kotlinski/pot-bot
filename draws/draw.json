@@ -1,0 +1,681 @@
+{
+  "error": null,
+  "requestInfo": {
+    "elapsedTime": 2,
+    "apiVersion": 1
+  },
+  "requestId": "31b3d3d1-b81a-41f0-a4f5-78f78cdef691",
+  "sessionId": null,
+  "deviceId": "424370ef-a9c2-4dce-d238-dbd012df383a",
+  "session": null,
+  "sessionUser": null,
+  "clientInfo": null,
+  "draws": [
+    {
+      "drawComment": "Stryktips v. 2020-03",
+      "extraInfo": null,
+      "fund": null,
+      "events": [
+        {
+          "eventNumber": 1,
+          "description": "Arsenal-Sheffield U",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "1,83",
+            "draw": "3,65",
+            "away": "4,60"
+          },
+          "distribution": {
+            "home": "58",
+            "draw": "27",
+            "away": "15"
+          },
+          "newspaperAdvice": {
+            "home": "10",
+            "draw": "0",
+            "away": "0"
+          },
+          "league": {
+            "id": 1000380,
+            "name": "Premier League",
+            "season": {
+              "id": 11718625,
+              "name": "Premier League 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000210,
+              "type": "home",
+              "name": "Arsenal"
+            },
+            {
+              "id": 1000051,
+              "type": "away",
+              "name": "Sheffield U"
+            }
+          ],
+          "sportEventId": 11718905,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 2,
+          "description": "Manchester C-Crystal P",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "1,10",
+            "draw": "10,90",
+            "away": "26,00"
+          },
+          "distribution": {
+            "home": "86",
+            "draw": "8",
+            "away": "6"
+          },
+          "newspaperAdvice": {
+            "home": "10",
+            "draw": "0",
+            "away": "0"
+          },
+          "league": {
+            "id": 1000380,
+            "name": "Premier League",
+            "season": {
+              "id": 11718625,
+              "name": "Premier League 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000328,
+              "type": "home",
+              "name": "Manchester C"
+            },
+            {
+              "id": 1000038,
+              "type": "away",
+              "name": "Crystal P"
+            }
+          ],
+          "sportEventId": 11718913,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 3,
+          "description": "Newcastle-Chelsea",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "6,15",
+            "draw": "4,70",
+            "away": "1,52"
+          },
+          "distribution": {
+            "home": "17",
+            "draw": "22",
+            "away": "61"
+          },
+          "newspaperAdvice": {
+            "home": "0",
+            "draw": "0",
+            "away": "10"
+          },
+          "league": {
+            "id": 1000380,
+            "name": "Premier League",
+            "season": {
+              "id": 11718625,
+              "name": "Premier League 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000041,
+              "type": "home",
+              "name": "Newcastle"
+            },
+            {
+              "id": 1000036,
+              "type": "away",
+              "name": "Chelsea"
+            }
+          ],
+          "sportEventId": 11718912,
+          "sportEventStart": "2020-01-18T18:30:00+01:00"
+        },
+        {
+          "eventNumber": 4,
+          "description": "West Ham-Everton",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "3,02",
+            "draw": "3,48",
+            "away": "2,39"
+          },
+          "distribution": {
+            "home": "33",
+            "draw": "28",
+            "away": "39"
+          },
+          "newspaperAdvice": {
+            "home": "3",
+            "draw": "1",
+            "away": "6"
+          },
+          "league": {
+            "id": 1000380,
+            "name": "Premier League",
+            "season": {
+              "id": 11718625,
+              "name": "Premier League 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000044,
+              "type": "home",
+              "name": "West Ham"
+            },
+            {
+              "id": 1000039,
+              "type": "away",
+              "name": "Everton"
+            }
+          ],
+          "sportEventId": 11718924,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 5,
+          "description": "Southampton-Wolverhampton",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "2,36",
+            "draw": "3,40",
+            "away": "3,15"
+          },
+          "distribution": {
+            "home": "46",
+            "draw": "28",
+            "away": "26"
+          },
+          "newspaperAdvice": {
+            "home": "7",
+            "draw": "1",
+            "away": "2"
+          },
+          "league": {
+            "id": 1000380,
+            "name": "Premier League",
+            "season": {
+              "id": 11718625,
+              "name": "Premier League 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000079,
+              "type": "home",
+              "name": "Southampton"
+            },
+            {
+              "id": 1000057,
+              "type": "away",
+              "name": "Wolverhampton"
+            }
+          ],
+          "sportEventId": 11718920,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 6,
+          "description": "Brighton-Aston Villa",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "1,62",
+            "draw": "4,45",
+            "away": "5,15"
+          },
+          "distribution": {
+            "home": "58",
+            "draw": "23",
+            "away": "19"
+          },
+          "newspaperAdvice": {
+            "home": "10",
+            "draw": "0",
+            "away": "0"
+          },
+          "league": {
+            "id": 1000380,
+            "name": "Premier League",
+            "season": {
+              "id": 11718625,
+              "name": "Premier League 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000430,
+              "type": "home",
+              "name": "Brighton"
+            },
+            {
+              "id": 1000512,
+              "type": "away",
+              "name": "Aston Villa"
+            }
+          ],
+          "sportEventId": 11718902,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 7,
+          "description": "Norwich-Bournemouth",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "2,22",
+            "draw": "3,60",
+            "away": "3,23"
+          },
+          "distribution": {
+            "home": "49",
+            "draw": "26",
+            "away": "25"
+          },
+          "newspaperAdvice": {
+            "home": "9",
+            "draw": "0",
+            "away": "1"
+          },
+          "league": {
+            "id": 1000380,
+            "name": "Premier League",
+            "season": {
+              "id": 11718625,
+              "name": "Premier League 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000045,
+              "type": "home",
+              "name": "Norwich"
+            },
+            {
+              "id": 1000485,
+              "type": "away",
+              "name": "Bournemouth"
+            }
+          ],
+          "sportEventId": 11718922,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 8,
+          "description": "Birmingham-Cardiff",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "2,37",
+            "draw": "3,37",
+            "away": "3,00"
+          },
+          "distribution": {
+            "home": "43",
+            "draw": "30",
+            "away": "27"
+          },
+          "newspaperAdvice": {
+            "home": "10",
+            "draw": "0",
+            "away": "0"
+          },
+          "league": {
+            "id": 1000381,
+            "name": "Championship",
+            "season": {
+              "id": 11737620,
+              "name": "Championship 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000138,
+              "type": "home",
+              "name": "Birmingham"
+            },
+            {
+              "id": 1000505,
+              "type": "away",
+              "name": "Cardiff"
+            }
+          ],
+          "sportEventId": 11737945,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 9,
+          "description": "Derby-Hull",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "2,55",
+            "draw": "3,32",
+            "away": "2,78"
+          },
+          "distribution": {
+            "home": "51",
+            "draw": "24",
+            "away": "25"
+          },
+          "newspaperAdvice": {
+            "home": "10",
+            "draw": "0",
+            "away": "0"
+          },
+          "league": {
+            "id": 1000381,
+            "name": "Championship",
+            "season": {
+              "id": 11737620,
+              "name": "Championship 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000075,
+              "type": "home",
+              "name": "Derby"
+            },
+            {
+              "id": 1000560,
+              "type": "away",
+              "name": "Hull"
+            }
+          ],
+          "sportEventId": 11737947,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 10,
+          "description": "Huddersfield-Brentford",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "5,10",
+            "draw": "3,65",
+            "away": "1,72"
+          },
+          "distribution": {
+            "home": "20",
+            "draw": "22",
+            "away": "58"
+          },
+          "newspaperAdvice": {
+            "home": "0",
+            "draw": "0",
+            "away": "10"
+          },
+          "league": {
+            "id": 1000381,
+            "name": "Championship",
+            "season": {
+              "id": 11737620,
+              "name": "Championship 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000140,
+              "type": "home",
+              "name": "Huddersfield"
+            },
+            {
+              "id": 1000506,
+              "type": "away",
+              "name": "Brentford"
+            }
+          ],
+          "sportEventId": 11737949,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 11,
+          "description": "Millwall-Reading",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "2,19",
+            "draw": "3,23",
+            "away": "3,50"
+          },
+          "distribution": {
+            "home": "50",
+            "draw": "28",
+            "away": "22"
+          },
+          "newspaperAdvice": {
+            "home": "10",
+            "draw": "0",
+            "away": "0"
+          },
+          "league": {
+            "id": 1000381,
+            "name": "Championship",
+            "season": {
+              "id": 11737620,
+              "name": "Championship 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000494,
+              "type": "home",
+              "name": "Millwall"
+            },
+            {
+              "id": 1000050,
+              "type": "away",
+              "name": "Reading"
+            }
+          ],
+          "sportEventId": 11737950,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 12,
+          "description": "Preston-Charlton",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "1,54",
+            "draw": "4,25",
+            "away": "6,10"
+          },
+          "distribution": {
+            "home": "67",
+            "draw": "20",
+            "away": "13"
+          },
+          "newspaperAdvice": {
+            "home": "10",
+            "draw": "0",
+            "away": "0"
+          },
+          "league": {
+            "id": 1000381,
+            "name": "Championship",
+            "season": {
+              "id": 11737620,
+              "name": "Championship 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000500,
+              "type": "home",
+              "name": "Preston"
+            },
+            {
+              "id": 1000510,
+              "type": "away",
+              "name": "Charlton"
+            }
+          ],
+          "sportEventId": 11737952,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        },
+        {
+          "eventNumber": 13,
+          "description": "Sheffield W-Blackburn",
+          "cancelled": false,
+          "extraInfo": null,
+          "eventTypeDescription": "",
+          "participantType": "team",
+          "outcomes": null,
+          "odds": {
+            "home": "1,77",
+            "draw": "3,55",
+            "away": "4,95"
+          },
+          "distribution": {
+            "home": "65",
+            "draw": "21",
+            "away": "14"
+          },
+          "newspaperAdvice": {
+            "home": "10",
+            "draw": "0",
+            "away": "0"
+          },
+          "league": {
+            "id": 1000381,
+            "name": "Championship",
+            "season": {
+              "id": 11737620,
+              "name": "Championship 19/20"
+            },
+            "country": {
+              "id": 1000007,
+              "name": "England"
+            }
+          },
+          "participants": [
+            {
+              "id": 1000042,
+              "type": "home",
+              "name": "Sheffield W"
+            },
+            {
+              "id": 1000074,
+              "type": "away",
+              "name": "Blackburn"
+            }
+          ],
+          "sportEventId": 11737954,
+          "sportEventStart": "2020-01-18T16:00:00+01:00"
+        }
+      ],
+      "productName": "Stryktipset",
+      "productId": 1,
+      "drawNumber": 4633,
+      "openTime": "2020-01-12T07:00:00+01:00",
+      "closeTime": "2020-01-18T15:59:00+01:00",
+      "turnover": "4690727,00",
+      "sport": "Fotboll",
+      "sportId": 1,
+      "checksum": "75fb52c534c78248a0c716d422438990faa17866"
+    }
+  ]
+}

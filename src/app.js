@@ -1,12 +1,18 @@
-import {getDraw} from "./svenskaspel/stryktipset/stryktipset-api.js";
+import {getDraw} from "./svenskaspel/stryktipset/api-client.js";
+import fs from 'fs-extra';
 
+// Or
 const main = async function () {
 
-
   console.log("Fetching next draw");
+  let draw = await getDraw();
+  try {
+    await fs.writeJson('draws/draw.json', draw, {spaces: 2, EOL: '\n'});
+    console.log('success!')
+  } catch (err) {
+    console.error(err)
+  }
 
-  await getDraw();
-  console.log();
 };
 
 
@@ -15,6 +21,11 @@ const main = async function () {
 })().catch(e => {
   console.log("error, " + e)
 });
+
+function printStats(draw) {
+  console.log(draw);
+
+}
 
 
 // getData(url).then(r => console.log("Do nothing"));
