@@ -5,7 +5,7 @@ export async function getDraw() {
   try {
     const url = `https://api.www.svenskaspel.se/external/draw/stryktipset/draws?accesskey=${config.get("svenska_spel_api.access_key")}`;
     const response = await axios.get(url);
-    return response.data;
+    return response.data.draws[0];
   } catch (error) {
     console.log(error);
   }
