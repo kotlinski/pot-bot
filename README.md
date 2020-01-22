@@ -6,3 +6,6 @@ A bot giving recommended bets at Svenska Spels Europatipset and Stryktipset depe
 Run with
 * `npm run app`
 * `NODE_ENV=dev && npm run app`
+
+
+* `npm run analyze -- --drawNumber 4632`

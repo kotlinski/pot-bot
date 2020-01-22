@@ -13,11 +13,13 @@ function createCombinationObject(events, game1, game2, game3, game4, game5, game
 
   let odds_rate = 1;
   let bet_value_rate = 1;
+  let score = 0;
 
   let index = 1;
   events.forEach(game => {
-    bet_value_rate *= game.bet_value_rate[eval(`game${index}`)];
-    odds_rate *= game.odds_rate[eval(`game${index}`)];
+    bet_value_rate += game.bet_value_rate[eval(`game${index}`)];
+    odds_rate += game.odds_rate[eval(`game${index}`)];
+    score += game.outcome[eval(`game${index}`)];
     index++;
   });
 
@@ -26,9 +28,10 @@ function createCombinationObject(events, game1, game2, game3, game4, game5, game
     line_id.push(`${gameStringToStringToChar(eval(`game${game_index}`))}`);
   }
   return {
-    id: 'E,' + line_id.join(','),
-    odds_rate: odds_rate,
-    bet_value_rate: bet_value_rate
+    id: line_id.join(''),
+    odds_rate,
+    bet_value_rate,
+    score
   };
 }
 
@@ -72,28 +75,6 @@ const api = {
       }
     }
     return combinations;
-    /*  console.log("sorting odds...");
-      const sorted_on_probability = combinations.sort((a, b) => {
-        return b.odds_rate - a.odds_rate;
-      });
-
-      console.log("");
-      console.log("---Top 10 odds---");
-      for (let i = 0; i < 10; i++) {
-        const combination = sorted_on_probability[i];
-        console.log(`${combination.id}: ${combination.odds_rate}`);
-      }
-
-      console.log("sorting valuable bets...");
-      const sorted_on_bet_value = combinations.sort((a, b) => {
-        return b.bet_value_rate - a.bet_value_rate;
-      });
-
-      console.log("Top 10 bet value");
-      for (let i = 0; i < 10; i++) {
-        const combination = sorted_on_bet_value[i];
-        console.log(`${combination.id}: ${combination.bet_value_rate}`);
-      }*/
   }
 };
 

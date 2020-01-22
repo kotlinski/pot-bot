@@ -7,6 +7,7 @@
     "build": "babel src -d lib",
     "app": "babel-node src/app.js",
     "dev": "cross-env NODE_ENV=dev babel-node src/app.js",
+    "analyze": "cross-env NODE_ENV=dev babel-node src/analyze.js",
     "test": "cross-env mocha **/__test__/"
   },
   "keywords": [],
@@ -16,7 +17,9 @@
     "axios": "^0.19.1",
     "config": "^3.2.4",
     "dateformat": "^3.0.3",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "optimist": "^0.6.1",
+    "os": "^0.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
