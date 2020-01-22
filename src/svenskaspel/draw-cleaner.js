@@ -1,46 +1,29 @@
-function oddsToPercentage(odds) {
-  return 1 / parseInt(odds);
-}
+import math from './bet-calculations/math.js';
+import drawBetValueRater from "./bet-calculations/draw-bet-value-rater.js";
 
-function convertOddsToPercentage(odds) {
-  const home_probability = oddsToPercentage(odds.home);
-  const draw_probability = oddsToPercentage(odds.draw);
-  const away_probability = oddsToPercentage(odds.away);
-  const total_percentage = home_probability + draw_probability + away_probability;
-  return {
-    home: Math.round((home_probability / total_percentage) * 10000) / 10000,
-    draw: Math.round((draw_probability / total_percentage) * 10000) / 10000,
-    away: Math.round((away_probability / total_percentage) * 10000) / 10000,
-  };
-}
-
-function convertDistributionToPercentage(distribution) {
-  return {
-    home: parseInt(distribution.home) / 100,
-    draw: parseInt(distribution.draw) / 100,
-    away: parseInt(distribution.away) / 100,
-  };
-}
-
-function calculateQuota(odds_in_percentage, distribution_in_percentage) {
-  return {
-    home: Math.round((odds_in_percentage.home / distribution_in_percentage.home) * 10000) / 10000,
-    draw: Math.round((odds_in_percentage.draw / distribution_in_percentage.draw) * 10000) / 10000,
-    away: Math.round((odds_in_percentage.away / distribution_in_percentage.away) * 10000) / 10000,
-  };
-}
 
 function cleanEvents(events) {
-  return events.map(event => {
-    let odds_in_percentage = convertOddsToPercentage(event.odds);
-    let distribution_in_percentage = convertDistributionToPercentage(event.distribution);
+  const events_with_data = events.map(event => {
+    let odds_in_percentage = math.convertOddsToPercentage(event.odds);
+    let distribution_in_percentage = math.convertDistributionToPercentage(event.distribution);
     return {
       number: event.eventNumber,
       description: event.description,
       odds: event.odds,
+      outcome: event.outcome,
       odds_in_percentage: odds_in_percentage,
       distribution: distribution_in_percentage,
-      odds_distribution_quota: calculateQuota(odds_in_percentage, distribution_in_percentage)
+      odds_distribution_quota: math.calculateQuota(odds_in_percentage, distribution_in_percentage)
+    }
+  });
+  const events_with_rates = drawBetValueRater.calculateRates(events_with_data);
+  return events_with_rates.map(event => {
+    return {
+      number: event.eventNumber,
+      description: event.description,
+      bet_value_rate: event.bet_value_rate,
+      odds_rate: event.odds_rate,
+      outcome: event.outcome,
     }
   });
 }
