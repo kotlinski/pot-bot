@@ -19,7 +19,9 @@ function createCombinationObject(events, game1, game2, game3, game4, game5, game
   events.forEach(game => {
     bet_value_rate += game.bet_value_rate[eval(`game${index}`)];
     odds_rate += game.odds_rate[eval(`game${index}`)];
-    score += game.outcome[eval(`game${index}`)];
+    if (game.outcome) {
+      score += game.outcome[eval(`game${index}`)];
+    }
     index++;
   });
 
@@ -29,6 +31,7 @@ function createCombinationObject(events, game1, game2, game3, game4, game5, game
   }
   return {
     id: line_id.join(''),
+    output_format: 'E,' + line_id.join(','),
     odds_rate,
     bet_value_rate,
     score

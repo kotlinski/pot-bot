@@ -23,9 +23,11 @@ function cleanEvents(events) {
       description: event.description,
       bet_value_rate: event.bet_value_rate,
       odds_rate: event.odds_rate,
+      odds_in_percentage: event.odds_in_percentage,
       outcome: event.outcome,
     }
   });
+
 }
 
 const api = {

@@ -5,20 +5,15 @@ import combinationGenerator from "./svenskaspel/combinations/draw-bet-combinatio
 import betPicker from "./svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
 import dateFormat from 'dateformat';
+import drawStore from "./svenskaspel/stryktipset/draw-store";
+
 
 async function fetchDraw() {
   console.log("Fetching next draw");
   let draw = await apiClient.getNextDraw();
   try {
-    let drawNumber = drawTextFormatter.getDrawNumber(draw);
-    const formatted_today = dateFormat(new Date(), "yyyy-mm-dd HH:MM");
-    console.log(formatted_today);
-    await fs.mkdir(`./current/${drawNumber}/raw`, {recursive: true});
-    await fs.mkdir(`./current/${drawNumber}/clean`, {recursive: true});
-    await fs.writeJson(`current/${drawNumber}/raw/${formatted_today}.json`, draw, {spaces: 2, EOL: '\n'});
-
     let cleanDraw = drawCleaner.cleanDraw(draw);
-    await fs.writeJson(`current/${drawNumber}/clean/${formatted_today}.json`, cleanDraw, {spaces: 2, EOL: '\n'});
+    await drawStore.storeCleanDraw(cleanDraw);
 
     const combinations = combinationGenerator.generateAllCombinations(cleanDraw);
     const bets = betPicker.pickBets(combinations);
@@ -32,7 +27,7 @@ async function fetchDraw() {
       probability_of_13 += line.odds_rate;
     }
     console.log('Saving file');
-    await fs.outputFile(`current/${drawNumber}/final.txt`, string_to_print);
+    await fs.outputFile(`draws/${draw.drawNumber}/final.txt`, string_to_print);
     console.log();
     let turnover = drawTextFormatter.getTurnover(draw);
     console.log(`${Math.round((probability_of_13 - 1) * 1000) / 10}%`);
@@ -41,7 +36,8 @@ async function fetchDraw() {
 
 
     console.log('success!')
-  } catch (err) {
+  } catch
+      (err) {
     console.error(err)
   }
 }
@@ -50,7 +46,7 @@ async function infLoop() {
   await fetchDraw();
   await setInterval(async () => {
     await infLoop()
-  }, 3 * 60 * 1000);
+  }, 10 * 60 * 1000);
 }
 
 // Or

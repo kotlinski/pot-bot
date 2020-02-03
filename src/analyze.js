@@ -4,7 +4,7 @@ import drawCleaner from "./svenskaspel/draw-cleaner.js";
 import combinationGenerator from "./svenskaspel/combinations/draw-bet-combination-generator";
 import betPicker from "./svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
-import dateFormat from 'dateformat';
+import drawStore from "./svenskaspel/stryktipset/draw-store";
 
 const os = require("os");
 
@@ -15,7 +15,6 @@ const argv = require('optimist')
 
 
 async function printToCSV(drawNumber, combinations) {
-
   let i = 0;
   let combinations_string = combinations.map(combination => {
     return `${combination.id},${combination.odds_rate.toFixed(4)},${combination.bet_value_rate.toFixed(4)},${combination.score}${os.EOL}`;
@@ -24,21 +23,30 @@ async function printToCSV(drawNumber, combinations) {
   await fs.outputFile(`draws/${drawNumber}/combinations.csv`, combinations_string_return);
 }
 
-async function analyzeDraw(drawNumber) {
-  console.log("Fetching next draw");
-  let draw = await apiClient.getDraw(drawNumber);
-  try {
-    let drawNumber = drawTextFormatter.getDrawNumber(draw);
-    const formatted_today = dateFormat(new Date(), "yyyy-mm-dd HH:MM");
-    console.log(formatted_today);
-    await fs.mkdir(`./draws/${drawNumber}`, {recursive: true});
-    await fs.writeJson(`draws/${drawNumber}/raw.json`, draw, {spaces: 2, EOL: '\n'});
-
-    let cleanDraw = drawCleaner.cleanDraw(draw);
-    await fs.writeJson(`draws/${drawNumber}/clean.json`, cleanDraw, {
-      spaces: 2,
-      EOL: '\n'
+function blendDrawAndResults(draw, result) {
+  draw.events = draw.events.map(event => {
+    const result_event = result.events.find(result_event => {
+      return result_event.eventNumber === event.eventNumber;
     });
+    event.outcome = result_event.outcome;
+    event.outcome = {
+      home: result_event.outcome === "1" ? 1 : 0,
+      draw: result_event.outcome === "X" ? 1 : 0,
+      away: result_event.outcome === "2" ? 1 : 0
+    };
+    return event;
+  });
+}
+
+async function analyzeDraw(drawNumber) {
+  const USE_CACHED_DATA = true;
+  console.log("Fetching next draw");
+  let draw = await apiClient.getDraw(drawNumber, USE_CACHED_DATA);
+  let result = await apiClient.getResults(drawNumber);
+  try {
+    blendDrawAndResults(draw, result);
+    let cleanDraw = drawCleaner.cleanDraw(draw);
+    await drawStore.storeCleanDraw(cleanDraw);
 
     const combinations = combinationGenerator.generateAllCombinations(cleanDraw);
     const bets = betPicker.pickBets(combinations);
