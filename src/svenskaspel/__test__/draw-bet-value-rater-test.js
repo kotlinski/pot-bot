@@ -6,7 +6,7 @@ describe('draw-bet-value-rater', function () {
   let clean_draw;
 
   beforeEach('load draw', async () => {
-    const draws = await fs.readJson('./src/svenskaspel/__test__/fixtures/draw.json');
+    const draws = await fs.readJson('./src/svenskaspel/__test__/fixtures/stryktipset/draw.json');
     const draw = draws.draws[0];
     clean_draw = drawCleaner.cleanDraw(draw);
   });

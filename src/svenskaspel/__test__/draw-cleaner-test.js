@@ -5,7 +5,7 @@ describe('draw-cleaner', function () {
   let draw;
 
   beforeEach('load draw', async () => {
-    const draws = await fs.readJson('./src/svenskaspel/__test__/fixtures/draw.json');
+    const draws = await fs.readJson('./src/svenskaspel/__test__/fixtures/stryktipset/draw.json');
     draw = draws.draws[0];
   });
 

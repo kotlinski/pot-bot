@@ -8,7 +8,7 @@ describe('draw-bet-combination-generator', function () {
   let combinations;
 
   beforeEach('load draw', async () => {
-    const draws = await fs.readJson('./src/svenskaspel/__test__/fixtures/draw.json');
+    const draws = await fs.readJson('./src/svenskaspel/__test__/fixtures/stryktipset/draw.json');
     const draw = draws.draws[0];
     const clean_draw = drawCleaner.cleanDraw(draw);
     clean_draw_with_value_rates = drawBetValueRater.calculateRates(clean_draw)

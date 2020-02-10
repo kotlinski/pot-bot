@@ -1,16 +1,20 @@
-import apiClient from "./svenskaspel/stryktipset/api-client.js";
+import draw_fetcher from "./svenskaspel/stryktipset/draw-fetcher.js";
 import drawTextFormatter from "./svenskaspel/draw-text-formatter.js";
 import drawCleaner from "./svenskaspel/draw-cleaner.js";
+import draw_validator from "./svenskaspel/stryktipset/draw-validator.js";
 import combinationGenerator from "./svenskaspel/combinations/draw-bet-combination-generator";
 import betPicker from "./svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
-import dateFormat from 'dateformat';
 import drawStore from "./svenskaspel/stryktipset/draw-store";
 
 
 async function fetchDraw() {
   console.log("Fetching next draw");
-  let draw = await apiClient.getNextDraw();
+  let draw = await draw_fetcher.fetchNextDraw();
+  if (!draw || !draw_validator.hasOdds(draw)) {
+    console.log("Can't compute upcoming draw");
+    return;
+  }
   try {
     let cleanDraw = drawCleaner.cleanDraw(draw);
     await drawStore.storeCleanDraw(cleanDraw);
@@ -27,7 +31,7 @@ async function fetchDraw() {
       probability_of_13 += line.odds_rate;
     }
     console.log('Saving file');
-    await fs.outputFile(`draws/${draw.drawNumber}/final.txt`, string_to_print);
+    await fs.outputFile(`draws/stryktipset/${draw.drawNumber}/final.txt`, string_to_print);
     console.log();
     let turnover = drawTextFormatter.getTurnover(draw);
     console.log(`${Math.round((probability_of_13 - 1) * 1000) / 10}%`);
@@ -46,7 +50,7 @@ async function infLoop() {
   await fetchDraw();
   await setInterval(async () => {
     await infLoop()
-  }, 10 * 60 * 1000);
+  }, 2 * 60 * 1000);
 }
 
 // Or

@@ -20,7 +20,7 @@ async function printToCSV(drawNumber, combinations) {
     return `${combination.id},${combination.odds_rate.toFixed(4)},${combination.bet_value_rate.toFixed(4)},${combination.score}${os.EOL}`;
   });
   let combinations_string_return = "id, 'odds rate', 'value rate', score" + os.EOL + combinations_string.join('');
-  await fs.outputFile(`draws/${drawNumber}/combinations.csv`, combinations_string_return);
+  await fs.outputFile(`draws/stryktipset/${drawNumber}/combinations.csv`, combinations_string_return);
 }
 
 function blendDrawAndResults(draw, result) {
@@ -62,7 +62,7 @@ async function analyzeDraw(drawNumber) {
       probability_of_13 += line.odds_rate;
     }
     console.log('Saving file');
-    await fs.outputFile(`draws/${drawNumber}/final.txt`, string_to_print);
+    await fs.outputFile(`draws/stryktipset/${drawNumber}/final.txt`, string_to_print);
     console.log();
     let turnover = drawTextFormatter.getTurnover(draw);
     console.log(`${Math.round((probability_of_13 - 1) * 1000) / 10}%`);
