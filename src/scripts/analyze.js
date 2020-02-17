@@ -1,10 +1,10 @@
-import apiClient from "./svenskaspel/stryktipset/api-client.js";
-import drawTextFormatter from "./svenskaspel/draw-text-formatter.js";
-import drawCleaner from "./svenskaspel/draw-cleaner.js";
-import combinationGenerator from "./svenskaspel/combinations/draw-bet-combination-generator";
-import betPicker from "./svenskaspel/combinations/draw-bet-picker";
+import apiClient from "../svenskaspel/fetch/api-client.js";
+import drawTextFormatter from "../svenskaspel/draw-text-formatter.js";
+import drawCleaner from "../svenskaspel/draw-cleaner.js";
+import combinationGenerator from "../svenskaspel/combinations/draw-bet-combination-generator";
+import betPicker from "../svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
-import drawStore from "./svenskaspel/stryktipset/draw-store";
+import drawStore from "../svenskaspel/fetch/draw-store";
 
 const os = require("os");
 
@@ -14,13 +14,13 @@ const argv = require('optimist')
     .argv;
 
 
-async function printToCSV(drawNumber, combinations) {
+async function printToCSV(game_type, draw_number, combinations) {
   let i = 0;
   let combinations_string = combinations.map(combination => {
     return `${combination.id},${combination.odds_rate.toFixed(4)},${combination.bet_value_rate.toFixed(4)},${combination.score}${os.EOL}`;
   });
   let combinations_string_return = "id, 'odds rate', 'value rate', score" + os.EOL + combinations_string.join('');
-  await fs.outputFile(`draws/stryktipset/${drawNumber}/combinations.csv`, combinations_string_return);
+  await fs.outputFile(`draws/${game_type}/old/${draw_number}/combinations.csv`, combinations_string_return);
 }
 
 function blendDrawAndResults(draw, result) {
@@ -38,20 +38,20 @@ function blendDrawAndResults(draw, result) {
   });
 }
 
-async function analyzeDraw(drawNumber) {
+async function analyzeDraw(game_type, draw_number) {
   const USE_CACHED_DATA = true;
   console.log("Fetching next draw");
-  let draw = await apiClient.getDraw(drawNumber, USE_CACHED_DATA);
-  let result = await apiClient.getResults(drawNumber);
+  let draw = await apiClient.getDraw(game_type, draw_number, USE_CACHED_DATA);
+  let result = await apiClient.getResults(game_type, draw_number);
   try {
     blendDrawAndResults(draw, result);
     let cleanDraw = drawCleaner.cleanDraw(draw);
-    await drawStore.storeCleanDraw(cleanDraw);
+    await drawStore.storeCleanDraw(game_type, cleanDraw);
 
     const combinations = combinationGenerator.generateAllCombinations(cleanDraw);
     const bets = betPicker.pickBets(combinations);
 
-    await printToCSV(drawNumber, combinations);
+    await printToCSV(game_type, draw_number, combinations);
 
 
     let string_to_print = "Stryktipset\n";
@@ -62,7 +62,7 @@ async function analyzeDraw(drawNumber) {
       probability_of_13 += line.odds_rate;
     }
     console.log('Saving file');
-    await fs.outputFile(`draws/stryktipset/${drawNumber}/final.txt`, string_to_print);
+    await fs.outputFile(`draws/${game_type}/old/${draw_number}/final.txt`, string_to_print);
     console.log();
     let turnover = drawTextFormatter.getTurnover(draw);
     console.log(`${Math.round((probability_of_13 - 1) * 1000) / 10}%`);
@@ -86,7 +86,7 @@ const main = async function () {
     return;
   }
 
-  await analyzeDraw(argv.drawNumber);
+  await analyzeDraw('stryktipset', argv.drawNumber);
 };
 
 

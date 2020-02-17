@@ -1,27 +1,25 @@
-import draw_fetcher from "./svenskaspel/stryktipset/draw-fetcher.js";
-import drawTextFormatter from "./svenskaspel/draw-text-formatter.js";
-import drawCleaner from "./svenskaspel/draw-cleaner.js";
-import draw_validator from "./svenskaspel/stryktipset/draw-validator.js";
-import combinationGenerator from "./svenskaspel/combinations/draw-bet-combination-generator";
-import betPicker from "./svenskaspel/combinations/draw-bet-picker";
+import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
+import drawTextFormatter from "./../svenskaspel/draw-text-formatter.js";
+import drawCleaner from "./../svenskaspel/draw-cleaner.js";
+import draw_validator from "./../svenskaspel/fetch/draw-validator.js";
+import combinationGenerator from "./../svenskaspel/combinations/draw-bet-combination-generator";
+import betPicker from "./../svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
-import drawStore from "./svenskaspel/stryktipset/draw-store";
+import drawStore from "./../svenskaspel/fetch/draw-store";
 
 
-async function fetchDraw() {
+async function fetchDraw(game_type) {
   console.log("Fetching next draw");
-  let draw = await draw_fetcher.fetchNextDraw();
+  let draw = await draw_fetcher.fetchNextDraw(game_type);
   if (!draw || !draw_validator.hasOdds(draw)) {
     console.log("Can't compute upcoming draw");
     return;
   }
   try {
-    let cleanDraw = drawCleaner.cleanDraw(draw);
-    await drawStore.storeCleanDraw(cleanDraw);
-
-    const combinations = combinationGenerator.generateAllCombinations(cleanDraw);
+    let clean_draw = drawCleaner.cleanDraw(draw);
+    await drawStore.storeCleanDraw(game_type, clean_draw);
+    const combinations = combinationGenerator.generateAllCombinations(clean_draw);
     const bets = betPicker.pickBets(combinations);
-
 
     let string_to_print = "Stryktipset\n";
     let probability_of_13 = 1;
@@ -31,7 +29,7 @@ async function fetchDraw() {
       probability_of_13 += line.odds_rate;
     }
     console.log('Saving file');
-    await fs.outputFile(`draws/stryktipset/${draw.drawNumber}/final.txt`, string_to_print);
+    await fs.outputFile(`draws/${game_type}/old/${draw.drawNumber}/final.txt`, string_to_print);
     console.log();
     let turnover = drawTextFormatter.getTurnover(draw);
     console.log(`${Math.round((probability_of_13 - 1) * 1000) / 10}%`);

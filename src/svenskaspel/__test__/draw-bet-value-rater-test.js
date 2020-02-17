@@ -1,5 +1,5 @@
 import drawCleaner from '../draw-cleaner'
-import drawBetValueRater from '../draw-bet-value-rater'
+import drawBetValueRater from '../bet-calculations/draw-bet-value-rater'
 import fs from 'fs-extra';
 
 describe('draw-bet-value-rater', function () {

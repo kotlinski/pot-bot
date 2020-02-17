@@ -1,6 +1,6 @@
 import drawCleaner from '../draw-cleaner'
-import drawBetValueRater from '../draw-bet-value-rater'
-import drawBetCombinationGenerator from '../draw-bet-combination-generator'
+import drawBetValueRater from '../bet-calculations/draw-bet-value-rater'
+import drawBetCombinationGenerator from '../combinations/draw-bet-combination-generator'
 import fs from 'fs-extra';
 
 describe('draw-bet-combination-generator', function () {

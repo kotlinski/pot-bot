@@ -5,9 +5,12 @@
   "main": "lib/app",
   "scripts": {
     "build": "babel src -d lib",
-    "app": "babel-node src/app.js",
-    "dev": "cross-env NODE_ENV=dev babel-node src/app.js",
-    "analyze": "cross-env NODE_ENV=dev babel-node src/analyze.js",
+    "rename": "babel-node src/scripts/file-rename.js",
+    "app": "babel-node src/scripts/app.js",
+    "fetch-draw": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-draw.js",
+    "fetch-all-results": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-all-results.js",
+    "dev": "cross-env NODE_ENV=dev babel-node src/scripts/app.js",
+    "analyze": "cross-env NODE_ENV=dev babel-node src/scripts/analyze.js",
     "test": "cross-env mocha **/__test__/"
   },
   "keywords": [],
@@ -16,7 +19,6 @@
   "dependencies": {
     "axios": "^0.19.1",
     "config": "^3.2.4",
-    "dateformat": "^3.0.3",
     "fs-extra": "^8.1.0",
     "moment": "^2.24.0",
     "optimist": "^0.6.1",
