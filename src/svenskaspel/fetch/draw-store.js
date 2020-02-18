@@ -32,7 +32,7 @@ const api = {
     if (draw_validator.isAfterCloseTime(draw)) {
       fileName = `raw-after-deadline.json`;
     }
-    if (!draw_validator.hasOdds(draw)) {
+    else if (!draw_validator.hasOdds(draw)) {
       fileName = `raw-without-odds.json`;
     }
     await fs.writeJson(`draws/${game_type}/old/${draw_number}/raw-history/${getFormattedToday()}.json`, draw, {

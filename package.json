@@ -9,6 +9,7 @@
     "app": "babel-node src/scripts/app.js",
     "fetch-draw": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-draw.js",
     "fetch-all-results": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-all-results.js",
+    "fetch-all-draws": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-all-draws.js",
     "dev": "cross-env NODE_ENV=dev babel-node src/scripts/app.js",
     "analyze": "cross-env NODE_ENV=dev babel-node src/scripts/analyze.js",
     "test": "cross-env mocha **/__test__/"
