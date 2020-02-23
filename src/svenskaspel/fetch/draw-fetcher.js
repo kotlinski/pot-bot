@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import draw_validator from './draw-validator';
-import draw_store from './draw-store';
+import { storeResults, storeDraw } from './draw-store';
 import api_client from '../fetch/api-client';
 
 const api = {
@@ -28,7 +28,7 @@ const api = {
       console.log("game type: " + game_type);
       draw = await api_client.getNextDraw(game_type);
       if (draw) {
-        await draw_store.storeDraw(game_type, draw);
+        await storeDraw(game_type, draw);
         return draw;
       }
       return draw_from_file;
@@ -42,7 +42,7 @@ const api = {
       console.log("game type: " + game_type);
       const draw = await api_client.getDraw(game_type, draw_number);
       if (draw) {
-        await draw_store.storeDraw(game_type, draw);
+        await storeDraw(game_type, draw);
         return draw;
       }
     } catch (err) {
@@ -55,7 +55,7 @@ const api = {
       console.log("game type: " + game_type);
       const results = await api_client.getResults(game_type, draw_number);
       if (results) {
-        await draw_store.storeResults(game_type, results);
+        await storeResults(game_type, results);
         return results;
       }
     } catch (err) {

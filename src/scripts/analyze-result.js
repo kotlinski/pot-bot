@@ -4,13 +4,13 @@ import drawCleaner from "../svenskaspel/draw-cleaner.js";
 import combinationGenerator from "../svenskaspel/combinations/draw-bet-combination-generator";
 import betPicker from "../svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
-import drawStore from "../svenskaspel/fetch/draw-store";
+import {storeCleanDraw, getDraw} from "../svenskaspel/fetch/draw-store";
 
 const os = require("os");
 
 
 const argv = require('optimist')
-    .demand(['drawNumber'])
+    .demand(['draw_number', 'game_type'])
     .argv;
 
 
@@ -46,7 +46,7 @@ async function analyzeDraw(game_type, draw_number) {
   try {
     blendDrawAndResults(draw, result);
     let cleanDraw = drawCleaner.cleanDraw(draw);
-    await drawStore.storeCleanDraw(game_type, cleanDraw);
+    await storeCleanDraw(game_type, cleanDraw);
 
     const combinations = combinationGenerator.generateAllCombinations(cleanDraw);
     const bets = betPicker.pickBets(combinations);
@@ -62,7 +62,7 @@ async function analyzeDraw(game_type, draw_number) {
       probability_of_13 += line.odds_rate;
     }
     console.log('Saving file');
-    await fs.outputFile(`draws/${game_type}/old/${draw_number}/final.txt`, string_to_print);
+    // await fs.outputFile(`draws/${game_type}/old/${draw_number}/final.txt`, string_to_print);
     console.log();
     let turnover = drawTextFormatter.getTurnover(draw);
     console.log(`${Math.round((probability_of_13 - 1) * 1000) / 10}%`);
@@ -76,17 +76,16 @@ async function analyzeDraw(game_type, draw_number) {
   }
 }
 
-
-// Or
 const main = async function () {
-  const args = process.argv.slice(2);
-  console.log(args);
-  if (!argv.drawNumber) {
-    console.log('Please provide a draw no. 0 to ~4633');
+  if (!argv.game_type) {
+    console.log('No game type selected, will download both stryktipset and europatipset');
     return;
   }
-
-  await analyzeDraw('stryktipset', argv.drawNumber);
+  if (!argv.draw_number) {
+    console.log('No draw_number slected');
+    return;
+  }
+  await analyzeDraw(argv.game_type, parseInt(argv.draw_number));
 };
 
 
@@ -95,8 +94,4 @@ const main = async function () {
 })().catch(e => {
   console.log("error, " + e)
 });
-
-function printStats(draw) {
-  console.log(draw);
-}
 

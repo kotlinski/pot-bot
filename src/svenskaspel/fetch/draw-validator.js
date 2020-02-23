@@ -29,7 +29,11 @@ const api = {
 
   hoursUntilCloseTime(draw) {
     const close_time = moment(draw.closeTime);
-    return -1*moment().diff(close_time, 'minutes');
+    return -1 * moment().diff(close_time, 'minutes');
+  },
+
+  closeTime(draw) {
+    return moment(draw.closeTime);
   }
 };
 

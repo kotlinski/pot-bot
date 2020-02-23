@@ -10,7 +10,7 @@ const api = {
       const response = await axios.get(url);
       return response.data.draws[0];
     } catch (error) {
-      console.log(error);
+      console.log(`could not fetch next draw, status: ${error.response.status}`, error.response.data);
     }
   },
 
@@ -20,7 +20,7 @@ const api = {
       const response = await axios.get(url);
       return response.data.draw;
     } catch (error) {
-      console.log(error);
+      console.log(`could not fetch draw, status: ${error.response.status}`, error.response.data);
     }
   },
 
@@ -30,7 +30,7 @@ const api = {
       const response = await axios.get(url);
       return response.data.result;
     } catch (error) {
-      console.log(error);
+      console.log(`could not fetch results, status: ${error.response.status}`, error.response.data);
     }
 
   }

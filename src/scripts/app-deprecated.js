@@ -5,7 +5,7 @@ import draw_validator from "./../svenskaspel/fetch/draw-validator.js";
 import combinationGenerator from "./../svenskaspel/combinations/draw-bet-combination-generator";
 import betPicker from "./../svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
-import drawStore from "./../svenskaspel/fetch/draw-store";
+import {storeCleanDraw} from "./../svenskaspel/fetch/draw-store";
 
 
 async function fetchDraw(game_type) {
@@ -17,7 +17,7 @@ async function fetchDraw(game_type) {
   }
   try {
     let clean_draw = drawCleaner.cleanDraw(draw);
-    await drawStore.storeCleanDraw(game_type, clean_draw);
+    await storeCleanDraw(game_type, clean_draw);
     const combinations = combinationGenerator.generateAllCombinations(clean_draw);
     const bets = betPicker.pickBets(combinations);
 
@@ -29,7 +29,7 @@ async function fetchDraw(game_type) {
       probability_of_13 += line.odds_rate;
     }
     console.log('Saving file');
-    await fs.outputFile(`draws/${game_type}/old/${draw.drawNumber}/final.txt`, string_to_print);
+    await fs.outputFile(`draws/${game_type}/old/${draw.drawNumber}/final-lines-to-hand-in.txt`, string_to_print);
     console.log();
     let turnover = drawTextFormatter.getTurnover(draw);
     console.log(`${Math.round((probability_of_13 - 1) * 1000) / 10}%`);

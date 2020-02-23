@@ -15,7 +15,6 @@ async function infLoop(game_type, draw_number) {
   }, 15 * 1000);
 }
 
-// Or
 const main = async function () {
   if (!argv.game_type) {
     console.log('No game type selected, will download both stryktipset and europatipset');
