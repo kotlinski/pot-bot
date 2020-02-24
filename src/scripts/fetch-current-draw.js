@@ -6,6 +6,10 @@ const argv = require('optimist')
     .default(['game_type'])
     .argv;
 
+const capitalize = (s) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+};
 
 async function infLoop(game_type) {
   let sleep = 12 * 60;
@@ -29,12 +33,12 @@ async function infLoop(game_type) {
       sleep = 12 * 60;
     }
     const from_now = moment(moment().add(sleep, 'minutes')).fromNow();
-    let deadline = draw_validator.hoursUntilCloseTime(draw);
-    console.log(`${moment().format('hh:mm')}: Fetching next draw ${from_now}. Deadline: ${moment(deadline).format('hh:mm')}`);
+    let deadline = draw_validator.closeTime(draw);
+    console.log(`${capitalize(game_type)}, ${moment().format('HH:mm')}: Fetching next draw ${from_now}. Deadline: ${moment(deadline).format('dddd HH:mm')}`);
   } catch (error) {
     console.log('Could not parse next draw.', error);
     const from_now = moment(moment().add(sleep, 'minutes')).fromNow();
-    console.log(`${moment().format('hh:mm')}: Fetching next draw ${from_now}.`);
+    console.log(`${capitalize(game_type)}, ${moment().format('HH:mm')}: Fetching next draw ${from_now}.`);
   }
   await setInterval(async () => {
     await infLoop(game_type)
@@ -44,7 +48,7 @@ async function infLoop(game_type) {
 // Or
 const main = async function () {
   if (!argv.game_type) {
-    console.log('No game type slected, will download both stryktipset and europatipset');
+    console.log('No game type selected, will download both stryktipset and europatipset');
     let stryktipset_promise = await infLoop('stryktipset');
     let europatipset_promise = await infLoop('europatipset');
     Promise.all([stryktipset_promise, europatipset_promise]);
