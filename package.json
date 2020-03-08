@@ -11,7 +11,7 @@
   },
   "scripts": {
     "prepublish": "npm run build",
-    "build": "rm -rf build && babel src --out-dir build --copy-files",
+    "build": "rm -rf build && babel src --out-dir build --copy-files && mkdir -p build/config && cp config/default.json build/config/default.json",
     "rename": "babel-node src/scripts/file-rename.js",
     "fetch-current-draw": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-current-draw.js",
     "fetch-old-results": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-old-results.js",
