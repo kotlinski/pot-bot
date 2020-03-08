@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-process.env.NODE_CONFIG_DIR = './../../config';
+process.env.NODE_CONFIG_DIR = './../config';
 
 import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
 import draw_validator from "./../svenskaspel/fetch/draw-validator.js";

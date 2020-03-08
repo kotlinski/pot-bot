@@ -9,3 +9,6 @@ Run with
 
 
 * `npm run analyze -- --drawNumber 4632`
+
+
+// npm run build; node ./build/scripts/fetch-current-draw.js
