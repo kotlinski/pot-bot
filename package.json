@@ -3,7 +3,14 @@
   "version": "1.0.3",
   "description": "",
   "main": "lib/app",
+  "files": [
+    "lib"
+  ],
+  "bin": {
+    "pot-bot-fetch-draws": "./lib/scripts/fetch-current-draw.js"
+  },
   "scripts": {
+    "prepublish": "npm run build",
     "build": "babel src -d lib",
     "rename": "babel-node src/scripts/file-rename.js",
     "fetch-current-draw": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-current-draw.js",
