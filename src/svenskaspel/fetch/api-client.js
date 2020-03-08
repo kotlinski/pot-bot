@@ -1,11 +1,10 @@
 import axios from "axios";
-import config from "config";
 
 const api = {
 
-  async getNextDraw(game_type) {
+  async getNextDraw(game_type, svenskaspel_api_key) {
     try {
-      const url = `https://api.www.svenskaspel.se/external/draw/${game_type}/draws?accesskey=${config.get("svenska_spel_api.access_key")}`;
+      const url = `https://api.www.svenskaspel.se/external/draw/${game_type}/draws?accesskey=${svenskaspel_api_key}`;
       console.log(url);
       const response = await axios.get(url);
       return response.data.draws[0];
@@ -14,9 +13,9 @@ const api = {
     }
   },
 
-  async getDraw(game_type, id) {
+  async getDraw(game_type, id, svenskaspel_api_key) {
     try {
-      const url = `https://api.www.svenskaspel.se/external/draw/${game_type}/draws/${id}?accesskey=${config.get("svenska_spel_api.access_key")}`;
+      const url = `https://api.www.svenskaspel.se/external/draw/${game_type}/draws/${id}?accesskey=${svenskaspel_api_key}`;
       const response = await axios.get(url);
       return response.data.draw;
     } catch (error) {
@@ -24,9 +23,9 @@ const api = {
     }
   },
 
-  async getResults(game_type, id) {
+  async getResults(game_type, id, svenskaspel_api_key) {
     try {
-      const url = `https://api.www.svenskaspel.se/external/draw/${game_type}/draws/${id}/result?accesskey=${config.get("svenska_spel_api.access_key")}`;
+      const url = `https://api.www.svenskaspel.se/external/draw/${game_type}/draws/${id}/result?accesskey=${svenskaspel_api_key}`;
       const response = await axios.get(url);
       return response.data.result;
     } catch (error) {

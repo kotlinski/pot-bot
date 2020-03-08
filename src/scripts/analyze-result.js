@@ -38,11 +38,11 @@ function blendDrawAndResults(draw, result) {
   });
 }
 
-async function analyzeDraw(game_type, draw_number) {
+async function analyzeDraw(game_type, draw_number, svenskaspel_api_key) {
   const USE_CACHED_DATA = true;
   console.log("Fetching next draw");
-  let draw = await apiClient.getDraw(game_type, draw_number, USE_CACHED_DATA);
-  let result = await apiClient.getResults(game_type, draw_number);
+  let draw = await apiClient.getDraw(game_type, draw_number, svenskaspel_api_key, USE_CACHED_DATA);
+  let result = await apiClient.getResults(game_type, draw_number, svenskaspel_api_key);
   try {
     blendDrawAndResults(draw, result);
     let cleanDraw = drawCleaner.massageData(draw);
@@ -85,7 +85,11 @@ const main = async function () {
     console.log('No draw_number slected');
     return;
   }
-  await analyzeDraw(argv.game_type, parseInt(argv.draw_number));
+  if (!argv.svenskaspel_api_key) {
+    console.log('No api key provided');
+    return;
+  }
+  await analyzeDraw(argv.game_type, parseInt(argv.draw_number), argv.svenskaspel_api_key);
 };
 
 

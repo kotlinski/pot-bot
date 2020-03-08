@@ -3,13 +3,14 @@ import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
 const argv = require('optimist')
     .default(['game_type'])
     .default(['draw_number'])
+    .default(['svenskaspel_api_key'])
     .argv;
 
 
-async function infLoop(game_type, draw_number) {
+async function infLoop(game_type, draw_number, svenskaspel_api_key) {
   await setInterval(async () => {
     console.log(`Fetching draw ${draw_number}`);
-    await draw_fetcher.fetchDraw(game_type, draw_number);
+    await draw_fetcher.fetchDraw(game_type, draw_number, svenskaspel_api_key);
     console.log('Done!');
     draw_number--;
   }, 15 * 1000);
@@ -24,7 +25,11 @@ const main = async function () {
     console.log('No draw_number slected');
     return;
   }
-  await infLoop(argv.game_type, parseInt(argv.draw_number));
+  if (!argv.svenskaspel_api_key) {
+    console.log('No api key');
+    return;
+  }
+  await infLoop(argv.game_type, parseInt(argv.draw_number), argv.svenskaspel_api_key);
 };
 
 

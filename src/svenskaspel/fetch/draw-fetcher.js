@@ -1,11 +1,11 @@
 import fs from "fs-extra";
 import draw_validator from './draw-validator';
-import { storeResults, storeDraw } from './draw-store';
+import {storeResults, storeDraw} from './draw-store';
 import api_client from '../fetch/api-client';
 
 const api = {
 
-  async fetchNextDraw(game_type, force_fetch = false) {
+  async fetchNextDraw(game_type, svenskaspel_api_key, force_fetch = false) {
     try {
       let draw;
       let draw_from_file;
@@ -26,7 +26,7 @@ const api = {
         return draw_from_file;
       }
       console.log("game type: " + game_type);
-      draw = await api_client.getNextDraw(game_type);
+      draw = await api_client.getNextDraw(game_type, svenskaspel_api_key);
       if (draw) {
         await storeDraw(game_type, draw);
         return draw;
@@ -37,10 +37,10 @@ const api = {
     }
   },
 
-  async fetchDraw(game_type, draw_number) {
+  async fetchDraw(game_type, draw_number, svenskaspel_api_key) {
     try {
       console.log("game type: " + game_type);
-      const draw = await api_client.getDraw(game_type, draw_number);
+      const draw = await api_client.getDraw(game_type, draw_number, svenskaspel_api_key);
       if (draw) {
         await storeDraw(game_type, draw);
         return draw;
@@ -50,10 +50,10 @@ const api = {
     }
   },
 
-  async fetchResults(game_type, draw_number) {
+  async fetchResults(game_type, draw_number, svenskaspel_api_key) {
     try {
       console.log("game type: " + game_type);
-      const results = await api_client.getResults(game_type, draw_number);
+      const results = await api_client.getResults(game_type, draw_number, svenskaspel_api_key);
       if (results) {
         await storeResults(game_type, results);
         return results;
