@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
 import draw_validator from "./../svenskaspel/fetch/draw-validator.js";
 import moment from 'moment';
