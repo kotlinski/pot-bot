@@ -12,11 +12,8 @@ const api = {
   },
   getDeadline(draw) {
     return draw.closeTime;
-  }
-  ,
-  getDrawNumber(draw) {
-    return draw.drawNumber;
-  }
+  },
+
 };
 
 export default api;

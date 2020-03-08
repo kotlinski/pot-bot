@@ -11,7 +11,7 @@
     "fetch-old-draws": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-old-draws.js",
     "analyze-result": "cross-env NODE_ENV=dev babel-node src/scripts/analyze-result.js",
     "analyze-current-draw": "cross-env NODE_ENV=dev babel-node src/scripts/analyze-current-draw.js",
-    "test": "cross-env mocha **/__test__/"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +19,9 @@
   "dependencies": {
     "axios": "^0.19.1",
     "config": "^3.2.4",
+    "delay": "^4.3.0",
     "fs-extra": "^8.1.0",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "optimist": "^0.6.1",
     "os": "^0.1.1"
@@ -34,6 +36,7 @@
     "babel-register": "^6.26.0",
     "coffeescript": "^2.5.0",
     "cross-env": "^6.0.3",
+    "jest": "^25.1.0",
     "mocha": "^7.0.0"
   }
 }

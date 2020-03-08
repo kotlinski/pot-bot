@@ -1,6 +1,7 @@
 import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
 import draw_validator from "./../svenskaspel/fetch/draw-validator.js";
 import moment from 'moment';
+import delay from 'delay';
 
 const argv = require('optimist')
     .default(['game_type'])
@@ -12,7 +13,11 @@ const capitalize = (s) => {
 };
 
 async function infLoop(game_type) {
-  let sleep = 12 * 60;
+  if (game_type === 'europatipset') {
+    // Delay ten seconds to separate the two different game types
+    await delay(10000);
+  }
+  let sleep = 0;
   try {
     console.log('Fetching draw...');
     let draw = await draw_fetcher.fetchNextDraw(game_type, true);
@@ -34,24 +39,24 @@ async function infLoop(game_type) {
     }
     const from_now = moment(moment().add(sleep, 'minutes')).fromNow();
     let deadline = draw_validator.closeTime(draw);
-    console.log(`${capitalize(game_type)}, ${moment().format('HH:mm')}: Fetching next draw ${from_now}. Deadline: ${moment(deadline).format('dddd HH:mm')}`);
+    console.log(`${moment().format('HH:mm')}, ${capitalize(game_type)}: Fetching next draw ${from_now}. \nDeadline: ${moment(deadline).format('dddd HH:mm')}`);
   } catch (error) {
-    console.log('Could not parse next draw.', error);
+    sleep = 12 * 60;
+    console.log('Could not parse next draw.', error.message);
+    console.log();
     const from_now = moment(moment().add(sleep, 'minutes')).fromNow();
-    console.log(`${capitalize(game_type)}, ${moment().format('HH:mm')}: Fetching next draw ${from_now}.`);
+    console.log(`${moment().format('HH:mm')}, ${capitalize(game_type)}: Fetching next draw ${from_now}.`);
   }
-  await setInterval(async () => {
-    await infLoop(game_type)
-  }, sleep * 60 * 1000);
+  await delay(sleep * 60 * 1000);
+  await infLoop(game_type)
 }
 
 // Or
 const main = async function () {
   if (!argv.game_type) {
     console.log('No game type selected, will download both stryktipset and europatipset');
-    let stryktipset_promise = await infLoop('stryktipset');
-    let europatipset_promise = await infLoop('europatipset');
-    Promise.all([stryktipset_promise, europatipset_promise]);
+    await Promise.all([infLoop('europatipset'), infLoop('stryktipset')]);
+    console.log("done with promises");
     return;
   }
   await infLoop(argv.game_type);

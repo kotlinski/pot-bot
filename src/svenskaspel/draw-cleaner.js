@@ -1,38 +1,42 @@
-import math from './bet-calculations/math.js';
-import drawBetValueRater from "./bet-calculations/draw-bet-value-rater.js";
+import {
+  convertOddsToPercentage,
+  convertDistributionToPercentage,
+  convertOddsToFloatValues
+} from './bet-calculations/percentage-converter';
+import {EVENT_OUTCOME_TYPES} from './event-outcome-types'
+import {normalizeProperty} from "./bet-calculations/event-property-normalizer";
 
 
 function cleanEvents(events) {
-  const events_with_data = events.map(event => {
-    let odds_in_percentage = math.convertOddsToPercentage(event.odds);
-    let distribution_in_percentage = math.convertDistributionToPercentage(event.distribution);
-    return {
+  return events.map(event => {
+    event.odds = convertOddsToFloatValues(event.odds);
+    let event_distributions_in_percentage = convertDistributionToPercentage(event.distribution);
+    let event_odds_in_percentage = convertOddsToPercentage(event.odds);
+    const cleanEvent = {
       number: event.eventNumber,
-      description: event.description,
-      odds: event.odds,
-      outcome: event.outcome,
-      odds_in_percentage: odds_in_percentage,
-      distribution: distribution_in_percentage,
-      odds_distribution_quota: math.calculateQuota(odds_in_percentage, distribution_in_percentage)
-    }
+      description: event.description
+    };
+    EVENT_OUTCOME_TYPES.forEach(event_outcome_type => {
+      const odds_in_percentage = event_odds_in_percentage[event_outcome_type];
+      const distribution_in_percentage = event_distributions_in_percentage[event_outcome_type];
+      cleanEvent[event_outcome_type] = {
+        odds: event.odds[event_outcome_type],
+        odds_in_percentage,
+        distribution_in_percentage,
+        bet_value: Math.round((odds_in_percentage / distribution_in_percentage) * 10000) / 10000,
+      }
+    });
+    return cleanEvent;
   });
-  const events_with_rates = drawBetValueRater.calculateRates(events_with_data);
-  return events_with_rates.map(event => {
-    return {
-      number: event.eventNumber,
-      description: event.description,
-      bet_value_rate: event.bet_value_rate,
-      odds_rate: event.odds_rate,
-      odds_in_percentage: event.odds_in_percentage,
-      outcome: event.outcome,
-    }
-  });
-
 }
 
 const api = {
 
-  cleanDraw(draw) {
+  massageData(draw) {
+    let events = cleanEvents(draw.events);
+    events = normalizeProperty(events, 'bet_value');
+    events = normalizeProperty(events, 'odds_in_percentage');
+
     return {
       turnover: parseInt(draw.turnover, 10),
       name: draw.drawComment,
@@ -41,7 +45,7 @@ const api = {
       drawNumber: draw.drawNumber,
       openTime: draw.openTime,
       closeTime: draw.closeTime,
-      events: cleanEvents(draw.events)
+      events,
     };
   },
 

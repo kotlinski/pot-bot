@@ -8,7 +8,7 @@ function getFormattedToday() {
 
 async function storeCurrentDraw(game_type, draw) {
   await fs.mkdir(`./draws/${game_type}/current`, {recursive: true});
-  let file_name = `draw.json`;
+  let file_name = `draw-before-deadline.json`;
   if (!draw_validator.hasOdds(draw)) {
     file_name = `draw-without-odds.json`;
   }
@@ -31,9 +31,9 @@ export function getCurrentDraw(game_type) {
 export async function storeDraw(game_type, draw) {
   const draw_number = draw.drawNumber;
   await fs.mkdir(`./draws/${game_type}/old/${draw_number}/draw-history/`, {recursive: true});
-  let fileName = `draw.json`;
+  let fileName = `draw-before-deadline.json`;
   if (draw_validator.isAfterCloseTime(draw)) {
-    fileName = `raw-after-deadline.json`;
+    fileName = `draw-after-deadline.json`;
   } else if (!draw_validator.hasOdds(draw)) {
     fileName = `draw-without-odds.json`;
   }

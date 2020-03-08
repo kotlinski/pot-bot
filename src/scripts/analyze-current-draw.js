@@ -1,6 +1,6 @@
 import drawTextFormatter from "../svenskaspel/draw-text-formatter.js";
 import drawCleaner from "../svenskaspel/draw-cleaner.js";
-import combinationGenerator from "../svenskaspel/combinations/draw-bet-combination-generator";
+import combinationGenerator from "../svenskaspel/combinations/generate-all-possible-combinations";
 import betPicker from "../svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
 import {storeCleanDraw, getCurrentDraw} from "../svenskaspel/fetch/draw-store";
@@ -44,12 +44,12 @@ async function analyzeCurrentDraw(game_type) {
   let draw;
   try {
     draw = getCurrentDraw(game_type);
-  } catch (error) {
+  } catch (error) {
     console.log('Could not read current draw, please fetch again `npm run fetch-current-draw`', error)
   }
   try {
-    let clean_draw = drawCleaner.cleanDraw(draw);
-    await storeCleanDraw(game_type, clean_draw);
+    let clean_draw = drawCleaner.massageData(draw);
+    // await storeCleanDraw(game_type, clean_draw);
 
     const combinations = combinationGenerator.generateAllCombinations(clean_draw);
 

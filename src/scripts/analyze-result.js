@@ -1,7 +1,7 @@
 import apiClient from "../svenskaspel/fetch/api-client.js";
 import drawTextFormatter from "../svenskaspel/draw-text-formatter.js";
 import drawCleaner from "../svenskaspel/draw-cleaner.js";
-import combinationGenerator from "../svenskaspel/combinations/draw-bet-combination-generator";
+import combinationGenerator from "../svenskaspel/combinations/generate-all-possible-combinations";
 import betPicker from "../svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
 import {storeCleanDraw, getDraw} from "../svenskaspel/fetch/draw-store";
@@ -45,7 +45,7 @@ async function analyzeDraw(game_type, draw_number) {
   let result = await apiClient.getResults(game_type, draw_number);
   try {
     blendDrawAndResults(draw, result);
-    let cleanDraw = drawCleaner.cleanDraw(draw);
+    let cleanDraw = drawCleaner.massageData(draw);
     await storeCleanDraw(game_type, cleanDraw);
 
     const combinations = combinationGenerator.generateAllCombinations(cleanDraw);

@@ -2,7 +2,7 @@ import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
 import drawTextFormatter from "./../svenskaspel/draw-text-formatter.js";
 import drawCleaner from "./../svenskaspel/draw-cleaner.js";
 import draw_validator from "./../svenskaspel/fetch/draw-validator.js";
-import combinationGenerator from "./../svenskaspel/combinations/draw-bet-combination-generator";
+import combinationGenerator from "../svenskaspel/combinations/generate-all-possible-combinations";
 import betPicker from "./../svenskaspel/combinations/draw-bet-picker";
 import fs from 'fs-extra';
 import {storeCleanDraw} from "./../svenskaspel/fetch/draw-store";
@@ -16,7 +16,7 @@ async function fetchDraw(game_type) {
     return;
   }
   try {
-    let clean_draw = drawCleaner.cleanDraw(draw);
+    let clean_draw = drawCleaner.massageData(draw);
     await storeCleanDraw(game_type, clean_draw);
     const combinations = combinationGenerator.generateAllCombinations(clean_draw);
     const bets = betPicker.pickBets(combinations);
