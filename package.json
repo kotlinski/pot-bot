@@ -2,16 +2,16 @@
   "name": "pot-bot",
   "version": "1.0.4",
   "description": "",
-  "main": "lib/app",
+  "main": "build/app",
   "files": [
-    "lib"
+    "build"
   ],
   "bin": {
-    "pot-bot-fetch-draws": "./lib/scripts/fetch-current-draw.js"
+    "pot-bot-fetch-draws": "./build/scripts/fetch-current-draw.js"
   },
   "scripts": {
     "prepublish": "npm run build",
-    "build": "babel src -d lib",
+    "build": "rm -rf build && babel src --out-dir build --copy-files",
     "rename": "babel-node src/scripts/file-rename.js",
     "fetch-current-draw": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-current-draw.js",
     "fetch-old-results": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-old-results.js",
