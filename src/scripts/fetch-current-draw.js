@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-process.env.NODE_CONFIG_DIR = './../config';
+import {sendMail} from "../mail/send-email";
+
+process.env.NODE_CONFIG_DIR = './config';
 
 import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
 import draw_validator from "./../svenskaspel/fetch/draw-validator.js";
@@ -13,26 +15,39 @@ const argv = require('optimist')
     .argv;
 
 const capitalize = (s) => {
-  if (typeof s !== 'string') return ''
+  if (typeof s !== 'string') return '';
   return s.charAt(0).toUpperCase() + s.slice(1)
 };
 
 async function infLoop(game_type, svenskaspel_api_key) {
+
+  const states = [
+      'WAIT_UNTIL_LAST_HOUR',
+      'MAIL_THAT_ITS_ONE_HOUR_LEFT',
+  ];
+  // TODO: A state machine that decides what to do.
+  // Sleep for 15 hours,
+  // Send a mail
+  // Send another type of mail
+  // Sleep for 72 hours
+
+
   if (game_type === 'europatipset') {
     // Delay ten seconds to separate the two different game types
-    await delay(10000);
+    await delay(10 * 1000);
   }
   let sleep = 0;
   try {
     console.log('Fetching draw...');
     let draw = await draw_fetcher.fetchNextDraw(game_type, svenskaspel_api_key, true);
+   // await sendMail(draw);
     console.log('Done!');
     let time_until_deadline = draw_validator.hoursUntilCloseTime(draw);
     if (time_until_deadline < 0) {
       console.log(`Draw was in the past.`);
       return;
     } else if (time_until_deadline < 10) {
-      sleep = 1;
+      sleep = 2;
     } else if (time_until_deadline < 25) {
       sleep = 5;
     } else if (time_until_deadline < 120) {
@@ -64,6 +79,7 @@ const main = async function () {
     return;
   }
   const svenskaspel_api_key = config.get("svenska_spel_api.access_key") ? config.get("svenska_spel_api.access_key") : argv.svenskaspel_api_key;
+  console.log("argv.game_type: ", JSON.stringify(argv.game_type, null, 2));
   if (!argv.game_type) {
     console.log('No game type selected, will download both stryktipset and europatipset');
     await Promise.all([infLoop('europatipset', svenskaspel_api_key), infLoop('stryktipset', svenskaspel_api_key)]);

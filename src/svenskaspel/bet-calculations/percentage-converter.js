@@ -11,11 +11,36 @@ export function convertOddsToPercentage(odds) {
   const draw_probability = oddsToPercentage(odds.draw);
   const away_probability = oddsToPercentage(odds.away);
   const total_percentage = home_probability + draw_probability + away_probability;
+
+  console.log("Math.round((home_probability / total_percentage) * 10000) / 10000: ", JSON.stringify(Math.round((home_probability / total_percentage) * 10000) / 10000, null, 2));
+  console.log("Math.round((draw_probability / total_percentage) * 10000) / 10000: ", JSON.stringify(Math.round((draw_probability / total_percentage) * 10000) / 10000, null, 2));
+  console.log("Math.round((away_probability / total_percentage) * 10000) / 10000: ", JSON.stringify(Math.round((away_probability / total_percentage) * 10000) / 10000, null, 2));
   return {
     home: Math.round((home_probability / total_percentage) * 10000) / 10000,
     draw: Math.round((draw_probability / total_percentage) * 10000) / 10000,
     away: Math.round((away_probability / total_percentage) * 10000) / 10000,
   };
+}
+
+function convertPercentageToOdds(fraction) {
+  return (1 / fraction);
+}
+
+export function convertLottoRatesToOdds(event) {
+  if (event.eventTypeDescription === "" || event.eventTypeDescription === undefined) {
+    return event.odds;
+  } else {
+    const odds = event.eventTypeDescription.match(/\d+/g).map(number => parseInt(number));
+    const total = odds.reduce((a, b) => a + b);
+    let home = `${convertPercentageToOdds(odds[0] / total)}`;
+    let draw = `${convertPercentageToOdds(odds[1] / total)}`;
+    let away = `${convertPercentageToOdds(odds[2] / total)}`;
+    return {
+      home,
+      draw,
+      away,
+    };
+  }
 }
 
 export function convertOddsToFloatValues(odds) {

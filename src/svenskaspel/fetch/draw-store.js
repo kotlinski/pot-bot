@@ -23,8 +23,8 @@ async function storeCurrentCleanDraw(game_type, clean_draw) {
   });
 }
 
-export function getCurrentDraw(game_type) {
-  return fs.readJson(`draws/${game_type}/current/draw.json`)
+export async function getCurrentDraw(game_type) {
+  return await fs.readJson(`./draws/${game_type}/current/draw-before-deadline.json`);
 }
 
 

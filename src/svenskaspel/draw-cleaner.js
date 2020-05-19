@@ -1,7 +1,8 @@
 import {
   convertOddsToPercentage,
   convertDistributionToPercentage,
-  convertOddsToFloatValues
+  convertOddsToFloatValues,
+  convertLottoRatesToOdds
 } from './bet-calculations/percentage-converter';
 import {EVENT_OUTCOME_TYPES} from './event-outcome-types'
 import {normalizeProperty} from "./bet-calculations/event-property-normalizer";
@@ -9,6 +10,7 @@ import {normalizeProperty} from "./bet-calculations/event-property-normalizer";
 
 function cleanEvents(events) {
   return events.map(event => {
+    event.odds = convertLottoRatesToOdds(event);
     event.odds = convertOddsToFloatValues(event.odds);
     let event_distributions_in_percentage = convertDistributionToPercentage(event.distribution);
     let event_odds_in_percentage = convertOddsToPercentage(event.odds);

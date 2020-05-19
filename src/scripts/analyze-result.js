@@ -62,7 +62,7 @@ async function analyzeDraw(game_type, draw_number, svenskaspel_api_key) {
       probability_of_13 += line.odds_rate;
     }
     console.log('Saving file');
-    // await fs.outputFile(`draws/${game_type}/old/${draw_number}/final.txt`, string_to_print);
+    // await fs.outputFile(`draws/${game_type}/old/${draw_number}/final-100.txt`, string_to_print);
     console.log();
     let turnover = drawTextFormatter.getTurnover(draw);
     console.log(`${Math.round((probability_of_13 - 1) * 1000) / 10}%`);

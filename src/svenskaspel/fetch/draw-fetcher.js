@@ -34,6 +34,7 @@ const api = {
       return draw_from_file;
     } catch (err) {
       console.log(err);
+      console.log();
     }
   },
 
