@@ -8,6 +8,7 @@ import draw_validator from "./../svenskaspel/fetch/draw-validator.js";
 import moment from 'moment';
 import delay from 'delay';
 import config from 'config';
+import drawTextFormatter from "../svenskaspel/draw-text-formatter";
 
 const argv = require('optimist')
     .default(['game_type'])
@@ -59,7 +60,12 @@ async function infLoop(game_type, svenskaspel_api_key) {
     }
     const from_now = moment(moment().add(sleep, 'minutes')).fromNow();
     let deadline = draw_validator.closeTime(draw);
+    console.log();
+    let turnover = drawTextFormatter.getTurnover(draw);
+    console.log(turnover);
+    console.log();
     console.log(`${moment().format('HH:mm')}, ${capitalize(game_type)}: Fetching next draw ${from_now}. \nDeadline: ${moment(deadline).format('dddd HH:mm')}`);
+
   } catch (error) {
     sleep = 12 * 60;
     console.log('Could not parse next draw.', error.message);

@@ -14,7 +14,7 @@ function recursiveLines(events, line, index, outcome) {
     line.outcomes.push(outcome);
     line.total_odds *= events[index][outcome].odds;
     line.total_bet_rate += events[index][outcome].bet_value_normalized;
-    line.bet_score += (events[index][outcome].odds_in_percentage * 3.0 + events[index][outcome].bet_value_normalized);
+    line.bet_score += (events[index][outcome].odds_in_percentage * 2 + events[index][outcome].bet_value_normalized);
     /*    if (events[index][outcome].bet_value_normalized <= 0.05) {
           return [];
         }*/

@@ -27,7 +27,7 @@ function convertPercentageToOdds(fraction) {
 }
 
 export function convertLottoRatesToOdds(event) {
-  if (event.eventTypeDescription === "" || event.eventTypeDescription === undefined) {
+  if (event.eventTypeDescription === "" || event.eventTypeDescription === undefined || event.eventTypeDescription === 'Neutral plan') {
     return event.odds;
   } else {
     const odds = event.eventTypeDescription.match(/\d+/g).map(number => parseInt(number));
