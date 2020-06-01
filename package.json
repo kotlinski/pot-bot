@@ -18,6 +18,7 @@
     "fetch-old-draws": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-old-draws.js",
     "analyze-result": "cross-env NODE_ENV=dev babel-node src/scripts/analyze-result.js",
     "analyze-current-draw": "cross-env NODE_ENV=dev babel-node src/scripts/analyze-current-draw.js",
+    "verify-bet-with-current-results": "cross-env NODE_ENV=dev babel-node src/scripts/verify-bet-with-current-results.js",
     "test": "jest"
   },
   "keywords": [],

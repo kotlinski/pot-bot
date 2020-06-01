@@ -157,13 +157,16 @@ async function printStats(bets, draw, game_type) {
   printOutcomeDistribution(draw, bets);
   printOddsDistribution(bets);
 
+  let final_bets_json = bets.map(bet => bet.outcomes.map(outcome => outcomeToChar(outcome)));
+
   console.log('Saving file');
 
-  if (draw_validator.isCurrentDraw(draw)) {
-    await fs.outputFile(`draws/${draw.productName.toLowerCase()}/current/final.txt`, string_to_print);
+  await fs.outputFile(`draws/${draw.productName.toLowerCase()}/current/final.txt`, string_to_print);
+  await fs.outputJSON(`draws/${draw.productName.toLowerCase()}/current/final.json`, final_bets_json, {spaces: 2});
+  /*if (draw_validator.isCurrentDraw(draw)) {
   } else {
     await fs.outputFile(`draws/${draw.productName.toLowerCase()}/old/${draw.drawNumber}/analyze-ongoing/${getFormattedToday()}.txt`, string_to_print);
-  }
+  }*/
 
   await fs.outputFile(`draws/${draw.productName.toLowerCase()}/old/${draw.drawNumber}/final.txt`, string_to_print);
   console.log();

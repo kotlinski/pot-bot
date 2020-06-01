@@ -26,6 +26,9 @@ async function storeCurrentCleanDraw(game_type, clean_draw) {
 export async function getCurrentDraw(game_type) {
   return await fs.readJson(`./draws/${game_type}/current/draw-before-deadline.json`);
 }
+export async function getCurrentBets(game_type) {
+  return await fs.readJson(`./draws/${game_type}/current/final.json`);
+}
 
 
 export async function storeDraw(game_type, draw) {
