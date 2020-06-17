@@ -13,7 +13,7 @@ async function infLoop(game_type, draw_number, svenskaspel_api_key) {
     await draw_fetcher.fetchDraw(game_type, draw_number, svenskaspel_api_key);
     console.log('Done!');
     draw_number--;
-  }, 15 * 1000);
+  }, 5 * 1000);
 }
 
 const main = async function () {

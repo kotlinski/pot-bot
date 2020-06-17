@@ -8,11 +8,32 @@ import {EVENT_OUTCOME_TYPES} from './event-outcome-types'
 import {normalizeProperty} from "./bet-calculations/event-property-normalizer";
 
 
+
 function cleanEvents(events) {
   return events.map(event => {
     event.odds = convertLottoRatesToOdds(event);
     event.odds = convertOddsToFloatValues(event.odds);
     let event_distributions_in_percentage = convertDistributionToPercentage(event.distribution);
+    event.original_odds = event.odds;
+    // Math learned from university
+    if (event_distributions_in_percentage['home'] < 0.07) {
+      event.odds['home'] = 0;
+    }
+    if (event_distributions_in_percentage['home'] > 0.89) {
+      event.odds['draw'] = 0;
+      event.odds['away'] = 0;
+    }
+    if (event_distributions_in_percentage['draw'] < 0.06) {
+      event.odds['draw'] = 0;
+    }
+    if (event_distributions_in_percentage['away'] > 0.81) {
+      event.odds['home'] = 0;
+      event.odds['draw'] = 0;
+    }
+    if (event_distributions_in_percentage['away'] < 0.06) {
+      event.odds['away'] = 0;
+    }
+
     let event_odds_in_percentage = convertOddsToPercentage(event.odds);
     const cleanEvent = {
       number: event.eventNumber,
@@ -23,6 +44,7 @@ function cleanEvents(events) {
       const distribution_in_percentage = event_distributions_in_percentage[event_outcome_type];
       cleanEvent[event_outcome_type] = {
         odds: event.odds[event_outcome_type],
+        original_odds: event.original_odds[event_outcome_type],
         odds_in_percentage,
         distribution_in_percentage,
         bet_value: Math.round((odds_in_percentage / distribution_in_percentage) * 10000) / 10000,

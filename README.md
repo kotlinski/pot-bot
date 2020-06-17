@@ -12,3 +12,7 @@ Run with
 
 
 // npm run build; node ./build/scripts/fetch-current-draw.js
+
+## Other
+to get nice printouts with sek you might add the swedish locale
+`npm install -g full-icu` 

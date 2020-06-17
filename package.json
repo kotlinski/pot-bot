@@ -17,7 +17,7 @@
     "fetch-old-results": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-old-results.js",
     "fetch-old-draws": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-old-draws.js",
     "analyze-result": "cross-env NODE_ENV=dev babel-node src/scripts/analyze-result.js",
-    "analyze-current-draw": "cross-env NODE_ENV=dev babel-node src/scripts/analyze-current-draw.js",
+    "analyze-current-draw": "cross-env NODE_ENV=dev babel-node --icu-data-dir=/Users/simon/.nvm/versions/node/v12.17.0/lib/node_modules/full-icu src/scripts/analyze-current-draw.js",
     "verify-bet-with-current-results": "cross-env NODE_ENV=dev babel-node src/scripts/verify-bet-with-current-results.js",
     "test": "jest"
   },
@@ -27,6 +27,7 @@
   "dependencies": {
     "acorn": "^7.1.1",
     "axios": "^0.19.1",
+    "colors": "^1.4.0",
     "config": "^3.2.4",
     "delay": "^4.3.0",
     "fs-extra": "^8.1.0",

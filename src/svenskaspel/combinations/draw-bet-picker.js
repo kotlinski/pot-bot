@@ -2,7 +2,7 @@ function calculateSortScore(game, i) {
   return game.odds_rate * (1 - i) + game.bet_value_rate * i;
 }
 
-function sortOnHighestBestScore(combinations, number_of_lines) {
+function sortOnHighestBestScore(combinations, number_of_lines_to_pick) {
   const lines_to_pick = [];
 
   const sort = combinations.sort((a, b) => {
@@ -11,12 +11,18 @@ function sortOnHighestBestScore(combinations, number_of_lines) {
   });
 
 
+/*
   // Loop throw all possible bets
-  const signs = ['home', 'draw', 'away'];
-  for (let n = 0; n < 2; n++) {
+  let time_to_pick_each_result = Math.floor(Math.round(number_of_lines_to_pick / 39)) - 1;
+  console.log("time_to_pick_each_result: ", JSON.stringify(time_to_pick_each_result, null, 2));
+
+ draw one x in each game
+  for (let n = 0; n < time_to_pick_each_result; n++) {
     for (let i = 0; i < 13; i++) {
-      for (const sign of signs) {
-        const line = sort.find(line => line.outcomes[i] === sign);
+      // for (const sign of signs) {
+      const sign = 'draw';
+      const line = sort.find(line => line.outcomes[i] === sign);
+      if (line) {
         lines_to_pick.push(line);
         const index = sort.indexOf(line);
         if (index > -1) {
@@ -24,11 +30,28 @@ function sortOnHighestBestScore(combinations, number_of_lines) {
         }
       }
     }
+  }*/
+  /* generating at least two X in every bet */
+  // const time_to_pick_each_result = Math.round(number_of_lines_to_pick/2);
+  for (let n = 0; n < 1; n++) {
+    for (let i = 0; i < 13; i++) {
+      for (let j = i + 1; j < 13; j++) {
+        // for (const sign of signs) {
+        const sign = 'draw';
+        const line = sort.find(line => line.outcomes[i] === sign && line.outcomes[j] === sign);
+        if (line) {
+          lines_to_pick.push(line);
+          const index = sort.indexOf(line);
+          if (index > -1) {
+            sort.splice(index, 1);
+          }
+        }
+      }
+    }
   }
+  console.log(`Forced ${lines_to_pick.length} to have at least two X signs`);
   const number_of_picked_lines = lines_to_pick.length;
-  console.log("number_of_picked_lines: ", JSON.stringify(number_of_picked_lines, null, 2));
-
-  for (let i = 0; i < number_of_lines - number_of_picked_lines; i++) {
+  for (let i = 0; i < number_of_lines_to_pick - number_of_picked_lines; i++) {
     lines_to_pick.push(sort[i]);
   }
 
