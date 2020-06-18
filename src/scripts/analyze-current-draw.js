@@ -117,7 +117,7 @@ function printNumberOfPersonsWithThisBet(draw, bets) {
   const distribution = {};
 
   for (const line of no_of_lines_with_bet) {
-    for (let i = min_no_of_lines; i <= max_no_of_lines+100; i = Math.ceil(i + a)) {
+    for (let i = min_no_of_lines; i <= max_no_of_lines + 100; i = Math.ceil(i + a)) {
       /* console.log("line: ", JSON.stringify(line, null, 2));
        console.log("i: ", JSON.stringify(i, null, 2));
        console.log("i+a: ", JSON.stringify(i+a, null, 2));*/
@@ -149,8 +149,8 @@ function printNumberOfPersonsWithThisBet(draw, bets) {
     maximumFractionDigits: 0,
     minimumFractionDigits: 0
   });
-  console.log(`Max 1:${Math.round(max_no_of_lines)},${appendNoOfSpaces(4-max_no_of_lines.toString().length)} ~${sek_formatter.format(Math.round(money_to_win/max_no_of_lines))}`);
-  console.log(`Min 1:${Math.round(min_no_of_lines)},${appendNoOfSpaces(4-min_no_of_lines.toString().length)} ~${sek_formatter.format(Math.round(money_to_win/min_no_of_lines))}`);
+  console.log(`Max 1:${Math.round(max_no_of_lines)},${appendNoOfSpaces(4 - max_no_of_lines.toString().length)} ~${sek_formatter.format(Math.round(money_to_win / max_no_of_lines))}`);
+  console.log(`Min 1:${Math.round(min_no_of_lines)},${appendNoOfSpaces(4 - min_no_of_lines.toString().length)} ~${sek_formatter.format(Math.round(money_to_win / min_no_of_lines))}`);
   console.log();
 }
 
@@ -230,9 +230,9 @@ function print1X2Distribution(string_to_print, bets) {
   const no_of_1 = (string_to_print.match(/1/g) || []).length;
   const no_of_2 = (string_to_print.match(/2/g) || []).length;
   console.log("1,X,2 distributions");
-  console.log(`1: ${no_of_1},${appendNoOfSpaces(4-no_of_1.toString().length)} ~${(no_of_1 / bets.length).toFixed(2)} per line`);
-  console.log(`X: ${no_of_x},${appendNoOfSpaces(4-no_of_x.toString().length)} ~${(no_of_x / bets.length).toFixed(2)} per line`);
-  console.log(`2: ${no_of_2},${appendNoOfSpaces(4-no_of_2.toString().length)} ~${(no_of_2 / bets.length).toFixed(2)} per line`);
+  console.log(`1: ${no_of_1},${appendNoOfSpaces(4 - no_of_1.toString().length)} ~${(no_of_1 / bets.length).toFixed(2)} per line`);
+  console.log(`X: ${no_of_x},${appendNoOfSpaces(4 - no_of_x.toString().length)} ~${(no_of_x / bets.length).toFixed(2)} per line`);
+  console.log(`2: ${no_of_2},${appendNoOfSpaces(4 - no_of_2.toString().length)} ~${(no_of_2 / bets.length).toFixed(2)} per line`);
 }
 
 async function printStats(bets, draw, game_type) {
@@ -271,7 +271,7 @@ async function printStats(bets, draw, game_type) {
   console.log(turnover);
 }
 
-async function analyzeCurrentDraw(game_type, number_of_lines_to_generate) {
+export async function analyzeCurrentDraw(game_type, number_of_lines_to_generate) {
 
   console.log("Reading current draw...");
   let draw;
@@ -298,9 +298,11 @@ async function analyzeCurrentDraw(game_type, number_of_lines_to_generate) {
 
     printStats(final_bet, draw, game_type);
 
-    console.log('success!')
+    console.log('success!');
+    return final_bet;
   } catch (err) {
     console.error(err)
+    return err;
   }
 }
 
