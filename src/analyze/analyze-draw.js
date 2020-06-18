@@ -8,6 +8,7 @@ import betPicker from "../svenskaspel/combinations/draw-bet-picker";
 import drawTextFormatter from "../svenskaspel/draw-text-formatter.js";
 import drawCleaner from "../svenskaspel/draw-cleaner.js";
 import moment from "moment";
+const path = require('path');
 
 require('colors');
 

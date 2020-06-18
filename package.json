@@ -35,7 +35,8 @@
     "moment": "^2.24.0",
     "nodemailer": "^6.4.4",
     "optimist": "^0.6.1",
-    "os": "^0.1.1"
+    "os": "^0.1.1",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
