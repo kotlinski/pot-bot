@@ -264,6 +264,7 @@ async function printStats(bets, draw, game_type) {
   console.log();
 
   console.log(turnover);
+  return string_to_print;
 }
 
 export async function analyzeCurrentDraw(game_type, number_of_lines_to_generate) {
@@ -291,10 +292,10 @@ export async function analyzeCurrentDraw(game_type, number_of_lines_to_generate)
     // Skip this for now
     // await printToCSV(game_type, draw.drawNumber, combinations);
 
-    printStats(final_bet, draw, game_type);
+    const string_to_print = printStats(final_bet, draw, game_type);
 
     console.log('success!');
-    return path.join(__dirname, 'draws', draw.productName.toLowerCase(), 'current', 'final.txt');
+    return string_to_print;
   } catch (err) {
     console.error(err);
     return err;
