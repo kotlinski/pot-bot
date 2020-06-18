@@ -1,5 +1,5 @@
 import draw_fetcher from "./svenskaspel/fetch/draw-fetcher";
-import { analyzeCurrentDraw } from "./scripts/analyze-current-draw";
+import {analyzeCurrentDraw} from "./analyze/analyze-draw";
 
 exports.fetchCurrentDraw = async (svenskaspel_api_key, game_type) => {
   return await draw_fetcher.fetchNextDraw(game_type, svenskaspel_api_key, true);
