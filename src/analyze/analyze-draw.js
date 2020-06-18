@@ -293,7 +293,7 @@ export async function analyzeCurrentDraw(game_type, number_of_lines_to_generate)
     printStats(final_bet, draw, game_type);
 
     console.log('success!');
-    return `draws/${draw.productName.toLowerCase()}/current/final.txt`;
+    return path.join(__dirname, 'draws', draw.productName.toLowerCase(), 'current', 'final.txt');
   } catch (err) {
     console.error(err);
     return err;
