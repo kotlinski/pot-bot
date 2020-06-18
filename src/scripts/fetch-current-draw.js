@@ -77,12 +77,6 @@ async function infLoop(game_type, svenskaspel_api_key) {
   await infLoop(game_type)
 }
 
-
-exports.fetchCurrentDraw = async (svenskaspel_api_key, game_type) => {
-  return await draw_fetcher.fetchNextDraw(game_type, svenskaspel_api_key, true);
-};
-
-
 // Or
 const main = async function () {
 
