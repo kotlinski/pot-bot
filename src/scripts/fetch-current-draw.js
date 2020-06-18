@@ -23,8 +23,8 @@ const capitalize = (s) => {
 async function infLoop(game_type, svenskaspel_api_key) {
 
   const states = [
-      'WAIT_UNTIL_LAST_HOUR',
-      'MAIL_THAT_ITS_ONE_HOUR_LEFT',
+    'WAIT_UNTIL_LAST_HOUR',
+    'MAIL_THAT_ITS_ONE_HOUR_LEFT',
   ];
   // TODO: A state machine that decides what to do.
   // Sleep for 15 hours,
@@ -41,7 +41,7 @@ async function infLoop(game_type, svenskaspel_api_key) {
   try {
     console.log('Fetching draw...');
     let draw = await draw_fetcher.fetchNextDraw(game_type, svenskaspel_api_key, true);
-   // await sendMail(draw);
+    // await sendMail(draw);
     console.log('Done!');
     let time_until_deadline = draw_validator.hoursUntilCloseTime(draw);
     if (time_until_deadline < 0) {
@@ -76,6 +76,12 @@ async function infLoop(game_type, svenskaspel_api_key) {
   await delay(sleep * 60 * 1000);
   await infLoop(game_type)
 }
+
+
+exports.fetchCurrentDraw = async (svenskaspel_api_key, game_type) => {
+  return await draw_fetcher.fetchNextDraw(game_type, svenskaspel_api_key, true);
+};
+
 
 // Or
 const main = async function () {
