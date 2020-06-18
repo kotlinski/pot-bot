@@ -299,9 +299,9 @@ export async function analyzeCurrentDraw(game_type, number_of_lines_to_generate)
     printStats(final_bet, draw, game_type);
 
     console.log('success!');
-    return final_bet;
+    return `draws/${draw.productName.toLowerCase()}/current/final.txt`;
   } catch (err) {
-    console.error(err)
+    console.error(err);
     return err;
   }
 }
