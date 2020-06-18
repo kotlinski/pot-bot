@@ -14,7 +14,7 @@ function recursiveLines(events, line, index, outcome) {
     line.outcomes.push(outcome);
     line.total_odds *= events[index][outcome].odds;
     line.total_bet_rate += events[index][outcome].bet_value_normalized;
-    line.bet_score += (events[index][outcome].odds_in_percentage_normalized * 1.9 + events[index][outcome].bet_value_normalized);
+    line.bet_score += (events[index][outcome].odds_in_percentage_normalized * 1.5 + events[index][outcome].bet_value_normalized);
     if (events[index][outcome].odds === 0) {
       return [];
     }
@@ -51,9 +51,9 @@ export function generateLines(events) {
     const no_of_x = line.outcomes.reduce((accumulator, currentValue) => (currentValue === 'draw') ? accumulator+1 : accumulator, 0);
     const no_of_2 = line.outcomes.reduce((accumulator, currentValue) => (currentValue === 'away') ? accumulator+1 : accumulator, 0);
     return line.outcomes.length === 13 &&
-        no_of_1 > 3 &&
-        no_of_x > 1 &&
-        no_of_2 > 2;
+        no_of_1 > 4 &&
+        no_of_x > 2 &&
+        no_of_2 > 3;
   });
   console.log("Done generating combinations, has 13 events: " + all_lines_filtered.length);
   return all_lines_filtered;
