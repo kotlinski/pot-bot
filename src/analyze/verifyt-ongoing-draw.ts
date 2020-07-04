@@ -1,18 +1,28 @@
 import {getCurrentDraw, getFinalBets} from "../svenskaspel/fetch/draw-store";
 import drawCleaner from "../svenskaspel/draw-cleaner";
 
+interface CorrectCount {
+  possible_no_of_corrects: number,
+  odds_to_be_fulfilled: number,
+  signs_to_beg_for: string[]
+}
 
-const argv = require('optimist')
-    .default(['file_name'])
-    .demand(['game_type', 'correct_results'])
-    .argv;
+interface AggregatedNoOfCorrects {
+  count: number,
+  odds: number,
+  signs: string[][],
+}
 
-async function verifyBetsWithCurrentResults(game_type, correct_results, file_name) {
+export async function verifyBetsWithCurrentResults(game_type: string, correct_results: string, file_name: string) {
   console.log("correct_results: ", JSON.stringify(correct_results, null, 2));
-  correct_results = correct_results.replace(/,/g, '');
+  correct_results = correct_results.replace(/[0-9]*[:]|,|[ ]/g, '');
+  if (correct_results.length < 13) {
+    console.log('try with: 1:*, 2:*, 3:*, 4:*, 5:*, 6:*, 7:*, 8:*, 9:*, 10:*, 11:*, 12:*, 13:*');
+    return;
+  }
 
   console.log("Reading current draw...");
-  let clean_draw;
+  let clean_draw: any;
   try {
     const draw = await getCurrentDraw(game_type);
     clean_draw = drawCleaner.massageData(draw);
@@ -28,8 +38,7 @@ async function verifyBetsWithCurrentResults(game_type, correct_results, file_nam
   }
   console.log("bets.length: ", JSON.stringify(bets.length, null, 2));
   try {
-    let correct_count = [];
-    let odds_of_winning_remaining_bets = [];
+    let correct_count: CorrectCount[] = [];
     for (let i = 0; i < correct_results.length; i++) {
       let correct_char = correct_results.charAt(i);
 
@@ -66,7 +75,7 @@ async function verifyBetsWithCurrentResults(game_type, correct_results, file_nam
       maximum_possible_no_of_corrects = Math.max(maximum_possible_no_of_corrects, coupon.possible_no_of_corrects);
     });
     console.log("maximum_possible_no_of_corrects: ", JSON.stringify(maximum_possible_no_of_corrects, null, 2));
-    let aggregated_values = {};
+    let aggregated_values: AggregatedNoOfCorrects[] = [];
     correct_count.forEach(coupon => {
       if (aggregated_values[coupon.possible_no_of_corrects] == null) {
         aggregated_values[coupon.possible_no_of_corrects] = {
@@ -91,7 +100,7 @@ async function verifyBetsWithCurrentResults(game_type, correct_results, file_nam
     }
 
     const number_of_unknowns = (correct_results.split("*").length - 1);
-    let signs_dist = {};
+    let signs_dist: any = {};
     for (const aggregated_value of aggregated_values[max].signs) {
       for (let i = 0; i < number_of_unknowns; i++) {
         if (signs_dist[i] === undefined) {
@@ -109,31 +118,12 @@ async function verifyBetsWithCurrentResults(game_type, correct_results, file_nam
     aggregated_values[max].signs = signs_dist;
     console.log("signs_dist: ", JSON.stringify(nice_lines, null, 2));
 
-
-    console.log("aggregated_values: ", JSON.stringify(aggregated_values, null, 2));
+    for (const index of [10, 11, 12, 13]) {
+      console.log(`${index}: ${JSON.stringify(aggregated_values[index], null, 2)}`);
+    }
 
     console.log('success!')
   } catch (err) {
     console.error(err)
   }
 }
-
-const main = async function () {
-  if (!argv.game_type) {
-    console.log('No game type selected, will download both stryktipset and europatipset');
-    return;
-  }
-  if (!argv.correct_results) {
-    console.log('Mark results with commas and non played games with a "*": 1,2,X,*,1,X...');
-    return;
-  }
-  await verifyBetsWithCurrentResults(argv.game_type, argv.correct_results, argv.file_name);
-};
-
-
-(async () => {
-  await main();
-})().catch(e => {
-  console.log("error, " + e)
-});
-

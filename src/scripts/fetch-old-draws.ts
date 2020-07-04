@@ -7,16 +7,15 @@ const argv = require('optimist')
     .argv;
 
 
-async function infLoop(game_type, draw_number, svenskaspel_api_key) {
+async function infLoop(game_type: string, draw_number: number, svenskaspel_api_key: string) {
   await setInterval(async () => {
     console.log(`Fetching draw ${draw_number}`);
-    await draw_fetcher.fetchResults(game_type, draw_number, svenskaspel_api_key);
+    await draw_fetcher.fetchDraw(game_type, draw_number, svenskaspel_api_key);
     console.log('Done!');
     draw_number--;
-  }, 15 * 1000);
+  }, 5 * 1000);
 }
 
-// Or
 const main = async function () {
   if (!argv.game_type) {
     console.log('No game type selected, will download both stryktipset and europatipset');
@@ -27,7 +26,7 @@ const main = async function () {
     return;
   }
   if (!argv.svenskaspel_api_key) {
-    console.log('No api key provided');
+    console.log('No api key');
     return;
   }
   await infLoop(argv.game_type, parseInt(argv.draw_number), argv.svenskaspel_api_key);

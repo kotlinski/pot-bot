@@ -1,5 +1,5 @@
 import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
-import drawTextFormatter from "./../svenskaspel/draw-text-formatter.js";
+import drawTextFormatter from "./../svenskaspel/draw-text-formatter.ts";
 import drawCleaner from "./../svenskaspel/draw-cleaner.js";
 import draw_validator from "./../svenskaspel/fetch/draw-validator.js";
 import combinationGenerator from "../svenskaspel/combinations/generate-all-possible-combinations";

@@ -1,8 +1,8 @@
 const api = {
-  getDrawName(draw) {
+  getDrawName(draw: any): string {
     return draw.drawComment;
   },
-  getTurnover(draw) {
+  getTurnover(draw: any) {
     const turnover = parseInt(draw.turnover) * 0.65;
     const sek_formatter = new Intl.NumberFormat('sv-SE', {
       style: 'currency',
@@ -35,7 +35,7 @@ const api = {
     }
 
   },
-  getDeadline(draw) {
+  getDeadline(draw: any) {
     return draw.closeTime;
   },
 
