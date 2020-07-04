@@ -3,7 +3,7 @@ import moment from "moment";
 
 const api = {
 
-  hasOdds(draw) {
+  hasOdds(draw: any) {
     for (const event of draw.events) {
       if (!event.odds) {
         return false;
@@ -12,28 +12,28 @@ const api = {
     return true;
   },
 
-  isCurrentDraw(draw) {
+  isCurrentDraw(draw: any) {
     const open_time = moment(draw.openTime);
     const close_time = moment(draw.closeTime);
     return moment().isBetween(open_time, close_time);
   },
 
-  isAfterCloseTime(draw) {
+  isAfterCloseTime(draw: any) {
     const close_time = moment(draw.closeTime);
     return moment().isAfter(close_time);
   },
 
-  isLastDay(current_draw) {
+  isLastDay(current_draw: any) {
     const close_time = moment(current_draw.closeTime);
     return moment().isSame(close_time, 'day');
   },
 
-  hoursUntilCloseTime(draw) {
+  hoursUntilCloseTime(draw: any) {
     const close_time = moment(draw.closeTime);
     return -1 * moment().diff(close_time, 'minutes');
   },
 
-  closeTime(draw) {
+  closeTime(draw: any) {
     return moment(draw.closeTime);
   }
 };

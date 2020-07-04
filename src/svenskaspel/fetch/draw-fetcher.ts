@@ -1,11 +1,11 @@
 import fs from "fs-extra";
 import draw_validator from './draw-validator';
 import {storeResults, storeDraw} from './draw-store';
-import api_client from '../fetch/api-client';
+import api_client from './api-client';
 
 const api = {
 
-  async fetchNextDraw(game_type, svenskaspel_api_key, force_fetch = false) {
+  async fetchNextDraw(game_type: string, svenskaspel_api_key: string, force_fetch = false) {
     try {
       let draw;
       let draw_from_file;
@@ -38,7 +38,7 @@ const api = {
     }
   },
 
-  async fetchDraw(game_type, draw_number, svenskaspel_api_key) {
+  async fetchDraw(game_type: string, draw_number: number, svenskaspel_api_key: string) {
     try {
       console.log("game type: " + game_type);
       const draw = await api_client.getDraw(game_type, draw_number, svenskaspel_api_key);
@@ -51,7 +51,7 @@ const api = {
     }
   },
 
-  async fetchResults(game_type, draw_number, svenskaspel_api_key) {
+  async fetchResults(game_type: string, draw_number: number, svenskaspel_api_key: string) {
     try {
       console.log("game type: " + game_type);
       const results = await api_client.getResults(game_type, draw_number, svenskaspel_api_key);

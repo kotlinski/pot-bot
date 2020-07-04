@@ -1,4 +1,4 @@
-import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
+import draw_fetcher from "../svenskaspel/fetch/draw-fetcher.js";
 
 const argv = require('optimist')
     .default(['game_type'])

@@ -1,4 +1,4 @@
-import {normalizeProperty} from '../../bet-calculations/event-property-normalizer'
+import {normalizeProperty} from '../event-property-normalizer'
 import {EVENT_OUTCOME_TYPES} from '../../event-outcome-types'
 
 describe('event-property-normalizer', function () {

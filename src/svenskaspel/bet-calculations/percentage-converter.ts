@@ -1,4 +1,4 @@
-const oddsToPercentage = odds => {
+const oddsToPercentage = (odds: any) => {
   let odds_as_number = parseFloat(odds);
   if (odds_as_number === 0) {
     return 0;
@@ -6,7 +6,7 @@ const oddsToPercentage = odds => {
   return 1 / odds_as_number;
 };
 
-export function convertOddsToPercentage(odds) {
+export function convertOddsToPercentage(odds: any) {
   const home_probability = oddsToPercentage(odds.home);
   const draw_probability = oddsToPercentage(odds.draw);
   const away_probability = oddsToPercentage(odds.away);
@@ -19,7 +19,7 @@ export function convertOddsToPercentage(odds) {
   };
 }
 
-export function convertOddsToIntegerPercentage(odds) {
+export function convertOddsToIntegerPercentage(odds: any) {
   const home_probability = oddsToPercentage(odds.home);
   const draw_probability = oddsToPercentage(odds.draw);
   const away_probability = oddsToPercentage(odds.away);
@@ -32,16 +32,16 @@ export function convertOddsToIntegerPercentage(odds) {
   };
 }
 
-function convertPercentageToOdds(fraction) {
+function convertPercentageToOdds(fraction: number) {
   return (1 / fraction);
 }
 
-export function convertLottoRatesToOdds(event) {
+export function convertLottoRatesToOdds(event: any) {
   if (event.eventTypeDescription === "" || event.eventTypeDescription === undefined || event.eventTypeDescription === 'Neutral plan' || event.eventTypeDescription === 'Neutral Plan') {
     return event.odds;
   } else {
-    const odds = event.eventTypeDescription.match(/\d+/g).map(number => parseInt(number));
-    const total = odds.reduce((a, b) => a + b);
+    const odds = event.eventTypeDescription.match(/\d+/g).map((number: any) => parseInt(number));
+    const total = odds.reduce((a: number, b: number) => a + b);
     let home = `${convertPercentageToOdds(odds[0] / total)}`;
     let draw = `${convertPercentageToOdds(odds[1] / total)}`;
     let away = `${convertPercentageToOdds(odds[2] / total)}`;
@@ -53,7 +53,7 @@ export function convertLottoRatesToOdds(event) {
   }
 }
 
-export function convertOddsToFloatValues(odds) {
+export function convertOddsToFloatValues(odds: any) {
   return {
     home: parseFloat(odds.home.replace(',', '.')),
     draw: parseFloat(odds.draw.replace(',', '.')),
@@ -61,7 +61,7 @@ export function convertOddsToFloatValues(odds) {
   };
 }
 
-export function convertDistributionToPercentage(distribution) {
+export function convertDistributionToPercentage(distribution: any) {
   return {
     home: parseInt(distribution.home) / 100,
     draw: parseInt(distribution.draw) / 100,

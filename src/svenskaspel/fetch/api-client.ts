@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = {
 
-  async getNextDraw(game_type, svenskaspel_api_key) {
+  async getNextDraw(game_type: string, svenskaspel_api_key: string) {
     try {
       const url = `https://api.www.svenskaspel.se/external/draw/${game_type}/draws?accesskey=${svenskaspel_api_key}`;
       console.log(url);
@@ -13,7 +13,7 @@ const api = {
     }
   },
 
-  async getDraw(game_type, id, svenskaspel_api_key) {
+  async getDraw(game_type: string, id: number, svenskaspel_api_key: string) {
     try {
       const url = `https://api.www.svenskaspel.se/external/draw/${game_type}/draws/${id}?accesskey=${svenskaspel_api_key}`;
       const response = await axios.get(url);
@@ -23,7 +23,7 @@ const api = {
     }
   },
 
-  async getResults(game_type, id, svenskaspel_api_key) {
+  async getResults(game_type: string, id: number, svenskaspel_api_key: string) {
     try {
       const url = `https://api.www.svenskaspel.se/external/draw/${game_type}/draws/${id}/result?accesskey=${svenskaspel_api_key}`;
       const response = await axios.get(url);

@@ -9,11 +9,11 @@ import {normalizeProperty} from "./bet-calculations/event-property-normalizer";
 
 
 
-function cleanEvents(events) {
-  return events.map(event => {
+function cleanEvents(events: any) {
+  return events.map((event: any) => {
     event.odds = convertLottoRatesToOdds(event);
     event.odds = convertOddsToFloatValues(event.odds);
-    let event_distributions_in_percentage = convertDistributionToPercentage(event.distribution);
+    let event_distributions_in_percentage: any = convertDistributionToPercentage(event.distribution);
     event.original_odds = event.odds;
     // Math learned from university
     if (event_distributions_in_percentage['home'] < 0.07) {
@@ -34,8 +34,8 @@ function cleanEvents(events) {
       event.odds['away'] = 0;
     }
 
-    let event_odds_in_percentage = convertOddsToPercentage(event.odds);
-    const cleanEvent = {
+    let event_odds_in_percentage: any = convertOddsToPercentage(event.odds);
+    const cleanEvent: any = {
       number: event.eventNumber,
       description: event.description
     };
@@ -56,7 +56,7 @@ function cleanEvents(events) {
 
 const api = {
 
-  massageData(draw) {
+  massageData(draw: any) {
     let events = cleanEvents(draw.events);
     events = normalizeProperty(events, 'bet_value');
     events = normalizeProperty(events, 'odds_in_percentage');

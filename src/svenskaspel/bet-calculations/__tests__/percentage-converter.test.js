@@ -3,7 +3,7 @@ import {
   convertOddsToPercentage,
   convertDistributionToPercentage,
   convertOddsToFloatValues
-} from "../../bet-calculations/percentage-converter";
+} from "../percentage-converter";
 
 describe('distribution-to-percentage', function () {
   let odds;

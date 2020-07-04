@@ -6,7 +6,7 @@ import {getCurrentDraw} from "../svenskaspel/fetch/draw-store";
 import {generateLines} from "../svenskaspel/combinations/generate-lines-combinations";
 import betPicker from "../svenskaspel/combinations/draw-bet-picker";
 import drawTextFormatter from "../svenskaspel/draw-text-formatter";
-import drawCleaner from "../svenskaspel/draw-cleaner.js";
+import drawCleaner from "../svenskaspel/draw-cleaner";
 
 require('colors');
 

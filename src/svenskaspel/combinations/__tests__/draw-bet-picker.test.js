@@ -1,4 +1,4 @@
-import drawBetPicker from '../../../svenskaspel/combinations/draw-bet-picker'
+import drawBetPicker from '../draw-bet-picker'
 import fs from 'fs-extra';
 
 describe.skip('draw-bet-combination-generator', function () {
