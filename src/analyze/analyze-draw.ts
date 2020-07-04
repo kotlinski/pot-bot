@@ -1,4 +1,4 @@
-import fs from "fs-extra";
+import {outputFile, outputJSON} from "fs-extra";
 import {convertOddsToIntegerPercentage} from "../svenskaspel/bet-calculations/percentage-converter";
 
 import {getCurrentDraw} from "../svenskaspel/fetch/draw-store";
@@ -7,49 +7,42 @@ import {generateLines} from "../svenskaspel/combinations/generate-lines-combinat
 import betPicker from "../svenskaspel/combinations/draw-bet-picker";
 import drawTextFormatter from "../svenskaspel/draw-text-formatter.js";
 import drawCleaner from "../svenskaspel/draw-cleaner.js";
-import moment from "moment";
-const path = require('path');
 
 require('colors');
 
-const os = require("os");
-
-function getFormattedToday() {
-  return moment().format('YYYYMMDDTHHmm');
+export enum Outcome {
+  home = 'home',
+  draw = 'draw',
+  away = 'away',
 }
 
-async function printToCSV(game_type, draw_number, combinations) {
-  console.log("combinations: ", JSON.stringify(combinations, null, 2));
-  let combinations_string = combinations.map(combination => {
-    return `${combination.id},${combination.odds_rate.toFixed(4)},${combination.bet_value_rate.toFixed(4)},${combination.score}${os.EOL}`;
-  });
-  let combinations_string_return = "id, 'odds rate', 'value rate', score" + os.EOL + combinations_string.join('');
-  await fs.outputFile(`draws/${game_type}/old/${draw_number}/combinations.csv`, combinations_string_return);
-}
-
-function outcomeToChar(outcome) {
-  if (outcome === "home") {
+function outcomeToChar(outcome: Outcome) {
+  if (outcome === Outcome.home) {
     return '1';
-  } else if (outcome === "draw") {
+  } else if (outcome === Outcome.draw) {
     return 'X'
   }
   return "2";
 
 }
 
-function outcomesToPrintable(outcomes) {
+function outcomesToPrintable(outcomes: Outcome[]) {
   let printable = "E";
-  outcomes.forEach(outcome => {
+  outcomes.forEach((outcome: Outcome) => {
     printable += ',' + outcomeToChar(outcome);
   });
   return printable;
 }
 
-function printOddsDistribution(bets) {
+export interface Bet {
+  total_odds: number;
+  outcomes: Outcome[];
+}
+
+function printOddsDistribution(bets: Bet[]) {
   let min_odds = 200000000;
   let max_odds = 0;
   for (const line of bets) {
-
     if (min_odds > line.total_odds) {
       min_odds = line.total_odds
     }
@@ -61,7 +54,7 @@ function printOddsDistribution(bets) {
   const dif = max_odds - min_odds;
   let segments = 15;
   const a = dif / segments;
-  const odds_distribution = {};
+  const odds_distribution: any = {};
 
   for (const line of bets) {
     for (let i = min_odds; i <= max_odds; i = i + a) {
@@ -76,7 +69,7 @@ function printOddsDistribution(bets) {
   }
   console.log();
   let prev = null;
-  for (let [odds_dist, value] of Object.entries(odds_distribution)) {
+  for (let [odds_dist] of Object.entries(odds_distribution)) {
     if (prev === null) {
       prev = parseInt(odds_dist);
     } else {
@@ -91,7 +84,7 @@ function printOddsDistribution(bets) {
   console.log();
 }
 
-function printNumberOfPersonsWithThisBet(draw, bets) {
+function printNumberOfPersonsWithThisBet(draw: any, bets: Bet[]) {
   console.log("printNumberOfPersonsWithThisBet");
   const no_of_lines_with_bet = [];
   for (const line of bets) {
@@ -109,7 +102,7 @@ function printNumberOfPersonsWithThisBet(draw, bets) {
   const dif = max_no_of_lines - min_no_of_lines;
   let segments = 15;
   const a = dif / segments;
-  const distribution = {};
+  const distribution: any = {};
 
   for (const line of no_of_lines_with_bet) {
     for (let i = min_no_of_lines; i <= max_no_of_lines + 100; i = Math.ceil(i + a)) {
@@ -127,7 +120,7 @@ function printNumberOfPersonsWithThisBet(draw, bets) {
   }
   console.log();
   let prev = null;
-  for (let [odds_dist, value] of Object.entries(distribution)) {
+  for (let [odds_dist] of Object.entries(distribution)) {
     if (prev === null) {
       prev = parseInt(odds_dist);
     } else {
@@ -149,20 +142,20 @@ function printNumberOfPersonsWithThisBet(draw, bets) {
   console.log();
 }
 
-const times = x => f => {
+const times = (x: number) => (f: any) => {
   if (x > 0) {
     f();
     times(x - 1)(f)
   }
 };
 
-function appendNoOfSpaces(number) {
+function appendNoOfSpaces(number: number) {
   let spaces = "";
   times(number)(() => spaces += " ");
   return spaces;
 }
 
-function niceTab(outcomes_of_game, comparable) {
+function niceTab(outcomes_of_game: any[], comparable?: { home: number; draw: number; away: number; }) {
   let formatted_output = "";
   outcomes_of_game.forEach((outcome_game, index) => {
     let outcome_string_length = outcome_game.toString().length;
@@ -170,10 +163,10 @@ function niceTab(outcomes_of_game, comparable) {
       let diff = outcome_game - Object.values(comparable)[index];
       if (diff < 0) {
         outcome_string_length = `${outcome_game} ${diff}`.length;
-        outcome_game = `${outcome_game} ${diff}`.green;
+        outcome_game = `${outcome_game} ${diff}`;
       } else if (diff > 0) {
         outcome_string_length = `${outcome_game} +${diff}`.length;
-        outcome_game = `${outcome_game} +${diff}`.red;
+        outcome_game = `${outcome_game} +${diff}`;
       }
     }
     let formattedOutput = outcome_game + appendNoOfSpaces(8 - outcome_string_length);
@@ -182,9 +175,13 @@ function niceTab(outcomes_of_game, comparable) {
   return formatted_output;
 }
 
-function printOutcomeDistribution(draw, bets) {
-  let outcome_distribution = {};
+export function calculateOutcomeDistributions(bets: Bet[]): any {
+  let outcome_distribution: any = {};
   for (const line of bets) {
+    if (!line) {
+      console.log("line is undefined");
+      console.log(`bets: ${JSON.stringify(bets, null, 2)}`);
+    }
     for (let i = 0; i < line.outcomes.length; i++) {
       const outcome = line.outcomes[i];
       if (outcome_distribution[i] == null) {
@@ -196,6 +193,11 @@ function printOutcomeDistribution(draw, bets) {
       outcome_distribution[i][outcome] += 1;
     }
   }
+  return outcome_distribution;
+}
+
+function printOutcomeDistribution(draw: any, bets: Bet[]) {
+  const outcome_distribution = calculateOutcomeDistributions(bets);
 
   for (let game in outcome_distribution) {
     const outcomes_of_games = [
@@ -204,13 +206,13 @@ function printOutcomeDistribution(draw, bets) {
       Math.round(100 * outcome_distribution[game].away / bets.length)
     ];
 
-    game = parseInt(game);
-    let odds_in_percentage = convertOddsToIntegerPercentage(draw.events[game].odds);
+    const game_index: number = parseInt(game);
+    let odds_in_percentage = convertOddsToIntegerPercentage(draw.events[game_index].odds);
     console.log();
-    console.log(game + 1 + ". " + draw.events[game].description);
-    console.log("      odds:  " + niceTab(Object.values(draw.events[game].odds)));
+    console.log((game_index + 1) + ". " + draw.events[game_index].description);
+    console.log("      odds:  " + niceTab(Object.values(draw.events[game_index].odds)));
     console.log("    odds %:  " + niceTab(Object.values(odds_in_percentage)));
-    console.log("  sv. dist:  " + niceTab(Object.values(draw.events[game].distribution), odds_in_percentage));// Object.values().toString().replace(/,/g, '\t'));
+    console.log("  sv. dist:  " + niceTab(Object.values(draw.events[game_index].distribution), odds_in_percentage));// Object.values().toString().replace(/,/g, '\t'));
     console.log("  my distr:  " + niceTab(outcomes_of_games));
 
     // console.log("draw.events[game]: ", JSON.stringify(draw.events[game], null, 2));
@@ -220,7 +222,7 @@ function printOutcomeDistribution(draw, bets) {
 }
 
 
-function print1X2Distribution(string_to_print, bets) {
+function print1X2Distribution(string_to_print: string, bets: Bet[]) {
   const no_of_x = (string_to_print.match(/X/g) || []).length;
   const no_of_1 = (string_to_print.match(/1/g) || []).length;
   const no_of_2 = (string_to_print.match(/2/g) || []).length;
@@ -230,7 +232,7 @@ function print1X2Distribution(string_to_print, bets) {
   console.log(`2: ${no_of_2},${appendNoOfSpaces(4 - no_of_2.toString().length)} ~${(no_of_2 / bets.length).toFixed(2)} per line`);
 }
 
-async function printStats(bets, draw, game_type) {
+async function printStats(bets: Bet[], draw: any, game_type: string) {
   let string_to_print = `${game_type}\n`;
   let probability_of_13 = 1.0;
 //   console.log(JSON.stringify(bets[0], null, 2));
@@ -251,10 +253,10 @@ async function printStats(bets, draw, game_type) {
 
   console.log('Saving file');
 
-  await fs.outputFile(`draws/${draw.productName.toLowerCase()}/current/final.txt`, string_to_print);
-  await fs.outputJSON(`draws/${draw.productName.toLowerCase()}/current/final.json`, final_bets_json, {spaces: 2});
+  await outputFile(`draws/${draw.productName.toLowerCase()}/current/final.txt`, string_to_print);
+  await outputJSON(`draws/${draw.productName.toLowerCase()}/current/final.json`, final_bets_json, {spaces: 2});
 
-  await fs.outputFile(`draws/${draw.productName.toLowerCase()}/old/${draw.drawNumber}/final.txt`, string_to_print);
+  await outputFile(`draws/${draw.productName.toLowerCase()}/old/${draw.drawNumber}/final.txt`, string_to_print);
   console.log();
   let turnover = drawTextFormatter.getTurnover(draw);
   console.log(`${Math.round((probability_of_13 - 1) * 1000) / 10}%`);
@@ -267,8 +269,7 @@ async function printStats(bets, draw, game_type) {
   return string_to_print;
 }
 
-export async function analyzeCurrentDraw(game_type, number_of_lines_to_generate) {
-
+export async function analyzeCurrentDraw(game_type: string, number_of_lines_to_generate: number) {
   console.log("Reading current draw...");
   let draw;
   try {
@@ -283,7 +284,9 @@ export async function analyzeCurrentDraw(game_type, number_of_lines_to_generate)
     const combinations = generateLines(clean_draw.events);
 
     console.log(`number of combinations: ${combinations.length}`);
-    const bets = betPicker.pickBets(combinations, number_of_lines_to_generate);
+
+    const bets = betPicker.pickBets(combinations, number_of_lines_to_generate, draw);
+
     const sorted_bets = betPicker.sortOnBestOdds(bets);
     console.log(`sorted_bets.length: ${JSON.stringify(sorted_bets.length, null, 2)}`);
     const final_bet = sorted_bets.slice(0, number_of_lines_to_generate);

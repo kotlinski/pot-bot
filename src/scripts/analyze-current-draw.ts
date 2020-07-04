@@ -14,7 +14,7 @@ const main = async function () {
     console.log('How many lines to you want to bet? add param: number_of_lines');
     return;
   }
-  await analyzeCurrentDraw(argv.game_type, parseInt(argv.number_of_lines), parseInt(argv.draw_number));
+  await analyzeCurrentDraw(argv.game_type, parseInt(argv.number_of_lines));
 };
 
 

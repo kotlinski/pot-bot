@@ -1,8 +1,10 @@
+import {willAlignToOdds} from "../../analyze/bet-comperator";
+
 function calculateSortScore(game, i) {
   return game.odds_rate * (1 - i) + game.bet_value_rate * i;
 }
 
-function sortOnHighestBestScore(combinations, number_of_lines_to_pick) {
+function sortOnHighestBestScore(combinations, number_of_lines_to_pick, draw) {
   const lines_to_pick = [];
 
   const sort = combinations.sort((a, b) => {
@@ -39,7 +41,8 @@ function sortOnHighestBestScore(combinations, number_of_lines_to_pick) {
         // for (const sign of signs) {
         const sign = 'draw';
         const line = sort.find(line => line.outcomes[i] === sign && line.outcomes[j] === sign);
-        if (line) {
+        const will_align = willAlignToOdds(lines_to_pick, line, draw);
+        if (line && will_align) {
           lines_to_pick.push(line);
           const index = sort.indexOf(line);
           if (index > -1) {
@@ -64,8 +67,8 @@ const api = {
       return a.total_odds - b.total_odds;
     });
   },
-  pickBets: function (combinations, number_of_lines) {
-    return sortOnHighestBestScore(combinations, number_of_lines);
+  pickBets: function (combinations, number_of_lines, draw) {
+    return sortOnHighestBestScore(combinations, number_of_lines, draw);
   }
 };
 

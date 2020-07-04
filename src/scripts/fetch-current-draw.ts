@@ -1,13 +1,14 @@
 #!/usr/bin/env node
-import {sendMail} from "../mail/send-email";
+
+// import {sendMail} from "../mail/send-email";
 
 process.env.NODE_CONFIG_DIR = './config';
 
-import draw_fetcher from "./../svenskaspel/fetch/draw-fetcher.js";
+import draw_fetcher from './../svenskaspel/fetch/draw-fetcher.js';
 import draw_validator from "./../svenskaspel/fetch/draw-validator.js";
 import moment from 'moment';
 import delay from 'delay';
-import config from 'config';
+const config = require('config');
 import drawTextFormatter from "../svenskaspel/draw-text-formatter";
 
 const argv = require('optimist')
@@ -15,23 +16,11 @@ const argv = require('optimist')
     .default(['svenskaspel_api_key'])
     .argv;
 
-const capitalize = (s) => {
-  if (typeof s !== 'string') return '';
+const capitalize = (s: string) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
 };
 
-async function infLoop(game_type, svenskaspel_api_key) {
-
-  const states = [
-    'WAIT_UNTIL_LAST_HOUR',
-    'MAIL_THAT_ITS_ONE_HOUR_LEFT',
-  ];
-  // TODO: A state machine that decides what to do.
-  // Sleep for 15 hours,
-  // Send a mail
-  // Send another type of mail
-  // Sleep for 72 hours
-
+async function infLoop(game_type: string, svenskaspel_api_key: string) {
 
   if (game_type === 'europatipset') {
     // Delay ten seconds to separate the two different game types
@@ -74,7 +63,7 @@ async function infLoop(game_type, svenskaspel_api_key) {
     console.log(`${moment().format('HH:mm')}, ${capitalize(game_type)}: Fetching next draw ${from_now}.`);
   }
   await delay(sleep * 60 * 1000);
-  await infLoop(game_type)
+  await infLoop(game_type, svenskaspel_api_key)
 }
 
 // Or
@@ -101,8 +90,3 @@ const main = async function () {
 })().catch(e => {
   console.log("error, " + e)
 });
-
-function printStats(draw) {
-  console.log(draw);
-}
-

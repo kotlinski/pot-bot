@@ -11,7 +11,7 @@ Run with
 * `npm run analyze -- --drawNumber 4632`
 
 
-// npm run build; node ./build/scripts/fetch-current-draw.js
+// npm run build; node ./build/scripts/fetch-current-draw.ts
 
 ## Other
 to get nice printouts with sek you might add the swedish locale

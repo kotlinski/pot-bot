@@ -1,7 +1,8 @@
 import {EVENT_OUTCOME_TYPES} from "../event-outcome-types";
 import _ from 'lodash';
+import {Outcome} from "../../analyze/analyze-draw";
 
-function recursiveLines(events, line, index, outcome) {
+function recursiveLines(events: any, index: number, outcome: Outcome, line?: Line): Line[] {
   if (!line) {
     line = {
       outcomes: [],
@@ -29,17 +30,24 @@ function recursiveLines(events, line, index, outcome) {
     return [line];
   } else {
     return _.flatten(EVENT_OUTCOME_TYPES.map(type => {
-      return recursiveLines(events, _.cloneDeep(line), index, type);
+      return recursiveLines(events, index, type as Outcome, _.cloneDeep(line));
     }));
   }
 }
 
-export function generateLines(events) {
+interface Line {
+  outcomes: Outcome[];
+  total_odds: number;
+  total_bet_rate: number;
+  bet_score: number;
+}
+
+export function generateLines(events: any): Line[] {
   console.log("events: ", JSON.stringify(events, null, 2));
   const start = Date.now();
   console.log("Generating combinations...");
 
-  const all_lines = recursiveLines(events);
+  const all_lines = recursiveLines(events, -1, Outcome.home);
   console.log(`events: ${events.length}`);
   // console.log("all_lines: ", JSON.stringify(all_lines, null, 2));
   const delta = Date.now() - start;
@@ -51,9 +59,9 @@ export function generateLines(events) {
     const no_of_x = line.outcomes.reduce((accumulator, currentValue) => (currentValue === 'draw') ? accumulator+1 : accumulator, 0);
     const no_of_2 = line.outcomes.reduce((accumulator, currentValue) => (currentValue === 'away') ? accumulator+1 : accumulator, 0);
     return line.outcomes.length === 13 &&
-        no_of_1 > 4 &&
+        no_of_1 > 3 &&
         no_of_x > 2 &&
-        no_of_2 > 3;
+        no_of_2 > 2;
   });
   console.log("Done generating combinations, has 13 events: " + all_lines_filtered.length);
   return all_lines_filtered;
