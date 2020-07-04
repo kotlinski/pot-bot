@@ -1,5 +1,5 @@
 import drawCleaner from '../../draw-cleaner'
-import {generateLines} from '../../combinations/generate-lines-combinations';
+import {generateLines} from '../generate-lines-combinations';
 import fs from 'fs-extra';
 
 describe('draw-bet-combination-generator', function () {
