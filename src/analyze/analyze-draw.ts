@@ -175,23 +175,27 @@ function niceTab(outcomes_of_game: any[], comparable?: { home: number; draw: num
   return formatted_output;
 }
 
-export function calculateOutcomeDistributions(bets: Bet[]): any {
+export function addBetToOutcomesDistribution(line: Bet, outcome_distribution: any) {
+  for (let i = 0; i < line.outcomes.length; i++) {
+    const outcome = line.outcomes[i];
+    if (outcome_distribution[i] == null) {
+      outcome_distribution[i] = {};
+    }
+    if (outcome_distribution[i][outcome] == null) {
+      outcome_distribution[i][outcome] = 0;
+    }
+    outcome_distribution[i][outcome] += 1;
+  }
+}
+
+export function calculateOutcomeDistributions(bets: Bet[]): { home: number, draw: number, away: number }[] {
   let outcome_distribution: any = {};
   for (const line of bets) {
     if (!line) {
       console.log("line is undefined");
       console.log(`bets: ${JSON.stringify(bets, null, 2)}`);
     }
-    for (let i = 0; i < line.outcomes.length; i++) {
-      const outcome = line.outcomes[i];
-      if (outcome_distribution[i] == null) {
-        outcome_distribution[i] = {};
-      }
-      if (outcome_distribution[i][outcome] == null) {
-        outcome_distribution[i][outcome] = 0;
-      }
-      outcome_distribution[i][outcome] += 1;
-    }
+    addBetToOutcomesDistribution(line, outcome_distribution);
   }
   return outcome_distribution;
 }

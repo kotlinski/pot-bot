@@ -1,4 +1,4 @@
-import apiClient from "../svenskaspel/fetch/api-client.ts";
+import apiClient from '../svenskaspel/fetch/api-client.ts';
 import drawTextFormatter from "../svenskaspel/draw-text-formatter.ts";
 import drawCleaner from "../svenskaspel/draw-cleaner.ts";
 import {getAllPossibleCombinations} from "../svenskaspel/combinations/generate-all-possible-combinations";

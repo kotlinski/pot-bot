@@ -59,7 +59,7 @@ export function generateLines(events: any): Line[] {
     const no_of_x = line.outcomes.reduce((accumulator, currentValue) => (currentValue === 'draw') ? accumulator+1 : accumulator, 0);
     const no_of_2 = line.outcomes.reduce((accumulator, currentValue) => (currentValue === 'away') ? accumulator+1 : accumulator, 0);
     return line.outcomes.length === 13 &&
-        no_of_1 > 3 &&
+        no_of_1 > 1 &&
         no_of_x > 2 &&
         no_of_2 > 2;
   });

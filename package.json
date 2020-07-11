@@ -11,7 +11,7 @@
   },
   "scripts": {
     "prepublish": "npm run build",
-    "build": "rm -rf build && babel src --out-dir build --copy-files --extensions '.ts,.js' && mkdir -p build/config && cp config/default.json build/config/default.json",
+    "build": "rm -rf build && babel src --out-dir build --copy-files --presets @babel/preset-typescript --extensions '.ts,.js' && mkdir -p build/config && cp config/default.json build/config/default.json",
     "rename": "babel-node src/scripts/file-rename.js",
     "fetch-current-draw": "cross-env NODE_ENV=dev babel-node --presets @babel/preset-typescript --extensions '.ts,.js' src/scripts/fetch-current-draw.ts",
     "fetch-old-results": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-old-results.ts",
@@ -39,7 +39,8 @@
     "nodemailer": "^6.4.4",
     "optimist": "^0.6.1",
     "os": "^0.1.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "crypto-js": "latest"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -49,6 +50,7 @@
     "@babel/preset-typescript": "^7.10.4",
     "@springworks/test-harness": "^3.0.2",
     "@types/config": "0.0.36",
+    "@types/crypto-js": "^3.1.47",
     "@types/optimist": "0.0.29",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
