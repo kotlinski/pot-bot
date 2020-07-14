@@ -31,6 +31,18 @@ export function convertOddsToIntegerPercentage(odds: any) {
     away: Math.round((away_probability / total_percentage) * 100),
   };
 }
+export function convertOddsToRawNumbers(odds: any) {
+  const home_probability = oddsToPercentage(odds.home);
+  const draw_probability = oddsToPercentage(odds.draw);
+  const away_probability = oddsToPercentage(odds.away);
+  const total_percentage = home_probability + draw_probability + away_probability;
+
+  return {
+    home: home_probability / total_percentage,
+    draw: draw_probability / total_percentage,
+    away: away_probability / total_percentage,
+  };
+}
 
 function convertPercentageToOdds(fraction: number) {
   return (1 / fraction);
