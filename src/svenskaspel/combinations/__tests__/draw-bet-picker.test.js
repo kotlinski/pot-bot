@@ -11,7 +11,7 @@ describe.skip('draw-bet-combination-generator', function () {
   describe('combination generator', () => {
 
     it('should generate combinations', async () => {
-      const picks = drawBetPicker.pickBets(combinations);
+      const picks = drawBetPicker.pickBets(undefined, combinations);
     });
 
   });

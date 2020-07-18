@@ -24,6 +24,9 @@ async function storeCurrentCleanDraw(game_type: string, clean_draw: any) {
   });
 }
 
+export async function getDraw(game_type: string, draw_number: number) {
+  return await readJson(`./draws/${game_type}/old/${draw_number}/draw-before-deadline.json`);
+}
 export async function getCurrentDraw(game_type: string) {
   return await readJson(`./draws/${game_type}/current/draw-before-deadline.json`);
 }

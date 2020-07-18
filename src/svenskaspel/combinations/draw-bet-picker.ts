@@ -2,6 +2,7 @@ import {willAlignToOdds} from "../../analyze/bet-comperator";
 import {convertOddsToPercentage} from "../bet-calculations/percentage-converter";
 import {Bet, calculateOutcomeDistributions, Outcome} from "../../analyze/analyze-draw";
 import ProgressBar from 'progress';
+import {DrawConfig} from "../../analyze/draw-config";
 // const ProgressBar = require('progress');
 
 
@@ -11,7 +12,7 @@ interface BetIndexSign {
   rate: number;
 }
 
-function findResultsToFocusOn(sorted_possible_combinations: Bet[], odds_in_percentage: { home: number, draw: number, away: number }[], picked_lines: Bet[], filter_roughness: number): Bet[] {
+function findResultsToFocusOn(draw_config: DrawConfig, sorted_possible_combinations: Bet[], odds_in_percentage: { home: number; draw: number; away: number }[], picked_lines: Bet[], filter_roughness: number): Bet[] {
   const outcome_distribution = calculateOutcomeDistributions(picked_lines);
 
   let bet_indexes: BetIndexSign[] = [];
@@ -41,7 +42,7 @@ function findResultsToFocusOn(sorted_possible_combinations: Bet[], odds_in_perce
   }
 
   const sorted_bet_indexes = bet_indexes.sort((bet_index_a, bet_index_b) => bet_index_b.rate - bet_index_a.rate);
-  const top_bets = sorted_bet_indexes.slice(0, 5 - filter_roughness);
+  const top_bets = sorted_bet_indexes.slice(0, draw_config.number_of_focused_bets_to_align - filter_roughness);
   // console.log(`top_bets: ${JSON.stringify(top_bets, null, 2)}`);
   //console.log(`sorted_possible_combinations length before: ${JSON.stringify(sorted_possible_combinations.length, null, 2)}`);
   const filtered_bet_combinations = sorted_possible_combinations.filter(bet => {
@@ -58,7 +59,7 @@ function findResultsToFocusOn(sorted_possible_combinations: Bet[], odds_in_perce
   return filtered_bet_combinations;
 }
 
-function sortOnHighestBestScore(combinations: any, number_of_lines_to_pick: number, draw: any) {
+function sortOnHighestBestScore(draw_config: DrawConfig, combinations: any, draw: any) {
   const lines_to_pick = [];
 
   const sorted_possible_combinations = combinations.sort((a: any, b: any) => {
@@ -120,9 +121,9 @@ function sortOnHighestBestScore(combinations: any, number_of_lines_to_pick: numb
 //  for (let i = 0; i < number_of_lines_to_pick - number_of_picked_lines; i++) {
   let loop_without_diff = 0;
   let last_lenght = 0;
-  const bar = new ProgressBar(':bar :percent :etas', {total: number_of_lines_to_pick - lines_to_pick.length, width: 32});
+  const bar = new ProgressBar(':bar :percent :etas', {total: draw_config.number_of_lines_to_pick - lines_to_pick.length, width: 32});
 
-  while (lines_to_pick.length < number_of_lines_to_pick) {
+  while (lines_to_pick.length < draw_config.number_of_lines_to_pick) {
     if (last_lenght == lines_to_pick.length) {
       loop_without_diff++;
       console.log(`loop_without_diff: ${JSON.stringify(loop_without_diff, null, 2)}`);
@@ -136,7 +137,7 @@ function sortOnHighestBestScore(combinations: any, number_of_lines_to_pick: numb
     last_lenght = lines_to_pick.length;
 
     // const startTime2 = Date.now();
-    const focus_on_lines = findResultsToFocusOn(sorted_possible_combinations, odds_in_percentage, lines_to_pick, loop_without_diff);
+    const focus_on_lines = findResultsToFocusOn(draw_config, sorted_possible_combinations, odds_in_percentage, lines_to_pick, loop_without_diff);
 
     for (let index = 0; index < focus_on_lines.length; index++) {
       const will_align = willAlignToOdds(lines_to_pick, focus_on_lines[index], hash_bet_score_map, outcome_distribution_map, odds_in_percentage);
@@ -158,7 +159,7 @@ function sortOnHighestBestScore(combinations: any, number_of_lines_to_pick: numb
     }
   }
 
-  console.log(`number_of_lines_to_pick - number_of_picked_lines: ${JSON.stringify(number_of_lines_to_pick - number_of_picked_lines, null, 2)}`);
+  console.log(`number_of_lines_to_pick - number_of_picked_lines: ${JSON.stringify(draw_config.number_of_lines_to_pick - number_of_picked_lines, null, 2)}`);
   return lines_to_pick;
 }
 
@@ -168,8 +169,8 @@ const api = {
       return a.total_odds - b.total_odds;
     });
   },
-  pickBets: function (combinations: any, number_of_lines: number, draw: any) {
-    return sortOnHighestBestScore(combinations, number_of_lines, draw);
+  pickBets: function (draw_config: DrawConfig, combinations: any, draw: any) {
+    return sortOnHighestBestScore(draw_config, combinations, draw);
   }
 };
 

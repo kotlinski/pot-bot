@@ -18,6 +18,7 @@
     "fetch-old-draws": "cross-env NODE_ENV=dev babel-node src/scripts/fetch-old-draws.ts",
     "analyze-current-draw": "cross-env NODE_ENV=dev babel-node --presets @babel/preset-typescript --extensions '.ts,.js' --icu-data-dir=/Users/simon/.nvm/versions/node/v12.17.0/lib/node_modules/full-icu src/scripts/analyze-current-draw.ts",
     "verify-bet-with-current-results": "cross-env NODE_ENV=dev babel-node --presets @babel/preset-typescript --extensions '.ts,.js'  src/scripts/verify-bet-with-current-results.ts",
+    "machine-learn": "cross-env NODE_ENV=dev babel-node --presets @babel/preset-typescript --extensions '.ts,.js'  src/scripts/machine-learn.ts",
     "test": "jest"
   },
   "keywords": [],

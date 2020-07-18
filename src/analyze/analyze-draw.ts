@@ -1,12 +1,13 @@
 import {outputFile, outputJSON} from "fs-extra";
 import {convertOddsToIntegerPercentage} from "../svenskaspel/bet-calculations/percentage-converter";
 
-import {getCurrentDraw} from "../svenskaspel/fetch/draw-store";
+import {getCurrentDraw, getDraw} from "../svenskaspel/fetch/draw-store";
 
 import {generateLines} from "../svenskaspel/combinations/generate-lines-combinations";
 import betPicker from "../svenskaspel/combinations/draw-bet-picker";
 import drawTextFormatter from "../svenskaspel/draw-text-formatter";
 import drawCleaner from "../svenskaspel/draw-cleaner";
+import {DrawConfig} from "./draw-config";
 
 require('colors');
 
@@ -236,7 +237,12 @@ function print1X2Distribution(string_to_print: string, bets: Bet[]) {
   console.log(`2: ${no_of_2},${appendNoOfSpaces(4 - no_of_2.toString().length)} ~${(no_of_2 / bets.length).toFixed(2)} per line`);
 }
 
-async function printStats(bets: Bet[], draw: any, game_type: string) {
+export interface FinalBets {
+  printable: string,
+  json: string[][]
+}
+
+async function printStats(bets: Bet[], draw: any, game_type: string): Promise<FinalBets> {
   let string_to_print = `${game_type}\n`;
   let probability_of_13 = 1.0;
 //   console.log(JSON.stringify(bets[0], null, 2));
@@ -270,14 +276,18 @@ async function printStats(bets: Bet[], draw: any, game_type: string) {
   console.log();
 
   console.log(turnover);
-  return string_to_print;
+  return {printable: string_to_print, json: final_bets_json};
 }
 
-export async function analyzeCurrentDraw(game_type: string, number_of_lines_to_generate: number) {
+export async function generateLinesForDraw(draw_config: DrawConfig, draw_number?: number): Promise<FinalBets> {
   console.log("Reading current draw...");
   let draw;
   try {
-    draw = await getCurrentDraw(game_type);
+    if (draw_number) {
+      draw = await getDraw(draw_config.game_type, draw_number);
+    } else {
+      draw = await getCurrentDraw(draw_config.game_type);
+    }
   } catch (error) {
     console.log('Could not read current draw, please fetch again `npm run fetch-current-draw`', error)
   }
@@ -285,21 +295,21 @@ export async function analyzeCurrentDraw(game_type: string, number_of_lines_to_g
     let clean_draw = drawCleaner.massageData(draw);
     // await storeCleanDraw(game_type, clean_draw);
 
-    const combinations = generateLines(clean_draw.events);
+    const combinations = generateLines(draw_config, clean_draw.events);
 
     console.log(`number of combinations: ${combinations.length}`);
 
-    const bets = betPicker.pickBets(combinations, number_of_lines_to_generate, draw);
+    const bets = betPicker.pickBets(draw_config, combinations, draw);
 
     const sorted_bets = betPicker.sortOnBestOdds(bets);
     console.log(`sorted_bets.length: ${JSON.stringify(sorted_bets.length, null, 2)}`);
-    const final_bet = sorted_bets.slice(0, number_of_lines_to_generate);
+    const final_bet = sorted_bets.slice(0, draw_config.number_of_lines_to_pick);
     console.log(`number of bets: ${final_bet.length}`);
 
     // Skip this for now
     // await printToCSV(game_type, draw.drawNumber, combinations);
 
-    const string_to_print = printStats(final_bet, draw, game_type);
+    const string_to_print: FinalBets = await printStats(final_bet, draw, draw_config.game_type);
 
     console.log('success!');
     return string_to_print;
