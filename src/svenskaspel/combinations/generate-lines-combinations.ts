@@ -1,8 +1,9 @@
 import {EVENT_OUTCOME_TYPES} from "../event-outcome-types";
 import _ from 'lodash';
 import {Outcome} from "../../analyze/analyze-draw";
+import {DrawConfig} from "../../analyze/draw-config";
 
-function recursiveLines(events: any, index: number, outcome: Outcome, line?: Line): Line[] {
+function recursiveLines(draw_config: DrawConfig, events: any, index: number, outcome: Outcome, line?: Line): Line[] {
   if (!line) {
     line = {
       outcomes: [],
@@ -15,7 +16,7 @@ function recursiveLines(events: any, index: number, outcome: Outcome, line?: Lin
     line.outcomes.push(outcome);
     line.total_odds *= events[index][outcome].odds;
     line.total_bet_rate += events[index][outcome].bet_value_normalized;
-    line.bet_score += (events[index][outcome].odds_in_percentage_normalized * 1.2 + events[index][outcome].bet_value_normalized);
+    line.bet_score += (events[index][outcome].odds_in_percentage_normalized * draw_config.bet_value_quota + events[index][outcome].bet_value_normalized);
     if (events[index][outcome].odds === 0) {
       return [];
     }
@@ -30,7 +31,7 @@ function recursiveLines(events: any, index: number, outcome: Outcome, line?: Lin
     return [line];
   } else {
     return _.flatten(EVENT_OUTCOME_TYPES.map(type => {
-      return recursiveLines(events, index, type as Outcome, _.cloneDeep(line));
+      return recursiveLines(draw_config, events, index, type as Outcome, _.cloneDeep(line));
     }));
   }
 }
@@ -42,12 +43,12 @@ interface Line {
   bet_score: number;
 }
 
-export function generateLines(events: any): Line[] {
+export function generateLines(draw_config: DrawConfig, events: any): Line[] {
   console.log("events: ", JSON.stringify(events, null, 2));
   const start = Date.now();
   console.log("Generating combinations...");
 
-  const all_lines = recursiveLines(events, -1, Outcome.home);
+  const all_lines = recursiveLines(draw_config, events, -1, Outcome.home);
   console.log(`events: ${events.length}`);
   // console.log("all_lines: ", JSON.stringify(all_lines, null, 2));
   const delta = Date.now() - start;
@@ -60,7 +61,7 @@ export function generateLines(events: any): Line[] {
     const no_of_2 = line.outcomes.reduce((accumulator, currentValue) => (currentValue === 'away') ? accumulator+1 : accumulator, 0);
     return line.outcomes.length === 13 &&
         no_of_1 > 1 &&
-        no_of_x > 1 &&
+        no_of_x > draw_config.number_of_X_signs &&
         no_of_2 > 1;
   });
   console.log("Done generating combinations, has 13 events: " + all_lines_filtered.length);

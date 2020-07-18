@@ -7,21 +7,24 @@ interface CorrectCount {
   signs_to_beg_for: string[]
 }
 
-interface AggregatedNoOfCorrects {
+export interface AggregatedNoOfCorrects {
   count: number,
   odds: number,
   signs: string[][],
 }
 
-export async function verifyBetsWithCurrentResults(game_type: string, correct_results: string, file_name: string) {
-  console.log("correct_results: ", JSON.stringify(correct_results, null, 2));
-  correct_results = correct_results.replace(/[0-9]*[:]|,|[ ]/g, '');
-  if (correct_results.length < 13) {
-    console.log('try with: 1:*, 2:*, 3:*, 4:*, 5:*, 6:*, 7:*, 8:*, 9:*, 10:*, 11:*, 12:*, 13:*');
-    return;
-  }
-
+export async function verifyBetsWithCurrentResults(game_type: string, correct_results: string[], file_name: string) {
   console.log("Reading current draw...");
+  let bets;
+  try {
+    bets = await getFinalBets(game_type, file_name);
+  } catch (error) {
+    console.log('Could not read current draw, please fetch again `npm run fetch-current-draw`', error)
+  }
+  return await verifyBetsWithResults(game_type, correct_results, bets);
+}
+
+export const verifyBetsWithResults = async (game_type: string, correct_results: string[], bets: string[][]): Promise<number> => {
   let clean_draw: any;
   try {
     const draw = await getCurrentDraw(game_type);
@@ -29,18 +32,11 @@ export async function verifyBetsWithCurrentResults(game_type: string, correct_re
   } catch (error) {
     console.log('Could not read current draw, please fetch again `npm run fetch-current-draw`', error)
   }
-
-  let bets;
   try {
-    bets = await getFinalBets(game_type, file_name);
-  } catch (error) {
-    console.log('Could not read current draw, please fetch again `npm run fetch-current-draw`', error)
-  }
-  console.log("bets.length: ", JSON.stringify(bets.length, null, 2));
-  try {
+    console.log("bets.length: ", JSON.stringify(bets.length, null, 2));
     let correct_count: CorrectCount[] = [];
     for (let i = 0; i < correct_results.length; i++) {
-      let correct_char = correct_results.charAt(i);
+      let correct_char = correct_results[i];
 
       console.log(i + 1 + ". " + correct_char);
       for (let bet_index = 0; bet_index < bets.length; bet_index++) {
@@ -99,7 +95,8 @@ export async function verifyBetsWithCurrentResults(game_type: string, correct_re
       max = (max < parseFloat(coupon)) ? parseFloat(coupon) : max;
     }
 
-    const number_of_unknowns = (correct_results.split("*").length - 1);
+
+    const number_of_unknowns = (correct_results.filter(sign => sign === "*").length);
     let signs_dist: any = {};
     for (const aggregated_value of aggregated_values[max].signs) {
       for (let i = 0; i < number_of_unknowns; i++) {
@@ -121,9 +118,11 @@ export async function verifyBetsWithCurrentResults(game_type: string, correct_re
     for (const index of [10, 11, 12, 13]) {
       console.log(`${index}: ${JSON.stringify(aggregated_values[index], null, 2)}`);
     }
-
-    console.log('success!')
+    console.log('success!');
+    return maximum_possible_no_of_corrects;
   } catch (err) {
-    console.error(err)
+    console.log(`err: ${JSON.stringify(err, null, 2)}`);
+    return 0;
   }
-}
+
+};

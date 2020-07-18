@@ -13,7 +13,7 @@ describe('draw-bet-combination-generator', function () {
   });
 
   beforeEach(async () => {
-    combinations = generateLines(clean_draw.events);
+    combinations = generateLines(draw_config, clean_draw.events);
   });
 
   describe('combination generator', () => {

@@ -47,7 +47,7 @@ async function analyzeDraw(game_type: string, draw_number: number, svenskaspel_a
     await storeCleanDraw(game_type, cleanDraw);
 
     const combinations = getAllPossibleCombinations();
-    const bets = betPicker.pickBets(combinations);
+    const bets = betPicker.pickBets(undefined, combinations);
 
     await printToCSV(game_type, draw_number, combinations);
 

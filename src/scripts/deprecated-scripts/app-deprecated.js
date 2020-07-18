@@ -19,7 +19,7 @@ async function fetchDraw(game_type) {
     let clean_draw = drawCleaner.massageData(draw);
     await storeCleanDraw(game_type, clean_draw);
     const combinations = combinationGenerator.generateAllCombinations(clean_draw);
-    const bets = betPicker.pickBets(combinations);
+    const bets = betPicker.pickBets(undefined, combinations);
 
     let string_to_print = "Stryktipset\n";
     let probability_of_13 = 1;
