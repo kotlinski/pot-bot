@@ -213,11 +213,13 @@ function printOutcomeDistribution(draw: any, bets: Bet[]) {
 
     const game_index: number = parseInt(game);
     let odds_in_percentage = convertOddsToIntegerPercentage(draw.events[game_index].odds);
+    const raw_distribution = draw.events[game_index].distribution
+    const distribution = {home: raw_distribution.home, draw: raw_distribution.draw, away: raw_distribution.away}
     console.log();
     console.log((game_index + 1) + ". " + draw.events[game_index].description);
     console.log("      odds:  " + niceTab(Object.values(draw.events[game_index].odds)));
     console.log("    odds %:  " + niceTab(Object.values(odds_in_percentage)));
-    console.log("  sv. dist:  " + niceTab(Object.values(draw.events[game_index].distribution), odds_in_percentage));// Object.values().toString().replace(/,/g, '\t'));
+    console.log("  sv. dist:  " + niceTab(Object.values(distribution), odds_in_percentage));// Object.values().toString().replace(/,/g, '\t'));
     console.log("  my distr:  " + niceTab(outcomes_of_games));
 
     // console.log("draw.events[game]: ", JSON.stringify(draw.events[game], null, 2));
