@@ -1,25 +1,53 @@
-import {EVENT_OUTCOME_TYPES} from '../event-outcome-types'
+import { Event, Outcome } from '../interfaces';
 
-
-export function normalizeProperty(events: any, property: any) {
-  let lowest = 1000000000;
-  events.forEach((event: any) => {
-    lowest = Math.min(lowest, event.home[property], event.draw[property], event.away[property]);
+function getHighestOddsPercentage(events: Event[]){
+}
+function getLowestOddsPercentage(events: Event[]){
+}
+function iterator(events: Event[], property: string, operator: (...values: number[]) => number): number{
+  let val: number;
+  events.forEach((event: Event) => {
+    let calculated_values = event.calculated_values;
+    const values = Object.values(Outcome).map((outcome: Outcome) => calculated_values.get(outcome)![property]);
+    val = operator(val,...values);
   });
-  events = events.map((event: any) => {
-    EVENT_OUTCOME_TYPES.forEach(outcome_type => {
-      event[outcome_type][`${property}_normalized`] = event[outcome_type][property] - lowest;
-    });
+  return val
+}
+
+
+export function normalizeProperty(events: Event[], property: 'odds_in_percentage' | 'bet_value') {
+  let lowest = Number.POSITIVE_INFINITY;
+  let highest = Number.NEGATIVE_INFINITY;
+  events.forEach((event: Event) => {
+    let calculated_values = event.calculated_values;
+    const values = Object.values(Outcome).map((outcome: Outcome) => calculated_values.get(outcome)![property]);
+    lowest = Math.min(lowest,...values);
+  });
+  events.forEach((event: Event) => {
+    let calculated_values = event.calculated_values;
+    const values = Object.values(Outcome).map((outcome: Outcome) => calculated_values.get(outcome)![property]);
+    highest = Math.max(highest,...values);
+  });
+
+  events = events.map((event: Event) => {
+    console.log(`event: ${JSON.stringify(event, null, 2)}`);
+    // for (const outcome: Outcome in Object.keys(Outcome)) {
+
+    for (const outcome of Object.values(Outcome)) {
+    event.calculated_values[outcome][`${property}_normalized`] = event[outcome][property] - lowest;
+    event[outcome][`${property}_normalized`] = event[outcome][property] - lowest;
+    event[outcome][`${property}_normalized`] = event[outcome][property] - lowest;
     return event;
   });
   let highest = 0;
-  events.forEach((event: any) => {
-    highest = Math.max(highest, event.home[`${property}_normalized`], event.draw[`${property}_normalized`], event.away[`${property}_normalized`]);
-  });
-  events = events.map((event: any) => {
-    EVENT_OUTCOME_TYPES.forEach(outcome_type => {
-      event[outcome_type][`${property}_normalized`] = Math.round((event[outcome_type][`${property}_normalized`] / highest) * 10000) / 10000;
-    });
+
+  events = events.map((event: Event) => {
+    event[Outcome.HOME][`${property}_normalized`] =
+      Math.round((event[Outcome.HOME][`${property}_normalized`] / highest) * 10000) / 10000;
+    event[Outcome.DRAW][`${property}_normalized`] =
+      Math.round((event[Outcome.DRAW][`${property}_normalized`] / highest) * 10000) / 10000;
+    event[Outcome.AWAY][`${property}_normalized`] =
+      Math.round((event[Outcome.AWAY][`${property}_normalized`] / highest) * 10000) / 10000;
     return event;
   });
 

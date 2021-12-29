@@ -1,4 +1,4 @@
-import drawBetPicker from '../draw-bet-picker'
+import drawBetPicker from '../draw-bet-picker';
 import fs from 'fs-extra';
 
 describe.skip('draw-bet-combination-generator', function () {
@@ -9,12 +9,8 @@ describe.skip('draw-bet-combination-generator', function () {
   });
 
   describe('combination generator', () => {
-
     it('should generate combinations', async () => {
-      const picks = drawBetPicker.pickBets(undefined, combinations);
+      const picks = drawBetPicker.pickBetsV1(undefined, combinations);
     });
-
   });
-
 });
-

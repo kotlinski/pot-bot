@@ -1,5 +1,4 @@
-import nodemailer from "nodemailer";
-
+import nodemailer from 'nodemailer';
 
 export async function sendMail(draw) {
   // Create a SMTP transporter object
@@ -7,8 +6,8 @@ export async function sendMail(draw) {
     service: 'Gmail',
     auth: {
       user: 'pot.bot.robot@gmail.com',
-      pass: 'q@ns*kTEUXfTC4MGbeCw'
-    }
+      pass: 'q@ns*kTEUXfTC4MGbeCw',
+    },
   });
 
   // Message object
@@ -25,9 +24,7 @@ export async function sendMail(draw) {
     text: 'Hello to myself!',
 
     // HTML body
-    html:
-        `<p><b>Hello!</b></p>` +
-        `<p>Here\\'s the latest draw just before deadline: ${draw.closeTime}<br/></p>`,
+    html: `<p><b>Hello!</b></p>` + `<p>Here\\'s the latest draw just before deadline: ${draw.closeTime}<br/></p>`,
 
     // An array of attachments
     attachments: [
@@ -35,10 +32,9 @@ export async function sendMail(draw) {
       {
         filename: `${draw.drawNumber}.json`,
         content: 'Some notes about this e-mail',
-        contentType: 'text/plain' // optional, would be detected from the filename
+        contentType: 'text/plain', // optional, would be detected from the filename
       },
-
-    ]
+    ],
   };
 
   let info = await transporter.sendMail(message);

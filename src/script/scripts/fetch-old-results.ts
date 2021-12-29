@@ -1,11 +1,6 @@
-import draw_fetcher from "../svenskaspel/fetch/draw-fetcher.js";
+import draw_fetcher from '../../svenskaspel/fetch/draw-fetcher.js';
 
-const argv = require('optimist')
-    .default(['game_type'])
-    .default(['draw_number'])
-    .default(['svenskaspel_api_key'])
-    .argv;
-
+const argv = require('optimist').default(['game_type']).default(['draw_number']).default(['svenskaspel_api_key']).argv;
 
 async function infLoop(game_type: string, draw_number: number, svenskaspel_api_key: string) {
   await setInterval(async () => {
@@ -33,10 +28,8 @@ const main = async function () {
   await infLoop(argv.game_type, parseInt(argv.draw_number), argv.svenskaspel_api_key);
 };
 
-
 (async () => {
   await main();
-})().catch(e => {
-  console.log("error, " + e)
+})().catch((e) => {
+  console.log(`error, ${e}`);
 });
-

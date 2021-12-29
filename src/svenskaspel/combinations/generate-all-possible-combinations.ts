@@ -1,28 +1,28 @@
-import {EVENT_OUTCOME_TYPES} from "../event-outcome-types";
+import { EVENT_OUTCOME_TYPES } from '../event-outcome-types';
 
 export function getAllPossibleCombinations() {
   const lines = [];
 
-  console.log("Generating combinations...");
+  console.log('Generating combinations...');
 
-  for (const outcome_event_1 of EVENT_OUTCOME_TYPES) {
-    for (const outcome_event_2 of EVENT_OUTCOME_TYPES) {
-      for (const outcome_event_3 of EVENT_OUTCOME_TYPES) {
-        for (const outcome_event_4 of EVENT_OUTCOME_TYPES) {
-          for (const outcome_event_5 of EVENT_OUTCOME_TYPES) {
-            for (const outcome_event_6 of EVENT_OUTCOME_TYPES) {
-              for (const outcome_event_7 of EVENT_OUTCOME_TYPES) {
-                for (const outcome_event_8 of EVENT_OUTCOME_TYPES) {
-                  for (const outcome_event_9 of EVENT_OUTCOME_TYPES) {
-                    for (const outcome_event_10 of EVENT_OUTCOME_TYPES) {
-                      for (const outcome_event_11 of EVENT_OUTCOME_TYPES) {
-                        for (const outcome_event_12 of EVENT_OUTCOME_TYPES) {
-                          for (const outcome_event_13 of EVENT_OUTCOME_TYPES) {
+  for (const _outcome_event_1 of EVENT_OUTCOME_TYPES) {
+    for (const _outcome_event_2 of EVENT_OUTCOME_TYPES) {
+      for (const _outcome_event_3 of EVENT_OUTCOME_TYPES) {
+        for (const _outcome_event_4 of EVENT_OUTCOME_TYPES) {
+          for (const _outcome_event_5 of EVENT_OUTCOME_TYPES) {
+            for (const _outcome_event_6 of EVENT_OUTCOME_TYPES) {
+              for (const _outcome_event_7 of EVENT_OUTCOME_TYPES) {
+                for (const _outcome_event_8 of EVENT_OUTCOME_TYPES) {
+                  for (const _outcome_event_9 of EVENT_OUTCOME_TYPES) {
+                    for (const _outcome_event_10 of EVENT_OUTCOME_TYPES) {
+                      for (const _outcome_event_11 of EVENT_OUTCOME_TYPES) {
+                        for (const _outcome_event_12 of EVENT_OUTCOME_TYPES) {
+                          for (const _outcome_event_13 of EVENT_OUTCOME_TYPES) {
                             const line = [];
                             for (let event_index = 0; event_index < 13; event_index++) {
                               line.push(eval(`outcome_event_${event_index + 1}`));
                             }
-                            lines.push(line)
+                            lines.push(line);
                           }
                         }
                       }
@@ -36,7 +36,7 @@ export function getAllPossibleCombinations() {
       }
     }
   }
-  console.log("Done generating combinations");
+  console.log('Done generating combinations');
   return lines;
 }
 
@@ -82,4 +82,3 @@ function createCombinationObject(events, outcome_event_1, outcome_event_2, outco
   };
 }
 */
-

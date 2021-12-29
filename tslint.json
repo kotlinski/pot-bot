@@ -1,6 +1,4 @@
 {
-  "extends": [
-    "@springworks/tslint-config"
-  ],
+  "extends": ["@springworks/tslint-config"],
   "rules": {}
 }

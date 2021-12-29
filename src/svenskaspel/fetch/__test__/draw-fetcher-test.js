@@ -1,4 +1,4 @@
-import draw_fetcher from '../draw-fetcher'
+import draw_fetcher from '../draw-fetcher';
 import fs from 'fs-extra';
 
 describe('draw-formatter', function () {
@@ -10,13 +10,9 @@ describe('draw-formatter', function () {
   });
 
   describe('should print draw name', () => {
-
     it('should return the string of the draw name', async () => {
       const draw = await draw_fetcher.fetchNextDraw();
       console.log(JSON.stringify(draw, null, 2));
     });
-
   });
-
 });
-

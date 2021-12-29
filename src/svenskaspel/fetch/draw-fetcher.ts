@@ -1,46 +1,49 @@
-import fs from "fs-extra";
-import draw_validator from './draw-validator';
-import {storeResults, storeDraw} from './draw-store';
-import api_client from './api-client';
+import { storeDraw } from '../../storage/draw-store';
+import api_client from '../../svenska-spel/api-clients/svenska-spel-api-client';
+import { SvenskaSpelDraw } from '../../svenska-spel/api-clients/svenskaspel-interfaces';
 
-const api = {
-
-  async fetchNextDraw(game_type: string, svenskaspel_api_key: string, force_fetch = false) {
+export default class DrawFetcher {
+  public async fetchNextDraw(game_type: string, svenskaspel_api_key: string, _force_fetch = false): Promise<SvenskaSpelDraw> {
     try {
-      let draw;
-      let draw_from_file;
-      try {
+      // let draw;
+      // let draw_from_file;
+      /*      try {
         draw_from_file = await fs.readJson(`./draws/${game_type}/current/raw.json`);
       } catch (error) {
-        console.log("No cached data for this draw");
-      }
+        console.log('No cached data for this draw');
+      }*/
 
-      if (draw_from_file && !draw_validator.isCurrentDraw(draw_from_file)) {
+      /*      if (draw_from_file && !draw_validator.isCurrentDraw(draw_from_file)) {
         await fs.emptyDirSync(`./draws/${game_type}/current`);
         return;
-      }
-      if (draw_from_file &&
+      }*/
+      /*      if (
+          draw_from_file &&
           draw_validator.isCurrentDraw(draw_from_file) &&
           !draw_validator.isLastDay(draw_from_file) &&
-          !force_fetch) {
+          !force_fetch
+      ) {
         return draw_from_file;
-      }
-      console.log("game type: " + game_type);
-      draw = await api_client.getNextDraw(game_type, svenskaspel_api_key);
-      if (draw) {
-        await storeDraw(game_type, draw);
-        return draw;
-      }
-      return draw_from_file;
+      }*/
+      console.log(`game type: ${game_type}`);
+      const draw = await api_client.fetchCurrentDraw(game_type, svenskaspel_api_key);
+
+      await storeDraw(game_type, draw);
+      return draw;
+
+      // return draw_from_file;
     } catch (err) {
       console.log(err);
       console.log();
+      throw err;
     }
-  },
+  }
+}
 
+/*
   async fetchDraw(game_type: string, draw_number: number, svenskaspel_api_key: string) {
     try {
-      console.log("game type: " + game_type);
+      console.log(`game type: ${game_type}`);
       const draw = await api_client.getDraw(game_type, draw_number, svenskaspel_api_key);
       if (draw) {
         await storeDraw(game_type, draw);
@@ -53,7 +56,7 @@ const api = {
 
   async fetchResults(game_type: string, draw_number: number, svenskaspel_api_key: string) {
     try {
-      console.log("game type: " + game_type);
+      console.log(`game type: ${game_type}`);
       const results = await api_client.getResults(game_type, draw_number, svenskaspel_api_key);
       if (results) {
         await storeResults(game_type, results);
@@ -63,7 +66,7 @@ const api = {
       console.log(err);
     }
   },
-
 };
 
 export default api;
+*/
