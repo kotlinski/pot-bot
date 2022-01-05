@@ -1,3 +1,4 @@
+/*
 import { FinalBets, generateLinesForDraw } from '../../analyze/analyze-draw';
 import { DrawConfigV1 } from '../../analyze/draw-config';
 import { verifyBetsWithResults } from '../../analyze/verifyt-ongoing-draw';
@@ -46,3 +47,4 @@ const main = async function () {
 })().catch((e) => {
   console.log(`error, ${e}`);
 });
+*/

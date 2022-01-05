@@ -1,18 +1,22 @@
-import draw_validator from '../svenskaspel/fetch/draw-validator';
 import moment from 'moment';
 import { mkdirSync } from 'fs';
 import { SvenskaSpelDraw } from '../svenska-spel/api-clients/svenskaspel-interfaces';
-import { loadJsonFile } from 'load-json-file';
-import { writeJsonFile } from 'write-json-file';
+import loadJsonFile = require('load-json-file')
+import writeJsonFile = require('write-json-file')
 import makeDir from 'make-dir';
+import DrawHelper from '../svenskaspel/fetch/draw-validator';
 
 export default class DrawStore {
-  constructor(private readonly game_type: 'stryktipset' | 'europatipset') {}
+  private readonly draw_helper: DrawHelper;
+
+  constructor(private readonly game_type: 'stryktipset' | 'europatipset') {
+    this.draw_helper = new DrawHelper();
+  }
 
   public async storeCurrentDraw(draw: SvenskaSpelDraw): Promise<void> {
     mkdirSync(`./draws/${this.game_type}/current`, { recursive: true });
     let file_name = `draw-before-deadline.json`;
-    if (!draw_validator.hasOdds(draw)) {
+    if (!this.draw_helper.hasOdds(draw)) {
       file_name = `draw-without-odds.json`;
     }
     await writeJsonFile(`draws/${this.game_type}/current/${file_name}`, draw, { indent: 2 });
@@ -22,9 +26,9 @@ export default class DrawStore {
     const draw_number = draw.drawNumber;
     await makeDir(`./draws/${this.game_type}/old/${draw_number}/draw-history/`);
     let file_name: string;
-    if (draw_validator.isAfterCloseTime(draw)) {
+    if (this.draw_helper.isAfterCloseTime(draw)) {
       file_name = `draw-after-deadline.json`;
-    } else if (!draw_validator.hasOdds(draw)) {
+    } else if (!this.draw_helper.hasOdds(draw)) {
       file_name = `draw-without-odds.json`;
     } else {
       file_name = `draw-before-deadline.json`;
@@ -34,7 +38,7 @@ export default class DrawStore {
       indent: 2,
     });
 
-    if (draw_validator.isCurrentDraw(draw)) {
+    if (this.draw_helper.isCurrentDraw(draw)) {
       await this.storeCurrentDraw(draw);
     }
   }

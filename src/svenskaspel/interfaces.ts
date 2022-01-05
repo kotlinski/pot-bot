@@ -37,10 +37,23 @@ export enum Outcome {
   AWAY = 'away',
 }
 
+export interface OutcomeData {
+  outcome: Outcome;
+  /*  normalized_odds: number;
+    normalized_distribution: number;*/
+  probability_based_on_distribution: number;
+  odds_percentage: number;
+  distribution_percentage: number;
+  newspaper_percentage: number;
+  raw_odds: string;
+  raw_distribution: string;
+}
+
 export interface Line {
   outcomes: Outcome[];
   total_odds: number;
-  total_bet_rate: number;
+  total_distribution: number;
+  total_probability: number;
   bet_score: number;
 }
 

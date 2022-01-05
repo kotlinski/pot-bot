@@ -1,4 +1,6 @@
+/*
 import { EVENT_OUTCOME_TYPES } from '../event-outcome-types';
+
 import _ from 'lodash';
 import { Outcome } from '../../analyze/analyze-draw-v1';
 import { DrawConfigV1 } from '../../analyze/draw-config';
@@ -75,3 +77,4 @@ export function generateLines(draw_config: DrawConfigV1, events: any): Line[] {
   console.log(`Done generating combinations, has 13 events: ${all_lines_filtered.length}`);
   return all_lines_filtered;
 }
+ */

@@ -1,3 +1,4 @@
+/*
 import { willAlignToOdds } from '../../analyze/bet-comperator';
 import { convertToPercentage } from '../bet-calculations/percentage-converter';
 import { calculateOutcomeDistributions } from '../../analyze/analyze-draw';
@@ -177,3 +178,4 @@ const api = {
 };
 
 export default api;
+*/

@@ -1,3 +1,4 @@
+/*
 import { getCurrentDraw, getFinalBets } from '../storage/draw-store';
 import drawCleaner from '../svenskaspel/draw-cleaner';
 
@@ -127,3 +128,4 @@ export const verifyBetsWithResults = async (
     return 0;
   }
 };
+*/

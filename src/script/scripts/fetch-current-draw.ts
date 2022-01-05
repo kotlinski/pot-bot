@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // import {sendMail} from "../mail/send-email";
-
+/*
 import DrawFetcher from '../../svenskaspel/fetch/draw-fetcher';
 
 process.env.NODE_CONFIG_DIR = './config';
@@ -94,3 +94,4 @@ const main = async function () {
     console.log(`error in main`);
   }
 });
+*/

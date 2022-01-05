@@ -1,3 +1,4 @@
+/*
 import { EVENT_OUTCOME_TYPES } from '../event-outcome-types';
 
 export function getAllPossibleCombinations() {

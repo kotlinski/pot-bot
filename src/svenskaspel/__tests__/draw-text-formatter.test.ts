@@ -1,3 +1,4 @@
+/*
 import draw_formatter from '../draw-text-formatter';
 import fs from 'fs-extra';
 
@@ -37,4 +38,4 @@ describe('draw-formatter', function () {
       expect(baseStatsString).toBe('2020-01-18T15:59:00+01:00');
     });
   });
-});
+});*/

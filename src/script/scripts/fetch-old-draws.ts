@@ -1,4 +1,4 @@
-import draw_fetcher from '../../svenskaspel/fetch/draw-fetcher.js';
+/* import draw_fetcher from '../../svenskaspel/fetch/draw-fetcher.js';
 
 const argv = require('optimist').default(['game_type']).default(['draw_number']).default(['svenskaspel_api_key']).argv;
 
@@ -32,3 +32,4 @@ const main = async function () {
 })().catch((e) => {
   console.log(`error, ${e}`);
 });
+*/

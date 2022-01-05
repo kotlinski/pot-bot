@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+/* import nodemailer from 'nodemailer';
 
 export async function sendMail(draw) {
   // Create a SMTP transporter object

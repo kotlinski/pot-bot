@@ -18,12 +18,12 @@ describe('university-math-applier.test.ts', function () {
         },
         {
           home: 0.01,
-          draw: 0.90,
-          away: 0.90,
+          draw: 0.9,
+          away: 0.9,
         },
         {
           home: 0.23,
-          draw: 0.20,
+          draw: 0.2,
           away: 0.05,
         },
       ];
@@ -31,7 +31,7 @@ describe('university-math-applier.test.ts', function () {
     it('should always normalize results', () => {
       const probabilities = applier.calculateProbabilities(distribution_percentages);
       for (const probability of probabilities) {
-        const sum = probability.away+probability.draw+probability.home;
+        const sum = probability.away + probability.draw + probability.home;
         expect(sum).toBe(1);
       }
     });

@@ -1,8 +1,8 @@
+/*
 import { DrawConfig } from './draw-config';
 import { Bet, Draw, HomeAwayDraw } from '../svenskaspel/interfaces';
 
 require('colors');
-/*
 function outcomeToChar(outcome: Outcome): '1' | 'X' | '2' {
   if (outcome === Outcome.HOME) {
     return '1';
@@ -175,6 +175,8 @@ function niceTab(outcomes_of_game: any[], comparable?: { home: number; draw: num
   return formatted_output;
 }*/
 
+import { Bet, HomeAwayDraw } from '../svenskaspel/interfaces';
+
 export function addBetToOutcomesDistribution(line: Bet, outcome_distribution: HomeAwayDraw<number>[]): void {
   for (let i = 0; i < line.outcomes.length; i++) {
     const outcome = line.outcomes[i];
@@ -281,13 +283,13 @@ async function printStats(bets: Bet[], draw: any, game_type: string): Promise<Fi
 
   console.log(turnover);
   return { printable: string_to_print, json: final_bets_json };
-} */
+}
 
 export default class LineGenerator {
-  public async generateLinesForDraw(_draw_config: DrawConfig, draw: Draw): Promise<void> {
+  public async generateLinesForDraw(_draw_config: DrawConfig, _draw: Draw): Promise<void> {
     console.log('Reading current draw...');
   }
-};
+}
 
   /* Promise<FinalBets>*/
   /*  try {
@@ -329,5 +331,5 @@ export default class LineGenerator {
   } catch (err) {
     console.error(err);
     throw err;
-  }*/
-}
+  }
+}*/

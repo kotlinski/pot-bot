@@ -1,3 +1,4 @@
+/*
 import _ from 'lodash';
 import { DrawConfig } from '../../analyze/draw-config';
 import { Event, Line, Outcome } from '../interfaces';
@@ -70,4 +71,4 @@ export function generateLines(draw_config: DrawConfig, events: Event[]): Line[] 
   });
   console.log(`Done generating combinations, has 13 events: ${all_lines_filtered.length}`);
   return all_lines_filtered;
-}
+}*/

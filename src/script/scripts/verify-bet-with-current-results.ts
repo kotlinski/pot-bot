@@ -1,3 +1,4 @@
+/*
 import { verifyBetsWithCurrentResults } from '../../analyze/verifyt-ongoing-draw';
 
 const argv = require('optimist').default(['file_name']).demand(['game_type', 'correct_results']).argv;
@@ -25,3 +26,4 @@ const main = async function () {
 })().catch((e) => {
   console.log(`error, ${e}`);
 });
+*/

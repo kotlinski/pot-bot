@@ -1,21 +1,22 @@
-import { Event, Outcome } from '../interfaces';
-
+import { Event } from '../interfaces';
+/*
 function getHighestOddsPercentage(events: Event[]){
 }
 function getLowestOddsPercentage(events: Event[]){
 }
 function iterator(events: Event[], property: string, operator: (...values: number[]) => number): number{
-  let val: number;
+/*  let val: number;
   events.forEach((event: Event) => {
-    let calculated_values = event.calculated_values;
+    const calculated_values = event.calculated_values;
     const values = Object.values(Outcome).map((outcome: Outcome) => calculated_values.get(outcome)![property]);
     val = operator(val,...values);
   });
   return val
+}*/
+
+export function normalizeProperty(_events: Event[], _property: 'odds_in_percentage' | 'bet_value') {
+  /*
 }
-
-
-export function normalizeProperty(events: Event[], property: 'odds_in_percentage' | 'bet_value') {
   let lowest = Number.POSITIVE_INFINITY;
   let highest = Number.NEGATIVE_INFINITY;
   events.forEach((event: Event) => {
@@ -51,5 +52,5 @@ export function normalizeProperty(events: Event[], property: 'odds_in_percentage
     return event;
   });
 
-  return events;
+  return events;*/
 }

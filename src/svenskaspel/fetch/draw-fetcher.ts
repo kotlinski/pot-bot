@@ -1,3 +1,4 @@
+/*
 import { storeDraw } from '../../storage/draw-store';
 import api_client from '../../svenska-spel/api-clients/svenska-spel-api-client';
 import { SvenskaSpelDraw } from '../../svenska-spel/api-clients/svenskaspel-interfaces';
@@ -24,7 +25,7 @@ export default class DrawFetcher {
           !force_fetch
       ) {
         return draw_from_file;
-      }*/
+      }
       console.log(`game type: ${game_type}`);
       const draw = await api_client.fetchCurrentDraw(game_type, svenskaspel_api_key);
 
