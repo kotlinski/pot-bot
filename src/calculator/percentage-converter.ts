@@ -1,5 +1,4 @@
-import { SvenskaSpelEvent } from '../../svenska-spel/api-clients/svenskaspel-interfaces';
-import { HomeAwayDraw, Outcome } from '../interfaces';
+import { HomeAwayDraw, Outcome } from '../svenska-spel/interfaces';
 
 const oddsToPercentage = (odds: number) => {
   if (odds === 0) {
@@ -18,6 +17,14 @@ export function convertToPercentage(raw_odds: HomeAwayDraw<string>): HomeAwayDra
     home: Math.round((oddsToPercentage(odds[Outcome.HOME]) / total_percentage) * 10000) / 10000,
     draw: Math.round((oddsToPercentage(odds[Outcome.DRAW]) / total_percentage) * 10000) / 10000,
     away: Math.round((oddsToPercentage(odds[Outcome.AWAY]) / total_percentage) * 10000) / 10000,
+  };
+}
+
+export function convertOddsToFloatValues(odds: HomeAwayDraw<string>): HomeAwayDraw<number> {
+  return {
+    home: parseFloat(odds.home.replace(',', '.')),
+    draw: parseFloat(odds.draw.replace(',', '.')),
+    away: parseFloat(odds.away.replace(',', '.')),
   };
 }
 /*
@@ -44,7 +51,7 @@ export function convertOddsToRawNumbers(odds: any) {
     draw: draw_probability / total_percentage,
     away: away_probability / total_percentage,
   };
-}*/
+}
 
 function convertPercentageToOdds(fraction: number) {
   return 1 / fraction;
@@ -71,16 +78,9 @@ export function convertLottoRatesToOdds(event: SvenskaSpelEvent): HomeAwayDraw<n
       away,
     };
   }
-}
+}*/
 
-export function convertOddsToFloatValues(odds: HomeAwayDraw<string>): HomeAwayDraw<number> {
-  return {
-    home: parseFloat(odds.home.replace(',', '.')),
-    draw: parseFloat(odds.draw.replace(',', '.')),
-    away: parseFloat(odds.away.replace(',', '.')),
-  };
-}
-
+/*
 export function convertDistributionToPercentage(distribution: HomeAwayDraw<string>): HomeAwayDraw<number> {
   return {
     home: parseInt(distribution.home, 10) / 100,
@@ -88,3 +88,4 @@ export function convertDistributionToPercentage(distribution: HomeAwayDraw<strin
     away: parseInt(distribution.away, 10) / 100,
   };
 }
+*/

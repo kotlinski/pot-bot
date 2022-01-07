@@ -1,4 +1,4 @@
-import { HomeAwayDraw } from '../../svenskaspel/interfaces';
+import { HomeAwayDraw } from '../../interfaces';
 
 export interface ApiDraw {
   draw_comment: string;

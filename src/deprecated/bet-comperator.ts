@@ -2,7 +2,7 @@ import { addBetToOutcomesDistribution, calculateOutcomeDistributions } from './a
 import _ from 'lodash';
 
 import sha256 from 'crypto-js/sha256';
-import { Bet } from '../svenskaspel/interfaces';
+import { Bet } from '../svenska-spel/interfaces';
 
 function calculateBetScore(
   bets: Bet[],

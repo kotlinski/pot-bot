@@ -1,7 +1,9 @@
-/*
-import fs from 'fs-extra';
-import { convertToPercentage, convertDistributionToPercentage, convertOddsToFloatValues } from '../percentage-converter';
 
+import fs from 'fs-extra';
+import { convertToPercentage, convertOddsToFloatValues } from '../percentage-converter';
+import { HomeAwayDraw } from '../../svenska-spel/interfaces';
+import { ApiDraw, ApiEvent } from '../../svenska-spel/api-clients/interfaces/api-interfaces';
+/*
 describe('distribution-to-percentage', function () {
   let odds;
 
@@ -17,10 +19,10 @@ describe('distribution-to-percentage', function () {
     const percentage = convertDistributionToPercentage(odds);
     expect(percentage).toEqual({ home: 0.2, draw: 0.75, away: 0.05 });
   });
-});
+});*/
 
 describe('convertOddsToFloats', function () {
-  let odds;
+  let odds: HomeAwayDraw<string>;
 
   beforeEach(() => {
     odds = {
@@ -37,7 +39,7 @@ describe('convertOddsToFloats', function () {
 });
 
 describe('odds-to-percentage', function () {
-  let odds;
+  let odds: HomeAwayDraw<string>;
 
   describe('with even odds', () => {
     beforeEach(() => {
@@ -75,7 +77,7 @@ describe('odds-to-percentage', function () {
   });
 
   describe('draws from fixture should sum up to 100%', () => {
-    let draw;
+    let draw: ApiDraw;
 
     beforeEach(async () => {
       const draws = await fs.readJson('./src/svenskaspel/__tests__/fixtures/stryktipset/draw.json');
@@ -83,7 +85,7 @@ describe('odds-to-percentage', function () {
     });
 
     it('should sum up to 100%', () => {
-      draw.events.forEach((event) => {
+      draw.events.forEach((event: ApiEvent) => {
         const percentage = convertToPercentage(event.odds);
         const sum = percentage.home + percentage.draw + percentage.away;
         expect(sum).toBeCloseTo(1, 0.001);
@@ -91,4 +93,3 @@ describe('odds-to-percentage', function () {
     });
   });
 });
-*/

@@ -5,7 +5,7 @@ import { SvenskaSpelDraw, SvenskaSpelEvent } from './api-clients/interfaces/sven
 import { HomeAwayDraw } from './interfaces';
 import DrawHelper from './draw-helper';
 
-export default class DrawProvider {
+export default class ResultsProvider {
   private readonly draw_helper: DrawHelper;
   constructor(private readonly api_client: SvenskaSpelApiClient, private readonly draw_store: DrawStore) {
     this.draw_helper = new DrawHelper();
@@ -15,7 +15,7 @@ export default class DrawProvider {
     console.log('got draw');
     return {
       draw_comment: draw.drawComment,
-      events: draw.events.map(DrawProvider.formatEvent),
+      events: draw.events.map(ResultsProvider.formatEvent),
       draw_number: draw.drawNumber,
       open_time: draw.openTime,
       close_time: draw.closeTime,

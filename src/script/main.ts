@@ -1,37 +1,19 @@
 import optimist from 'optimist';
-import { ScriptName, ScriptArg } from './command-line-interfaces';
-import CurrentDrawAnalyzer from './scripts/current-draw-analyzer';
-import { ScriptWrapper } from './script-wrapper';
-import DrawProvider from '../svenska-spel/draw-provider';
-import SvenskaSpelApiClient from '../svenska-spel/api-clients/svenska-spel-api-client';
-import config from 'config';
-import DrawStore from '../storage/draw-store';
+import { BaseInput } from './command-line-interfaces';
+import { ScriptFactory } from './script-factory';
 
 class ScriptRunner {
-  readonly script_args: ScriptArg;
+  readonly input: BaseInput;
   readonly script_factory: ScriptFactory;
   constructor() {
-    const access_key = config.get('svenska_spel_api.access_key');
-    this.script_args = optimist.demand(['script', 'game_type']).default('api_key', access_key).argv as ScriptArg;
-    console.log(`Starting script ${this.script_args.script}`);
-    const api_client = new SvenskaSpelApiClient(this.script_args.api_key, this.script_args.game_type);
-    const draw_store = new DrawStore(this.script_args.game_type);
-    const draw_provider = new DrawProvider(api_client, draw_store);
-    this.script_factory = new ScriptFactory(draw_provider);
+    this.input = optimist.demand(['script', 'game_type']).argv as BaseInput;
+    console.log(`Starting script ${this.input.script}`);
+
+    this.script_factory = new ScriptFactory();
   }
   public async runScript(): Promise<void> {
-    const script = this.script_factory.create(this.script_args.script);
-    await script.run(script.parseInput());
-  }
-}
-
-class ScriptFactory {
-  constructor(private readonly draw_provider: DrawProvider) {}
-  public create(script: ScriptName): ScriptWrapper {
-    switch (script) {
-      case ScriptName.ANALYZE_CURRENT_DRAW:
-        return new CurrentDrawAnalyzer(this.draw_provider);
-    }
+    const script = this.script_factory.create(this.input.script);
+    await script.run();
   }
 }
 

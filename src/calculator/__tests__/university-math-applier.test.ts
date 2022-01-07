@@ -1,5 +1,5 @@
 import UniversityMathApplier from '../university-math-applier';
-import { HomeAwayDraw } from '../../svenskaspel/interfaces';
+import { HomeAwayDraw } from '../../svenska-spel/interfaces';
 
 describe('university-math-applier.test.ts', function () {
   let applier: UniversityMathApplier;

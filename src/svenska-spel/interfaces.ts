@@ -1,13 +1,3 @@
-export interface Draw {
-  turnover: number;
-  name: string;
-  product: string;
-  productId: number;
-  drawNumber: number;
-  openTime: Date;
-  closeTime: Date;
-  events: Event[];
-}
 export interface Event {
   number: number;
   description: string;
@@ -39,8 +29,6 @@ export enum Outcome {
 
 export interface OutcomeData {
   outcome: Outcome;
-  /*  normalized_odds: number;
-    normalized_distribution: number;*/
   probability_based_on_distribution: number;
   odds_percentage: number;
   distribution_percentage: number;
@@ -60,9 +48,4 @@ export interface Line {
 export interface Bet {
   total_odds: number;
   outcomes: Outcome[];
-}
-export interface BetIndexSign {
-  index: number;
-  sign: Outcome;
-  rate: number;
 }

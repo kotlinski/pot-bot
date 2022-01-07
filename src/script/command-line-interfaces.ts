@@ -1,5 +1,6 @@
-export interface Input {
-  number_of_lines: string;
+export interface BaseInput {
+  script: ScriptName;
+  game_type: GameType;
 }
 
 export enum GameType {
@@ -8,11 +9,6 @@ export enum GameType {
 }
 
 export enum ScriptName {
-  ANALYZE_CURRENT_DRAW = 'analyze_current_draw',
-}
-
-export interface ScriptArg {
-  script: ScriptName;
-  game_type: GameType;
-  api_key: string;
+  GENERATE_BETS = 'generate_bets',
+  ANALYZE_FILTER = 'analyze_filter',
 }

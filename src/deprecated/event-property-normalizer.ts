@@ -1,4 +1,4 @@
-import { Event } from '../interfaces';
+import { Event } from '../svenska-spel/interfaces';
 /*
 function getHighestOddsPercentage(events: Event[]){
 }

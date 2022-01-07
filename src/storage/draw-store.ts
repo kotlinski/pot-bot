@@ -1,57 +1,73 @@
+import { ensureDir, outputJSON } from 'fs-extra';
 import moment from 'moment';
-import { mkdirSync } from 'fs';
-import { SvenskaSpelDraw } from '../svenska-spel/api-clients/svenskaspel-interfaces';
-import loadJsonFile = require('load-json-file')
-import writeJsonFile = require('write-json-file')
-import makeDir from 'make-dir';
-import DrawHelper from '../svenskaspel/fetch/draw-validator';
+import { SvenskaSpelDraw } from '../svenska-spel/api-clients/interfaces/svenskaspel-interfaces';
+import DrawHelper from '../svenska-spel/draw-helper';
+import { GameType } from '../script/command-line-interfaces';
+import loadJsonFile from 'load-json-file';
 
 export default class DrawStore {
   private readonly draw_helper: DrawHelper;
 
-  constructor(private readonly game_type: 'stryktipset' | 'europatipset') {
+  constructor(private readonly game_type: GameType) {
     this.draw_helper = new DrawHelper();
   }
 
-  public async storeCurrentDraw(draw: SvenskaSpelDraw): Promise<void> {
-    mkdirSync(`./draws/${this.game_type}/current`, { recursive: true });
-    let file_name = `draw-before-deadline.json`;
-    if (!this.draw_helper.hasOdds(draw)) {
-      file_name = `draw-without-odds.json`;
+  public async storeDraw(draw: SvenskaSpelDraw): Promise<void> {
+    const base_dirs = [`./draws/${this.game_type}/old/${draw.drawNumber}`];
+    if (this.draw_helper.isCurrentDraw(draw)) {
+      base_dirs.push(`./draws/${this.game_type}/current`);
     }
-    await writeJsonFile(`draws/${this.game_type}/current/${file_name}`, draw, { indent: 2 });
+    await this.storeDrawToBaseDirs(base_dirs, draw);
+    await this.storeToDrawHistory(draw);
+  }
+  private async storeDrawToBaseDirs(base_dirs: string[], draw: SvenskaSpelDraw): Promise<void> {
+    for (const base_dir of base_dirs) {
+      await ensureDir(base_dir);
+      await outputJSON(`${base_dir}/draw.json`, draw, { spaces: 2 });
+      if (this.draw_helper.isBeforeCloseTime(draw)) {
+        await outputJSON(`${base_dir}/draw-before-deadline.json`, draw, { spaces: 2 });
+      }
+      if (!this.draw_helper.hasOdds(draw)) {
+        await outputJSON(`${base_dir}/draw-without-odds.json`, draw, { spaces: 2 });
+      }
+    }
+  }
+  private async storeToDrawHistory(draw: SvenskaSpelDraw): Promise<void> {
+    const base_dir = `./draws/${this.game_type}/old/${draw.drawNumber}/draw-history`;
+    await ensureDir(`${base_dir}`);
+    await outputJSON(`${base_dir}/${this.getFormattedToday()}.json`, draw, { spaces: 2 });
+  }
+  private readonly getFormattedToday = (): string => moment().format('YYYYMMDDTHHmm');
+
+  public async getDraw(draw_number?: number): Promise<SvenskaSpelDraw | undefined> {
+    console.log(`draw_number: ${JSON.stringify(draw_number, null, 2)}`);
+    try {
+      if (draw_number) {
+        return await loadJsonFile<SvenskaSpelDraw>(`./draws/${this.game_type}/old/${draw_number}/draw.json`);
+      } else {
+        return await loadJsonFile<SvenskaSpelDraw>(`./draws/${this.game_type}/current/draw.json`);
+      }
+    } catch (error) {
+      console.log(`error!!!: ${JSON.stringify(error, null, 2)}`);
+      return undefined;
+    }
   }
 
+  /*
   public async storeDraw(draw: SvenskaSpelDraw): Promise<void> {
     const draw_number = draw.drawNumber;
     await makeDir(`./draws/${this.game_type}/old/${draw_number}/draw-history/`);
     let file_name: string;
-    if (this.draw_helper.isAfterCloseTime(draw)) {
-      file_name = `draw-after-deadline.json`;
-    } else if (!this.draw_helper.hasOdds(draw)) {
-      file_name = `draw-without-odds.json`;
-    } else {
-      file_name = `draw-before-deadline.json`;
-    }
+
     await writeJsonFile(`draws/${this.game_type}/old/${draw_number}/${file_name}`, draw, { indent: 2 });
     await writeJsonFile(`draws/${this.game_type}/old/${draw_number}/draw-history/${DrawStore.getFormattedToday()}.json`, draw, {
       indent: 2,
     });
 
     if (this.draw_helper.isCurrentDraw(draw)) {
-      await this.storeCurrentDraw(draw);
+      await this.storeDraw(draw);
     }
-  }
-
-  public async getDraw(draw_number: number): Promise<SvenskaSpelDraw> {
-    return loadJsonFile<SvenskaSpelDraw>(`./draws/${this.game_type}/old/${draw_number}/draw-before-deadline.json`);
-  }
-  public async getCurrentDraw(): Promise<SvenskaSpelDraw> {
-    return loadJsonFile<SvenskaSpelDraw>(`./draws/${this.game_type}/current/draw-before-deadline.json`);
-  }
-  private static getFormattedToday() {
-    return moment().format('YYYYMMDDTHHmm');
-  }
+  }*/
 
   /*
     public async storeResults(game_type: string, results: any): Promise<void> {

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { SvenskaSpelApiDraw, SvenskaSpelApiDraws, SvenskaSpelDraw } from './svenskaspel-interfaces';
-import DrawHelper from '../../svenskaspel/fetch/draw-validator';
+import { SvenskaSpelApiDraws, SvenskaSpelDraw } from './interfaces/svenskaspel-interfaces';
+import DrawHelper from '../draw-helper';
 
 export default class SvenskaSpelApiClient {
   readonly draw_helper: DrawHelper;
@@ -8,7 +8,8 @@ export default class SvenskaSpelApiClient {
     this.draw_helper = new DrawHelper();
   }
 
-  public async fetchCurrentDraw(): Promise<SvenskaSpelDraw> {
+  /*  public async fetchCurrentDraw(): Promise<SvenskaSpelDraw> {
+    console.log('Fetching draw from svenskaspel...');
     let draw: SvenskaSpelDraw;
     try {
       const url = `https://api.www.svenskaspel.se/external/draw/${this.game_type}/draws?accesskey=${this.api_key}`;
@@ -25,13 +26,14 @@ export default class SvenskaSpelApiClient {
       return draw;
     }
     throw new Error('No current draw');
-  }
+  }*/
 
-  public async fetchDraw(id: number): Promise<SvenskaSpelDraw> {
+  public async fetchDraw(id?: number): Promise<SvenskaSpelDraw> {
+    console.log('Fetching draw from svenskaspel...');
+    const url = `https://api.www.svenskaspel.se/external/draw/${this.game_type}/draws/${id ?? ''}?accesskey=${this.api_key}`;
     try {
-      const url = `https://api.www.svenskaspel.se/external/draw/${this.game_type}/draws/${id}?accesskey=${this.api_key}`;
-      const response = await axios.get<SvenskaSpelApiDraw>(url);
-      return response.data.draw;
+      const response = await axios.get<SvenskaSpelApiDraws>(url);
+      return response.data.draws[0];
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         console.log(`could not fetch draw, status: ${error.response.status}`, error.response.data);

@@ -1,4 +1,4 @@
-import drawCleaner from '../../draw-cleaner';
+import drawCleaner from '../draw-cleaner';
 import { generateLines } from '../generate-lines-combinations';
 import fs from 'fs-extra';
 

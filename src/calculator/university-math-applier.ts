@@ -1,4 +1,4 @@
-import { HomeAwayDraw } from '../svenskaspel/interfaces';
+import { HomeAwayDraw } from '../svenska-spel/interfaces';
 import UniversityMathCalculator from './university-math-calculator';
 
 export default class UniversityMathApplier {

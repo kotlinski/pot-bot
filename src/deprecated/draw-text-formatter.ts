@@ -1,3 +1,4 @@
+/*
 const api = {
   getDrawName(draw: any): string {
     return draw.drawComment;
@@ -42,3 +43,4 @@ const api = {
 };
 
 export default api;
+*/

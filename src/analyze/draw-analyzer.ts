@@ -1,6 +1,6 @@
-import { HomeAwayDraw, Outcome, OutcomeData } from '../svenskaspel/interfaces';
-import { ApiEvent } from '../svenska-spel/api-clients/api-interfaces';
-import { convertToPercentage } from '../svenskaspel/bet-calculations/percentage-converter';
+import { HomeAwayDraw, Outcome, OutcomeData } from '../svenska-spel/interfaces';
+import { ApiEvent } from '../svenska-spel/api-clients/interfaces/api-interfaces';
+import { convertToPercentage } from '../calculator/percentage-converter';
 import UniversityMathApplier from '../calculator/university-math-applier';
 
 export default class DrawAnalyzer {

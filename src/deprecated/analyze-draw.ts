@@ -96,7 +96,7 @@ function printNumberOfPersonsWithThisBet(draw: any, bets: Bet[]) {
       /* console.log("line: ", JSON.stringify(line, null, 2));
        console.log("i: ", JSON.stringify(i, null, 2));
        console.log("i+a: ", JSON.stringify(i+a, null, 2));*/
- /*     if (distribution[i] === null) {
+/*     if (distribution[i] === null) {
         distribution[i] = 0;
       }
       if (line < i) {
@@ -175,7 +175,7 @@ function niceTab(outcomes_of_game: any[], comparable?: { home: number; draw: num
   return formatted_output;
 }*/
 
-import { Bet, HomeAwayDraw } from '../svenskaspel/interfaces';
+import { Bet, HomeAwayDraw } from '../svenska-spel/interfaces';
 
 export function addBetToOutcomesDistribution(line: Bet, outcome_distribution: HomeAwayDraw<number>[]): void {
   for (let i = 0; i < line.outcomes.length; i++) {
@@ -292,7 +292,7 @@ export default class LineGenerator {
 }
 
   /* Promise<FinalBets>*/
-  /*  try {
+/*  try {
     if (draw_number) {
       draw = await getDraw(draw_config.game_type, draw_number);
     } else {
@@ -301,7 +301,7 @@ export default class LineGenerator {
   } catch (error) {
     console.log('Could not read current draw, please fetch again `npm run fetch-current-draw`', error);
   }*/
-  /* try {
+/* try {
     const draw_store = new DrawStore(draw_config.game_type);
     const draw: SvenskaSpelDraw = await draw_store.getCurrentDraw(draw_config.game_type);
 

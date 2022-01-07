@@ -1,3 +1,5 @@
+/*
+
 import drawBetPicker from '../draw-bet-picker';
 import fs from 'fs-extra';
 
@@ -13,4 +15,4 @@ describe.skip('draw-bet-combination-generator', function () {
       const picks = drawBetPicker.pickBetsV1(undefined, combinations);
     });
   });
-});
+});*/

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { SvenskaSpelDraw } from '../../svenska-spel/api-clients/svenskaspel-interfaces';
+import { SvenskaSpelDraw } from './api-clients/interfaces/svenskaspel-interfaces';
 
 export default class DrawHelper {
   public hasOdds(draw: SvenskaSpelDraw): boolean {
@@ -20,6 +20,11 @@ export default class DrawHelper {
   public isAfterCloseTime(draw: SvenskaSpelDraw): boolean {
     const close_time = moment(draw.closeTime);
     return moment().isAfter(close_time);
+  }
+
+  public isBeforeCloseTime(draw: SvenskaSpelDraw): boolean {
+    const close_time = moment(draw.closeTime);
+    return moment().isBefore(close_time);
   }
 
   public isLastDay(current_draw: SvenskaSpelDraw): boolean {
