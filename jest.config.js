@@ -1,8 +1,6 @@
 module.exports = {
-/*  transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-  },*/
-  testRegex: '(/__tests__/.*\\.test)\\.[jt]sx?$',
-  modulePathIgnorePatterns: ['build'],
-  moduleFileExtensions: ['ts', 'js', 'json'],
+  preset: 'ts-jest',
+  testRegex: '.*\\/__tests__\\/.*\\.test\\.ts$',
+  testEnvironment: 'node',
+  collectCoverage: true,
 };
