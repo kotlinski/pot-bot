@@ -27,13 +27,13 @@ describe('odds-to-percentage', function () {
     beforeEach(() => {
       odds = {
         home: '1',
-        draw: '2',
-        away: '3',
+        draw: '4',
+        away: '5',
       };
     });
     it('should result in 1/3%', async () => {
       const percentage = convertPlainValueToPercentage(odds);
-      expect(percentage).toEqual({ home: 0.3333, draw: 0.3333, away: 0.3333 });
+      expect(percentage).toEqual({ home: 0.1, draw: 0.4, away: 0.5 });
     });
   });
 
@@ -60,12 +60,10 @@ describe('odds-to-percentage', function () {
 
   describe('draws from fixture should sum up to 100%', () => {
     let draw: ApiDraw;
-
     beforeEach(async () => {
-      const draws = await fs.readJson('./src/svenskaspel/__tests__/fixtures/stryktipset/draw.json');
+      const draws = await fs.readJson('./src/fixtures/stryktipset/draw.json');
       draw = draws.draws[0];
     });
-
     it('should sum up to 100%', () => {
       draw.events.forEach((event: ApiDrawEvent) => {
         const percentage = convertFromOddsToPercentage(event.odds!);
