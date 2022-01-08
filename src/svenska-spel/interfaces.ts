@@ -30,16 +30,19 @@ export enum Outcome {
 export interface OutcomeData {
   outcome: Outcome;
   probability_based_on_distribution: number;
-  odds_percentage: number;
+  odds_percentage?: number;
   distribution_percentage: number;
-  newspaper_percentage: number;
-  raw_odds: string;
+  newspaper_percentage?: number;
+  raw_odds?: string;
   raw_distribution: string;
 }
-
+export interface DrawData {
+  line: Line;
+  has_odds: boolean;
+}
 export interface Line {
   outcomes: Outcome[];
-  total_odds: number;
+  total_odds?: number;
   total_distribution: number;
   total_probability: number;
   bet_score: number;

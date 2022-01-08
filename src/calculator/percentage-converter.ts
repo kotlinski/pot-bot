@@ -1,22 +1,34 @@
 import { HomeAwayDraw, Outcome } from '../svenska-spel/interfaces';
 
-const oddsToPercentage = (odds: number) => {
+export const oddsToPercentage = (odds: number): number => {
   if (odds === 0) {
     return 0;
   }
   return 1 / odds;
 };
 
-export function convertToPercentage(raw_odds: HomeAwayDraw<string>): HomeAwayDraw<number> {
-  const odds: HomeAwayDraw<number> = convertOddsToFloatValues(raw_odds);
+export const voidConverter = (odds: number): number => odds;
+
+export function convertFromOddsToPercentage(raw_odds: HomeAwayDraw<string>): HomeAwayDraw<number> {
+  return convertToPercentage(raw_odds, oddsToPercentage);
+}
+export function convertPlainValueToPercentage(raw_odds: HomeAwayDraw<string>): HomeAwayDraw<number> {
+  return convertToPercentage(raw_odds, voidConverter);
+}
+
+export function convertToPercentage(
+  raw_data: HomeAwayDraw<string>,
+  converter: (value: number) => number,
+): HomeAwayDraw<number> {
+  const odds: HomeAwayDraw<number> = convertOddsToFloatValues(raw_data);
   const total_percentage = Object.values(Outcome).reduce(
-    (percentage_sum: number, outcome: Outcome) => percentage_sum + oddsToPercentage(odds[outcome]),
+    (percentage_sum: number, outcome: Outcome) => percentage_sum + converter(odds[outcome]),
     0,
   );
   return {
-    home: Math.round((oddsToPercentage(odds[Outcome.HOME]) / total_percentage) * 10000) / 10000,
-    draw: Math.round((oddsToPercentage(odds[Outcome.DRAW]) / total_percentage) * 10000) / 10000,
-    away: Math.round((oddsToPercentage(odds[Outcome.AWAY]) / total_percentage) * 10000) / 10000,
+    home: Math.round((converter(odds[Outcome.HOME]) / total_percentage) * 10000) / 10000,
+    draw: Math.round((converter(odds[Outcome.DRAW]) / total_percentage) * 10000) / 10000,
+    away: Math.round((converter(odds[Outcome.AWAY]) / total_percentage) * 10000) / 10000,
   };
 }
 

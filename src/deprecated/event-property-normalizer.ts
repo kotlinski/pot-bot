@@ -14,7 +14,7 @@ function iterator(events: Event[], property: string, operator: (...values: numbe
   return val
 }*/
 
-export function normalizeProperty(_events: Event[], _property: 'odds_in_percentage' | 'bet_value') {
+export function normalizeProperty(_events: Event[], _property: 'odds_in_percentage' | 'bet_value'): any {
   /*
 }
   let lowest = Number.POSITIVE_INFINITY;

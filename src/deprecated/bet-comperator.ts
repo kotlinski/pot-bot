@@ -1,4 +1,6 @@
+/*
 import { addBetToOutcomesDistribution, calculateOutcomeDistributions } from './analyze-draw';
+
 import _ from 'lodash';
 
 import sha256 from 'crypto-js/sha256';
@@ -84,6 +86,8 @@ export function willAlignToOdds(
     // console.log(`bet_score_a: ${JSON.stringify(bet_score_a, null, 2)}`);
     return true;
   }*/
+
+/*
   const bet_score_b: number = calculateBetScore(
     [...picked_bets, bet],
     hash_bet_score_map,
@@ -99,6 +103,7 @@ export function willAlignToOdds(
   console.log(`value: ${JSON.stringify(value, null, 2)}`);
   console.log("-----------------------------------------------");
   //  console.log(`bet_score_b: ${JSON.stringify(bet_score_b, null, 2)}`);
-  }*/
+  }
   return value;
 }
+*/

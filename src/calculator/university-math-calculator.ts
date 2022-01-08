@@ -1,8 +1,8 @@
 export default class UniversityMathCalculator {
   public static calculateHomeProbability(distribution: number): number {
-    if (distribution < 0.08) {
+    if (distribution < 0.07) {
       return 0;
-    } else if (distribution >= 0.08 && distribution < 0.66) {
+    } else if (distribution >= 0.07 && distribution < 0.66) {
       return 0.652 * distribution + 0.12783;
     } else if (distribution >= 0.66 && distribution < 0.74) {
       return 0.55179;
@@ -32,9 +32,9 @@ export default class UniversityMathCalculator {
    * @param distribution
    */
   public static calculateAwayProbability(distribution: number): number {
-    if (distribution < 0.07) {
+    if (distribution < 0.03) {
       return 0;
-    } else if (distribution >= 0.07 && distribution < 0.63) {
+    } else if (distribution >= 0.03 && distribution < 0.63) {
       return 0.6 * distribution + 0.11837;
     } else if (distribution >= 0.63 && distribution <= 0.8) {
       return 2.1 * distribution - 0.82737;

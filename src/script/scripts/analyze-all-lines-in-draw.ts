@@ -34,7 +34,7 @@ export default class AnalyzeFilter implements ScriptWrapper {
   async run(): Promise<void> {
     await outputFile(
       this.report_file_path,
-      `draw_number|total_distribution|total_probability|total_odds|#winners|amount|${os.EOL}`,
+      `line|total_distribution|total_probability|total_odds|news_paper_advice|#correct|#winners|amount|${os.EOL}`,
     );
 
     const start_draw_number = parseInt(this.input.draw_number, 10);
@@ -66,7 +66,7 @@ export default class AnalyzeFilter implements ScriptWrapper {
         const data = `${draw_number}|${tot_dist}|${tot_prob}|${tot_odds}|${winners}|${amount}${os.EOL}`;
         await appendFile(this.report_file_path, data);
       } catch (error) {
-        console.error(`Probably missing odds and start odds for this draw`);
+        console.error(`Probably missing odds and start odds for this draw.`);
         if (error instanceof TypeError) {
           console.error(error.message);
         }

@@ -1,12 +1,13 @@
 import optimist from 'optimist';
 import { ScriptWrapper } from '../script-wrapper';
-import DrawProvider from '../../svenska-spel/draw-provider';
+import DrawProvider from '../../svenska-spel/draw/draw-provider';
 import LinesProvider from '../../lines/lines-provider';
 import LineSorter from '../../lines/line-sorter';
 import BetStore from '../../storage/bet-store';
-import { isTotalOddsPlayable } from '../../filters/filters';
+// import { isTotalDistributionPlayable } from '../../filters/filters';
 import { ScriptFactory } from '../script-factory';
 import { BaseInput } from '../command-line-interfaces';
+import { combinedFilters } from '../../filters/filters';
 
 interface Input extends BaseInput {
   number_of_lines: string;
@@ -33,8 +34,8 @@ export default class GenerateBets implements ScriptWrapper {
     const draw = await this.draw_provider.getDraw();
     const lines = this.lines_provider.getLines(draw);
     console.log(`lines before: ${JSON.stringify(lines.length, null, 2)}`);
-    const filter_lines = lines.filter(isTotalOddsPlayable);
-    console.log(`lines before: ${JSON.stringify(filter_lines.length, null, 2)}`);
+    const filter_lines = lines.filter(combinedFilters);
+    console.log(`lines after: ${JSON.stringify(filter_lines.length, null, 2)}`);
     const sorted_lines = this.lines_sorter.sortLines(filter_lines);
 
     console.log(`number_of_lines: ${JSON.stringify(number_of_lines, null, 2)}`);

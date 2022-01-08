@@ -1,25 +1,7 @@
-
 import fs from 'fs-extra';
-import { convertToPercentage, convertOddsToFloatValues } from '../percentage-converter';
+import { convertOddsToFloatValues, convertPlainValueToPercentage, convertFromOddsToPercentage } from '../percentage-converter';
 import { HomeAwayDraw } from '../../svenska-spel/interfaces';
-import { ApiDraw, ApiEvent } from '../../svenska-spel/api-clients/interfaces/api-interfaces';
-/*
-describe('distribution-to-percentage', function () {
-  let odds;
-
-  beforeEach(() => {
-    odds = {
-      home: '20',
-      draw: '75',
-      away: '5',
-    };
-  });
-
-  it('should convert distributions to decimals', async () => {
-    const percentage = convertDistributionToPercentage(odds);
-    expect(percentage).toEqual({ home: 0.2, draw: 0.75, away: 0.05 });
-  });
-});*/
+import { ApiDraw, ApiDrawEvent } from '../../svenska-spel/api-clients/interfaces/api-interfaces';
 
 describe('convertOddsToFloats', function () {
   let odds: HomeAwayDraw<string>;
@@ -44,13 +26,13 @@ describe('odds-to-percentage', function () {
   describe('with even odds', () => {
     beforeEach(() => {
       odds = {
-        home: '2',
+        home: '1',
         draw: '2',
-        away: '2',
+        away: '3',
       };
     });
     it('should result in 1/3%', async () => {
-      const percentage = convertToPercentage(odds);
+      const percentage = convertPlainValueToPercentage(odds);
       expect(percentage).toEqual({ home: 0.3333, draw: 0.3333, away: 0.3333 });
     });
   });
@@ -65,12 +47,12 @@ describe('odds-to-percentage', function () {
     });
 
     it('should calculate percentage', async () => {
-      const percentage = convertToPercentage(odds);
+      const percentage = convertFromOddsToPercentage(odds);
       expect(percentage).toEqual({ home: 0.3735, draw: 0.2911, away: 0.3355 });
     });
 
     it('should sum up to 100%', async () => {
-      const percentage = convertToPercentage(odds);
+      const percentage = convertFromOddsToPercentage(odds);
       const sum = percentage.home + percentage.draw + percentage.away;
       expect(sum).toBeCloseTo(1, 0.001);
     });
@@ -85,8 +67,8 @@ describe('odds-to-percentage', function () {
     });
 
     it('should sum up to 100%', () => {
-      draw.events.forEach((event: ApiEvent) => {
-        const percentage = convertToPercentage(event.odds);
+      draw.events.forEach((event: ApiDrawEvent) => {
+        const percentage = convertFromOddsToPercentage(event.odds!);
         const sum = percentage.home + percentage.draw + percentage.away;
         expect(sum).toBeCloseTo(1, 0.001);
       });

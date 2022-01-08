@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { SvenskaSpelDraw } from './api-clients/interfaces/svenskaspel-interfaces';
+import { SvenskaSpelDraw } from '../api-clients/interfaces/svenskaspel-draw-interfaces';
 
 export default class DrawHelper {
   public hasOdds(draw: SvenskaSpelDraw): boolean {

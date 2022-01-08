@@ -14,11 +14,11 @@ export default class DrawFetcher {
         console.log('No cached data for this draw');
       }*/
 
-      /*      if (draw_from_file && !draw_validator.isCurrentDraw(draw_from_file)) {
+/*      if (draw_from_file && !draw_validator.isCurrentDraw(draw_from_file)) {
         await fs.emptyDirSync(`./draws/${game_type}/current`);
         return;
       }*/
-      /*      if (
+/*      if (
           draw_from_file &&
           draw_validator.isCurrentDraw(draw_from_file) &&
           !draw_validator.isLastDay(draw_from_file) &&

@@ -39,6 +39,7 @@
     "colors": "^1.4.0",
     "config": "^3.2.4",
     "crypto-js": "latest",
+    "csv": "^6.0.5",
     "delay": "^4.3.0",
     "fs-extra": "^9.0.1",
     "joi": "^17.5.0",
@@ -51,7 +52,8 @@
     "os": "^0.1.1",
     "path": "^0.12.7",
     "progress": "latest",
-    "yargs": "^17.3.1"
+    "yargs": "^17.3.1",
+    "p-map": "^4.0.0"
   },
   "devDependencies": {
     "@springworks/eslint-config-typescript": "^3005.77.0",

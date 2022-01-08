@@ -1,6 +1,6 @@
 import { Line, Outcome } from '../svenska-spel/interfaces';
 
-export function formatBet(line: Line) {
+export function formatBet(line: Line): string {
   return `E,${line.outcomes.map(outcomeToBet).join(',')}`;
 }
 
