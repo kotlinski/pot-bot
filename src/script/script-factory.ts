@@ -9,6 +9,7 @@ import optimist from 'optimist';
 import config from 'config';
 import ResultProvider from '../svenska-spel/result/result-provider';
 import ResultStore from '../storage/result-store';
+import FindDeadlines from './scripts/find-deadlines';
 
 interface ApiKeyInput extends BaseInput {
   api_key: string;
@@ -21,6 +22,8 @@ export class ScriptFactory {
         return new GenerateBets();
       case ScriptName.ANALYZE_FILTER:
         return new AnalyzeFilter();
+      case ScriptName.FIND_DEADLINES:
+        return new FindDeadlines();
     }
   }
 
