@@ -99,9 +99,9 @@ describe('UniversityMathCalculator', () => {
     });
   });
   describe('calculateAwayProbability', () => {
-    describe('below 7% distribution', () => {
+    describe('below 3% distribution', () => {
       beforeEach(() => {
-        distributions = [0.01, 0.06];
+        distributions = [0.01, 0.02];
       });
       it('should have a probability of 0', () => {
         for (const distribution of distributions) {
@@ -111,9 +111,9 @@ describe('UniversityMathCalculator', () => {
         }
       });
     });
-    describe('between 7% and 29% distribution', () => {
+    describe('between 3% and 29% distribution', () => {
       beforeEach(() => {
-        distributions = [0.07, 0.29];
+        distributions = [0.03, 0.29];
       });
       it('should have higher probability than distribution', () => {
         for (const distribution of distributions) {
