@@ -44,16 +44,15 @@
     "fs-extra": "^9.0.1",
     "joi": "^17.5.0",
     "load-json-file": "6.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "minimist": "^1.2.5",
     "moment": "^2.24.0",
-    "nodemailer": "^6.4.4",
     "optimist": "^0.6.1",
     "os": "^0.1.1",
+    "p-map": "^4.0.0",
     "path": "^0.12.7",
     "progress": "latest",
-    "yargs": "^17.3.1",
-    "p-map": "^4.0.0"
+    "yargs": "^17.3.1"
   },
   "devDependencies": {
     "@springworks/eslint-config-typescript": "^3005.77.0",
