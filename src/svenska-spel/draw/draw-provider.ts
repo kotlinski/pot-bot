@@ -24,6 +24,7 @@ export default class DrawProvider {
     const stored_draw = await this.draw_store.getDraw(draw_number);
     if (stored_draw === undefined || this.isDrawCloseToDeadline(stored_draw)) {
       const draw = await this.api_client.fetchDraw(draw_number);
+      console.log(`${this.draw_helper.minutesUntilClose(draw)} minutes until close time.`);
       await this.draw_store.storeDraw(draw);
       return draw;
     } else {
@@ -33,7 +34,6 @@ export default class DrawProvider {
 
   private isDrawCloseToDeadline(draw: SvenskaSpelDraw): boolean {
     const minutes_until_close = this.draw_helper.minutesUntilClose(draw);
-    console.log(`${minutes_until_close} minutes until close time.`);
     return minutes_until_close > 0 && minutes_until_close < 90;
   }
 }

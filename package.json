@@ -19,6 +19,7 @@
     "build": "tsc --build tsconfig.json",
     "generate-bets": "cross-env NODE_ENV=dev ts-node src/script/main.ts --script generate_bets",
     "analyze-filter": "cross-env NODE_ENV=dev ts-node src/script/main.ts --script analyze_filter",
+    "find-deadlines": "cross-env NODE_ENV=dev ts-node src/script/main.ts --script find_deadlines --game_type stryktipset",
     "test": "jest"
   },
   "keywords": [],
