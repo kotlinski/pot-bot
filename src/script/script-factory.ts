@@ -4,38 +4,40 @@ import GenerateBets from './scripts/generate-bets';
 import AnalyzeFilter from './scripts/analyze-filter';
 import DrawProvider from '../svenska-spel/draw/draw-provider';
 import SvenskaSpelApiClient from '../svenska-spel/api-clients/svenska-spel-api-client';
-import DrawStore from '../storage/draw-store';
 import optimist from 'optimist';
 import config from 'config';
 import ResultProvider from '../svenska-spel/result/result-provider';
-import ResultStore from '../storage/result-store';
 import FindDeadlines from './scripts/find-deadlines';
+import FileStore from '../storage/file-store/file-store';
+import { Storage } from '../storage/storage';
 
 interface ApiKeyInput extends BaseInput {
   api_key: string;
 }
 
 export class ScriptFactory {
+  private readonly file_store: Storage;
+  constructor() {
+    const input = optimist.demand('game_type').argv as ApiKeyInput;
+    this.file_store = new FileStore(input.game_type);
+  }
+
   public create(script: ScriptName): ScriptWrapper {
     switch (script) {
       case ScriptName.GENERATE_BETS:
-        return new GenerateBets();
+        return new GenerateBets(this.file_store);
       case ScriptName.ANALYZE_FILTER:
-        return new AnalyzeFilter();
+        return new AnalyzeFilter(this.file_store);
       case ScriptName.FIND_DEADLINES:
-        return new FindDeadlines();
+        return new FindDeadlines(this.file_store);
     }
   }
 
-  public static createDrawProvider(): DrawProvider {
-    const input = optimist.demand('game_type').argv as ApiKeyInput;
-    const draw_store = new DrawStore(input.game_type);
-    return new DrawProvider(this.createApiClient(), draw_store);
+  public createDrawProvider(storage: Storage): DrawProvider {
+    return new DrawProvider(ScriptFactory.createApiClient(), storage);
   }
-  public static createResultProvider(): ResultProvider {
-    const input = optimist.demand('game_type').argv as ApiKeyInput;
-    const result_store = new ResultStore(input.game_type);
-    return new ResultProvider(this.createApiClient(), result_store);
+  public createResultProvider(storage: Storage): ResultProvider {
+    return new ResultProvider(ScriptFactory.createApiClient(), storage);
   }
 
   private static createApiClient(): SvenskaSpelApiClient {

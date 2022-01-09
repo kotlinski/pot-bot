@@ -11,6 +11,7 @@ import optimist from 'optimist';
 import { BaseInput } from '../command-line-interfaces';
 import * as os from 'os';
 import pMap from 'p-map';
+import { Storage } from '../../storage/storage';
 
 interface Input extends BaseInput {
   draw_number: string;
@@ -24,10 +25,11 @@ export default class AnalyzeFilter implements ScriptWrapper {
   private readonly result_provider: ResultProvider;
   private readonly input: Input;
 
-  constructor() {
+  constructor(storage: Storage) {
     this.input = optimist.demand(['draw_number']).argv as Input;
-    this.draw_provider = ScriptFactory.createDrawProvider();
-    this.result_provider = ScriptFactory.createResultProvider();
+    const script_factory = new ScriptFactory();
+    this.draw_provider = script_factory.createDrawProvider(storage);
+    this.result_provider = script_factory.createResultProvider(storage);
     this.lines_provider = new LinesProvider();
   }
 

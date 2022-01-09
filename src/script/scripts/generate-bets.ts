@@ -3,11 +3,11 @@ import { ScriptWrapper } from '../script-wrapper';
 import DrawProvider from '../../svenska-spel/draw/draw-provider';
 import LinesProvider from '../../lines/lines-provider';
 import LineSorter from '../../lines/line-sorter';
-import BetStore from '../../storage/bet-store';
-// import { isTotalDistributionPlayable } from '../../filters/filters';
 import { ScriptFactory } from '../script-factory';
 import { BaseInput } from '../command-line-interfaces';
 import { combinedFilters } from '../../filters/filters';
+import FileStore from '../../storage/file-store/file-store';
+import { Storage } from '../../storage/storage';
 
 interface Input extends BaseInput {
   number_of_lines: string;
@@ -16,16 +16,17 @@ interface Input extends BaseInput {
 export default class GenerateBets implements ScriptWrapper {
   private readonly lines_provider: LinesProvider;
   private readonly lines_sorter: LineSorter;
-  private readonly bet_store: BetStore;
   private readonly draw_provider: DrawProvider;
   private readonly input: Input;
+  private readonly bet_store: Storage;
 
-  constructor() {
+  constructor(storage: Storage) {
     this.input = optimist.demand(['number_of_lines']).argv as Input;
-    this.draw_provider = ScriptFactory.createDrawProvider();
+    const script_factory = new ScriptFactory();
+    this.draw_provider = script_factory.createDrawProvider(storage);
     this.lines_provider = new LinesProvider();
     this.lines_sorter = new LineSorter();
-    this.bet_store = new BetStore(this.input.game_type);
+    this.bet_store = new FileStore(this.input.game_type);
   }
 
   async run(): Promise<void> {
