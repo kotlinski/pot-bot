@@ -11,13 +11,12 @@ describe('dropbox-api-client', () => {
 
   describe('Test pushing a file to dropbox', () => {
     let draw: SvenskaSpelDraw;
-    // jest.spyOn(axios);
     beforeEach(async () => {
       const draws = await readJson('./src/fixtures/stryktipset/draw.json');
       draw = draws.draws[0];
     });
     it('should create a test file in dropbox', async () => {
-      await expect(api_client.createFile(draw)).resolves.not.toThrow();
+      await expect(api_client.storeDraw(draw, '/draw.json')).resolves.not.toThrow();
       expect(axios.post).toBeCalledWith('https://content.dropboxapi.com/2/files/upload', JSON.stringify(draw, null, 2), {
         headers: {
           'Authorization': 'Bearer dropbox-test-token',

@@ -3,7 +3,6 @@ import { ScriptWrapper } from '../script-wrapper';
 import DrawProvider from '../../svenska-spel/draw/draw-provider';
 import LinesProvider from '../../lines/lines-provider';
 import LineSorter from '../../lines/line-sorter';
-// import { isTotalDistributionPlayable } from '../../filters/filters';
 import { ScriptFactory } from '../script-factory';
 import { BaseInput } from '../command-line-interfaces';
 import { combinedFilters } from '../../filters/filters';

@@ -7,13 +7,13 @@ export default class DropboxApiClient {
     this.BASE_URL = `https://content.dropboxapi.com/2/files/upload`;
   }
 
-  public async createFile(draw: SvenskaSpelDraw): Promise<void> {
+  public async storeDraw(draw: SvenskaSpelDraw, path: string): Promise<void> {
     console.log(`Pushing file to dropbox`);
     try {
       return await axios.post(this.BASE_URL, JSON.stringify(draw, null, 2), {
         headers: {
           'Authorization': `Bearer ${this.access_token}`,
-          'Dropbox-API-Arg': JSON.stringify({ path: '/draw.json', mode: 'add', autorename: false }),
+          'Dropbox-API-Arg': JSON.stringify({ path, mode: 'add', autorename: false }),
           'Content-Type': 'text/plain; charset=dropbox-cors-hack',
         },
       });
