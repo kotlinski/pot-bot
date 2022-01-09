@@ -2,12 +2,14 @@ import { ScriptWrapper } from '../script-wrapper';
 import DrawProvider from '../../svenska-spel/draw/draw-provider';
 import { ScriptFactory } from '../script-factory';
 import moment from 'moment';
+import { Storage } from '../../storage/storage';
 
 export default class FindDeadlines implements ScriptWrapper {
   private readonly draw_provider: DrawProvider;
 
-  constructor() {
-    this.draw_provider = ScriptFactory.createDrawProvider();
+  constructor(storage: Storage) {
+    const script_factory = new ScriptFactory();
+    this.draw_provider = script_factory.createDrawProvider(storage);
   }
 
   /*

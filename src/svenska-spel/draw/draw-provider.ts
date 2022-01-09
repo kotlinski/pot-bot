@@ -1,13 +1,13 @@
 import SvenskaSpelApiClient from '../api-clients/svenska-spel-api-client';
 import { ApiDraw } from '../api-clients/interfaces/api-interfaces';
-import DrawStore from '../../storage/draw-store';
 import DrawHelper from './draw-helper';
 import { formatApiDraw } from './draw-formatter';
 import { SvenskaSpelDraw } from '../api-clients/interfaces/svenskaspel-draw-interfaces';
+import { Storage } from '../../storage/storage';
 
 export default class DrawProvider {
   private readonly draw_helper: DrawHelper;
-  constructor(private readonly api_client: SvenskaSpelApiClient, private readonly draw_store: DrawStore) {
+  constructor(private readonly api_client: SvenskaSpelApiClient, private readonly storage: Storage) {
     this.draw_helper = new DrawHelper();
   }
   public async getDraw(draw_number?: number): Promise<ApiDraw> {
@@ -21,11 +21,11 @@ export default class DrawProvider {
   }
 
   private async getSvenskaSpelDraw(draw_number?: number): Promise<SvenskaSpelDraw> {
-    const stored_draw = await this.draw_store.getDraw(draw_number);
+    const stored_draw = await this.storage.getDraw(draw_number);
     if (stored_draw === undefined || this.isDrawCloseToDeadline(stored_draw)) {
       const draw = await this.api_client.fetchDraw(draw_number);
       console.log(`${this.draw_helper.minutesUntilClose(draw)} minutes until close time.`);
-      await this.draw_store.storeDraw(draw);
+      await this.storage.storeDraw(draw);
       return draw;
     } else {
       return stored_draw;

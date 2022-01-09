@@ -1,11 +1,11 @@
 import SvenskaSpelApiClient from '../api-clients/svenska-spel-api-client';
 import { ApiResult } from '../api-clients/interfaces/api-interfaces';
 import { formatApiResult } from './result-formatter';
-import ResultStore from '../../storage/result-store';
 import { SvenskaSpelResult } from '../api-clients/interfaces/svenskaspel-result-interfaces';
+import { Storage } from '../../storage/storage';
 
 export default class ResultProvider {
-  constructor(private readonly api_client: SvenskaSpelApiClient, private readonly result_store: ResultStore) {}
+  constructor(private readonly api_client: SvenskaSpelApiClient, private readonly storage: Storage) {}
 
   public async getResult(draw_number?: number): Promise<ApiResult> {
     const result = await this.getSvenskaSpelResult(draw_number);
@@ -13,10 +13,10 @@ export default class ResultProvider {
   }
 
   private async getSvenskaSpelResult(draw_number?: number): Promise<SvenskaSpelResult> {
-    const stored_result = await this.result_store.getResult(draw_number);
+    const stored_result = await this.storage.getResult(draw_number);
     if (stored_result === undefined || !this.isComplete(stored_result)) {
       const result = await this.api_client.fetchResult(draw_number);
-      await this.result_store.storeResult(result);
+      await this.storage.storeResult(result);
       return result;
     } else {
       return stored_result;
