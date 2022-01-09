@@ -1,0 +1,8 @@
+{
+  "svenska_spel_api": {
+    "access_key": "ss-test-token"
+  },
+  "dropbox": {
+    "access_token": "dropbox-test-token"
+  }
+}
