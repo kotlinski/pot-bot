@@ -117,3 +117,7 @@ draws/
 
 current/
 /build/
+
+dist
+
+tsconfig.tsbuildinfo
