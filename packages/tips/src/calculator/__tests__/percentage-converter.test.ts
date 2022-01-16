@@ -1,7 +1,8 @@
-import fs from 'fs-extra';
+import { readJson } from 'fs-extra';
 import { convertOddsToFloatValues, convertPlainValueToPercentage, convertFromOddsToPercentage } from '../percentage-converter';
 import { HomeAwayDraw } from '../../svenska-spel/interfaces';
 import { ApiDraw, ApiDrawEvent } from '../../svenska-spel/api-clients/interfaces/api-interfaces';
+import path from 'path';
 
 describe('convertOddsToFloats', function () {
   let odds: HomeAwayDraw<string>;
@@ -61,7 +62,7 @@ describe('odds-to-percentage', function () {
   describe('draws from fixture should sum up to 100%', () => {
     let draw: ApiDraw;
     beforeEach(async () => {
-      const draws = await fs.readJson('./src/fixtures/stryktipset/draw.json');
+      const draws = await readJson(path.join(__dirname, '../../../fixtures/stryktipset/draw.json'));
       draw = draws.draws[0];
     });
     it('should sum up to 100%', () => {

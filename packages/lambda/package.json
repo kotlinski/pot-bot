@@ -12,10 +12,10 @@
   },
   "homepage": "https://github.com/kotlinski/pot-bot",
   "dependencies": {
-    "tips": "*"
+    "tips": "0.0.1-1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.75",
-    "@types/mongodb": "^3.6.12"
+    "del-cli": "^4.0.1"
   }
 }

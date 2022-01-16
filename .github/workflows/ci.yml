@@ -18,6 +18,7 @@ jobs:
       - name: Run tests
         run: yarn test
   build-lambda:
+    if: github.ref == 'refs/heads/main'
     needs: lint-and-test
     runs-on: ubuntu-latest
     steps:
@@ -31,6 +32,9 @@ jobs:
       - name: Move node_modules to build-directory
         run: cp -RL packages/lambda/node_modules packages/lambda/dist/ || exit 0
         shell: bash
-      - name: Zip build folder
-        run: cd packages/lambda/dist && zip -b . packages/lambda/dist.zip * -r
-        shell: bash
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+         name: lambda
+         path: packages/lambda/dist
+

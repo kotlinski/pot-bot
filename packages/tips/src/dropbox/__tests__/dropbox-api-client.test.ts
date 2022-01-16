@@ -3,6 +3,7 @@ import { readJson } from 'fs-extra';
 import { SvenskaSpelDraw } from '../../svenska-spel/api-clients/interfaces/svenskaspel-draw-interfaces';
 import config from 'config';
 import axios from 'axios';
+import path from 'path';
 jest.mock('axios');
 
 describe('dropbox-api-client', () => {
@@ -12,7 +13,7 @@ describe('dropbox-api-client', () => {
   describe('Test pushing a file to dropbox', () => {
     let draw: SvenskaSpelDraw;
     beforeEach(async () => {
-      const draws = await readJson('./src/fixtures/stryktipset/draw.json');
+      const draws = await readJson(path.join(__dirname, '../../../fixtures/stryktipset/draw.json'));
       draw = draws.draws[0];
     });
     it('should create a test file in dropbox', async () => {
