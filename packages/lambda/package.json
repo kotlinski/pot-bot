@@ -1,0 +1,21 @@
+{
+  "name": "lambda",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lambda importing stats",
+  "main": "dist/index.js",
+  "author": "Simon Kotlinski",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kotlinski/pot-bot.git",
+    "directory": "packages/lambda"
+  },
+  "homepage": "https://github.com/kotlinski/pot-bot",
+  "dependencies": {
+    "tips": "0.0.1-1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.75",
+    "del-cli": "^4.0.1"
+  }
+}

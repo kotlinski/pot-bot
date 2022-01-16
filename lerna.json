@@ -1,0 +1,15 @@
+{
+  "version": "0.4.0",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "ignoreChanges": ["**/__fixtures__/**", "**/__mocks__/**", "**/__tests__/**", "**/*.tsbuildinfo", "**/CHANGELOG.md"],
+  "command": {
+    "version": {
+      "allowBranch": "main",
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "exact": true,
+      "message": "chore(release): %s"
+    }
+  }
+}
