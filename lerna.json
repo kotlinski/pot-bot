@@ -1,8 +1,14 @@
 {
-  "version": "0.4.0",
+  "version": "0.4.1",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "ignoreChanges": ["**/__fixtures__/**", "**/__mocks__/**", "**/__tests__/**", "**/*.tsbuildinfo", "**/CHANGELOG.md"],
+  "ignoreChanges": [
+    "**/__fixtures__/**",
+    "**/__mocks__/**",
+    "**/__tests__/**",
+    "**/*.tsbuildinfo",
+    "**/CHANGELOG.md"
+  ],
   "command": {
     "version": {
       "allowBranch": "master",

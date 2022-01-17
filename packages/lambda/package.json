@@ -1,6 +1,6 @@
 {
   "name": "lambda",
-  "version": "1.0.0",
+  "version": "0.4.1",
   "private": true,
   "description": "Lambda importing stats",
   "main": "dist/index.js",

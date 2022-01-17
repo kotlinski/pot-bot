@@ -1,6 +1,6 @@
 {
   "name": "tips",
-  "version": "1.0.0",
+  "version": "0.4.1",
   "private": true,
   "description": "Storage for provisioning history",
   "main": "dist/index.js",
