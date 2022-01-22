@@ -9,6 +9,10 @@ export default class DropboxApiClient {
 
   public async storeDraw(draw: SvenskaSpelDraw, path: string): Promise<void> {
     console.log(`Pushing file to dropbox`);
+    const path_regex = new RegExp('(/(.|[\\r\\n])*)|(ns:[0-9]+(/.*)?)|(id:.*)');
+    if (!path_regex.test(path)) {
+      throw new Error(`Faulty path: ${path}`);
+    }
     try {
       return await axios.post(this.BASE_URL, JSON.stringify(draw, null, 2), {
         headers: {

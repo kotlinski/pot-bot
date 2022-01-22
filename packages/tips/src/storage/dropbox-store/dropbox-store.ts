@@ -18,8 +18,8 @@ export default class DropboxStore implements Storage {
 
   public async storeDraw(draw: SvenskaSpelDraw): Promise<void> {
     if (this.draw_helper.isCurrentDraw(draw)) {
-      await this.api_client.storeDraw(draw, `${this.game_type}/${draw.drawNumber}/${getFormattedToday()}.json`);
-      await this.api_client.storeDraw(draw, `${this.game_type}/${draw.drawNumber}/draw.json`);
+      await this.api_client.storeDraw(draw, `/${this.game_type}/${draw.drawNumber}/${getFormattedToday()}.json`);
+      await this.api_client.storeDraw(draw, `/${this.game_type}/${draw.drawNumber}/draw.json`);
     }
   }
 
