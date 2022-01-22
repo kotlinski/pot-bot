@@ -5,16 +5,14 @@ import { Storage } from '../storage';
 import { SvenskaSpelResult } from '../../svenska-spel/api-clients/interfaces/svenskaspel-result-interfaces';
 import { Line } from '../../svenska-spel/interfaces';
 import DropboxApiClient from '../../dropbox/dropbox-api-client';
-import config from 'config';
 import { getFormattedToday } from '../formatter';
 
 export default class DropboxStore implements Storage {
   private readonly draw_helper: DrawHelper;
   private readonly api_client: DropboxApiClient;
 
-  constructor(private readonly game_type: GameType) {
+  constructor(private readonly game_type: GameType, access_token: string) {
     this.draw_helper = new DrawHelper();
-    const access_token: string = config.get('dropbox.access_token');
     this.api_client = new DropboxApiClient(access_token, game_type);
   }
 

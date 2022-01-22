@@ -6776,11 +6776,6 @@ through@2, "through@>=2.2.7 <3", through@^2.3.4, through@^2.3.6:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
-tips@0.0.1-1:
-  version "0.0.1-1"
-  resolved "https://registry.yarnpkg.com/tips/-/tips-0.0.1-1.tgz#3a098fc0c169a4523d5512367099ecc7459f5fb1"
-  integrity sha1-OgmPwMFppFI9VRI2cJnsx0WfX7E=
-
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
