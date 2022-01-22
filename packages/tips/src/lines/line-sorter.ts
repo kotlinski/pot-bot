@@ -2,7 +2,7 @@ import { Line } from '../svenska-spel/interfaces';
 
 export default class LineSorter {
   public sortLines(lines: Line[]): Line[] {
-    const total_distribution_sort: Line[] = lines.sort(
+    /* const total_distribution_sort: Line[] = lines.sort(
       (line_a, line_b) => line_b.total_distribution - line_a.total_distribution,
     );
     console.log('total_distribution_sort: ');
@@ -22,7 +22,7 @@ export default class LineSorter {
           total_probability_sort[i].total_probability * Math.pow(3, 13)
         }`,
       );
-    }
+    }*/
     console.log('total_odds');
     const total_odds: Line[] = lines.sort((line_a, line_b) => line_b.total_odds! - line_a.total_odds!);
     for (let i = 0; i < 50; i++) {
