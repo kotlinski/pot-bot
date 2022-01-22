@@ -18,7 +18,7 @@ jobs:
       - name: Run tests
         run: yarn test
   update-version-numbers:
-    if: github.ref == 'refs/heads/master'
+    # if: github.ref == 'refs/heads/master'
     needs: lint-and-test
     runs-on: ubuntu-latest
     steps:
