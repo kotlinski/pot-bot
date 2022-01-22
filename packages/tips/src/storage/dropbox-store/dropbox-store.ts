@@ -24,7 +24,8 @@ export default class DropboxStore implements Storage {
   }
 
   public async getDraw(_draw_number?: number): Promise<SvenskaSpelDraw | undefined> {
-    throw new Error('not implemented');
+    console.warn('getDraw() is not yet implemented, dropbox-store');
+    return undefined;
   }
 
   public async storeResult(_result: SvenskaSpelResult): Promise<void> {
