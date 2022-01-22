@@ -1,8 +1,8 @@
 import { ScriptWrapper } from '../script-wrapper';
 import DrawProvider from '../../svenska-spel/draw/draw-provider';
 import { ScriptFactory } from '../script-factory';
-import moment from 'moment';
 import { Storage } from '../../storage/storage';
+import dayjs from 'dayjs';
 
 export default class FindDeadlines implements ScriptWrapper {
   private readonly draw_provider: DrawProvider;
@@ -30,11 +30,11 @@ export default class FindDeadlines implements ScriptWrapper {
     const deadlines: Map<string, number> = new Map<string, number>();
     for (let draw_number = 4723; draw_number > 4266; draw_number--) {
       const draw = await this.draw_provider.getDraw(draw_number);
-      if (!deadlines.has(moment(draw.close_time).format('dddd-HH:mm'))) {
-        deadlines.set(moment(draw.close_time).format('dddd-HH:mm'), 1);
+      if (!deadlines.has(dayjs(draw.close_time).format('dddd-HH:mm'))) {
+        deadlines.set(dayjs(draw.close_time).format('dddd-HH:mm'), 1);
       } else {
-        const old_count = deadlines.get(moment(draw.close_time).format('dddd-HH:mm'));
-        deadlines.set(moment(draw.close_time).format('dddd-HH:mm'), old_count! + 1);
+        const old_count = deadlines.get(dayjs(draw.close_time).format('dddd-HH:mm'));
+        deadlines.set(dayjs(draw.close_time).format('dddd-HH:mm'), old_count! + 1);
       }
     }
     deadlines.forEach((value: number, key: string) => {
