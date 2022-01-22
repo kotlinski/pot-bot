@@ -37,7 +37,7 @@ export default class FileStore implements Storage {
       }
     } catch (error) {
       if (isError(error)) {
-        console.error(`getResult, error code: ${error.name}`);
+        console.error(`getDraw, error code: ${error.name}`);
       }
       return undefined;
     }

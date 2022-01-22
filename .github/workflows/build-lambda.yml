@@ -1,0 +1,28 @@
+name: CI
+on: push
+
+env:
+  NODE_VERSION: '14'
+
+jobs:
+  build-lambda:
+    if: github.ref == 'refs/heads/main'
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - name: Compile typescript
+        run: |
+          yarn install
+          yarn run build
+      - name: Install prod-dependencies
+        run: yarn install --production=true
+      - name: Move node_modules to build-directory
+        run: cp -RL packages/lambda/node_modules packages/lambda/dist/ || exit 0
+        shell: bash
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: lambda
+          path: packages/lambda/dist
+
