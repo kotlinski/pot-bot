@@ -6,7 +6,7 @@ env:
 
 jobs:
   build-lambda:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     needs: lint-and-test
     runs-on: ubuntu-latest
     steps:
