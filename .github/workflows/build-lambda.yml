@@ -33,7 +33,7 @@ jobs:
       - name: Move node_modules to build-directory
         run: cp -RL packages/lambda/node_modules packages/lambda/dist/ || exit 0
         shell: bash
-      - name: Archive code coverage results
+      - name: Upload lambda artifact
         uses: actions/upload-artifact@v2
         with:
           name: lambda

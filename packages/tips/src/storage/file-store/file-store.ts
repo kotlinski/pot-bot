@@ -8,7 +8,8 @@ import { SvenskaSpelResult } from '../../svenska-spel/api-clients/interfaces/sve
 import { Line } from '../../svenska-spel/interfaces';
 import { formatBets } from '../formatter';
 import FileStoreHelper from './file-store-helper';
-import { isError } from 'lodash';
+
+import isError from 'lodash.iserror';
 
 export default class FileStore implements Storage {
   private readonly draw_helper: DrawHelper;
