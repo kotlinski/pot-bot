@@ -19,7 +19,7 @@ jobs:
       - name: Run tests
         run: yarn test
   build-lambda:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs: lint-and-test
     runs-on: ubuntu-latest
     steps:
