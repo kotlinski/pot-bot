@@ -5,7 +5,7 @@
     "packages": [
       "packages/*"
     ],
-    "nohoist": []
+    "nohoist": ["**/lambda/**"]
   },
   "version": "3.0.7",
   "description": "",

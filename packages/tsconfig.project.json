@@ -5,13 +5,13 @@
       "path": "./core/tsconfig.json"
     },
     {
-      "path": "./scripts/tsconfig.json"
-    },
-    {
       "path": "./dropbox/tsconfig.json"
     },
     {
       "path": "./lambda/tsconfig.json"
     },
+    {
+      "path": "./scripts/tsconfig.json"
+    }
   ]
 }
