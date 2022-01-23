@@ -1,4 +1,4 @@
-import { DrawProvider, DropboxStore, GameType, SvenskaSpelApiClient } from 'tips';
+import { DrawProvider, DropboxStore, GameType, SvenskaSpelApiClient } from '../../core';
 
 interface LambdaInput {
   game_type: GameType;

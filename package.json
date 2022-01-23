@@ -7,7 +7,7 @@
     ],
     "nohoist": [
       "**/lambda/**",
-      "**/tips/**",
+      "**/core/**",
       "**/scripts/**"
     ]
   },
@@ -33,7 +33,7 @@
     "prepublish": "del build",
     "prepare": "yarn run build",
     "test": "jest",
-    "generate-bets": "cross-env NODE_ENV=dev ts-node packages/tips/src/script/main.ts --script generate_bets"
+    "generate-bets": "cross-env NODE_ENV=dev ts-node packages/core/src/script/main.ts --script generate_bets"
   },
   "keywords": [],
   "repository": {
