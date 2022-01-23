@@ -12,7 +12,7 @@
   },
   "homepage": "https://github.com/kotlinski/pot-bot",
   "dependencies": {
-    "tips": "*"
+    "core": "*"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.75",
