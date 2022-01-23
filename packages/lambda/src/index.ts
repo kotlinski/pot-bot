@@ -1,4 +1,5 @@
-import { DrawProvider, DropboxStore, GameType, SvenskaSpelApiClient } from '../../core';
+import { DrawProvider, GameType, SvenskaSpelApiClient } from '../../core';
+import { DropboxStore } from '@pot-bot/dropbox';
 
 interface LambdaInput {
   game_type: GameType;

@@ -1,21 +1,19 @@
 {
-  "name": "@pot-bot/lambda",
+  "name": "@pot-bot/dropbox",
   "version": "0.4.1",
   "private": true,
-  "description": "Lambda importing stats",
+  "description": "Dropbox api and storages",
   "main": "dist/index.js",
   "author": "Simon Kotlinski",
   "repository": {
     "type": "git",
     "url": "git@github.com:kotlinski/pot-bot.git",
-    "directory": "packages/lambda"
+    "directory": "packages/dropbox"
   },
   "homepage": "https://github.com/kotlinski/pot-bot",
   "dependencies": {
     "@pot-bot/core": "*",
-    "@pot-bot/dropbox": "*"
+    "axios": "^0.25.0"
   },
-  "devDependencies": {
-    "@types/aws-lambda": "^8.10.75"
-  }
+  "devDependencies": {}
 }

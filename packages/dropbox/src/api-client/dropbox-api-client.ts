@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SvenskaSpelDraw } from '../svenska-spel/api-clients/interfaces/svenskaspel-draw-interfaces';
+import { SvenskaSpelDraw } from '@pot-bot/core';
 
 export default class DropboxApiClient {
   readonly BASE_URL: string;
