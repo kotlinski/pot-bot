@@ -1,11 +1,5 @@
-import DrawHelper from '../../svenska-spel/draw/draw-helper';
-import { GameType } from '../../script/command-line-interfaces';
-import { SvenskaSpelDraw } from '../../svenska-spel/api-clients/interfaces/svenskaspel-draw-interfaces';
-import { Storage } from '../storage';
-import { SvenskaSpelResult } from '../../svenska-spel/api-clients/interfaces/svenskaspel-result-interfaces';
-import { Line } from '../../svenska-spel/interfaces';
-import DropboxApiClient from '../../dropbox/dropbox-api-client';
-import { getFormattedToday } from '../formatter';
+import DropboxApiClient from '../api-client/dropbox-api-client';
+import { DrawHelper, GameType, Line, Storage, SvenskaSpelDraw, SvenskaSpelResult, getFormattedToday } from '@pot-bot/core';
 
 export default class DropboxStore implements Storage {
   private readonly draw_helper: DrawHelper;

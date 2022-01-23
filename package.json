@@ -5,11 +5,7 @@
     "packages": [
       "packages/*"
     ],
-    "nohoist": [
-      "**/lambda/**",
-      "**/core/**",
-      "**/scripts/**"
-    ]
+    "nohoist": []
   },
   "version": "3.0.7",
   "description": "",

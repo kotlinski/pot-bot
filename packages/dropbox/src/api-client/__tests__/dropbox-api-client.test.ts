@@ -1,9 +1,9 @@
 import DropboxApiClient from '../dropbox-api-client';
 import { readJson } from 'fs-extra';
-import { SvenskaSpelDraw } from '../../svenska-spel/api-clients/interfaces/svenskaspel-draw-interfaces';
 import config from 'config';
 import axios from 'axios';
 import path from 'path';
+import { SvenskaSpelDraw } from '@pot-bot/core';
 jest.mock('axios');
 
 describe('dropbox-api-client', () => {
