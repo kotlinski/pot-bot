@@ -1,5 +1,5 @@
 {
-  "name": "core",
+  "name": "@pot-bot/core",
   "version": "0.4.1",
   "private": true,
   "description": "Storage for provisioning history",
