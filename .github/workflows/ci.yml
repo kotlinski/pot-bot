@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
-      - name: Clean caches
-        run: yarn cache clean
       - name: Install modules
         run: yarn
       - name: Run lint
