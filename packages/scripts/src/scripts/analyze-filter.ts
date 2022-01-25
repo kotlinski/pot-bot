@@ -1,17 +1,12 @@
 import { ScriptWrapper } from '../script-wrapper';
-import LinesProvider from '../../lines/lines-provider';
 
 import { ScriptFactory } from '../script-factory';
-import DrawProvider from '../../svenska-spel/draw/draw-provider';
-import ResultProvider from '../../svenska-spel/result/result-provider';
-import { ApiResult } from '../../svenska-spel/api-clients/interfaces/api-interfaces';
-import { Line } from '../../svenska-spel/interfaces';
 import { appendFile, outputFile } from 'fs-extra';
 import optimist from 'optimist';
 import { BaseInput } from '../command-line-interfaces';
 import * as os from 'os';
 import pMap from 'p-map';
-import { Storage } from '../../storage/storage';
+import { ApiResult, DrawProvider, Line, LinesProvider, ResultProvider, Storage } from '@pot-bot/core';
 
 interface Input extends BaseInput {
   draw_number: string;

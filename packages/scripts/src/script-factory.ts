@@ -2,14 +2,10 @@ import { BaseInput, ScriptName } from './command-line-interfaces';
 import { ScriptWrapper } from './script-wrapper';
 import GenerateBets from './scripts/generate-bets';
 import AnalyzeFilter from './scripts/analyze-filter';
-import DrawProvider from '../svenska-spel/draw/draw-provider';
-import SvenskaSpelApiClient from '../svenska-spel/api-clients/svenska-spel-api-client';
 import optimist from 'optimist';
 import config from 'config';
-import ResultProvider from '../svenska-spel/result/result-provider';
 import FindDeadlines from './scripts/find-deadlines';
-import FileStore from '../storage/file-store/file-store';
-import { Storage } from '../storage/storage';
+import { DrawProvider, FileStore, ResultProvider, Storage, SvenskaSpelApiClient } from '@pot-bot/core';
 
 interface ApiKeyInput extends BaseInput {
   api_key: string;

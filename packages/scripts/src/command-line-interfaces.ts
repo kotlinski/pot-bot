@@ -1,11 +1,8 @@
+import { GameType } from '@pot-bot/core';
+
 export interface BaseInput {
   script: ScriptName;
   game_type: GameType;
-}
-
-export enum GameType {
-  EUROPATIPSET = 'europatipset',
-  STRYKTIPSET = 'stryktipset',
 }
 
 export enum ScriptName {
