@@ -1,8 +1,7 @@
 import { ScriptWrapper } from '../script-wrapper';
-import DrawProvider from '../../svenska-spel/draw/draw-provider';
 import { ScriptFactory } from '../script-factory';
-import { Storage } from '../../storage/storage';
 import dayjs from 'dayjs';
+import { DrawProvider, Storage } from '@pot-bot/core';
 
 export default class FindDeadlines implements ScriptWrapper {
   private readonly draw_provider: DrawProvider;

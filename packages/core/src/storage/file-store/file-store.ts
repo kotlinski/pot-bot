@@ -1,6 +1,5 @@
 import { ensureDir, outputFile, outputJSON } from 'fs-extra';
 import DrawHelper from '../../svenska-spel/draw/draw-helper';
-import { GameType } from '../../script/command-line-interfaces';
 import loadJsonFile from 'load-json-file';
 import { SvenskaSpelDraw } from '../../svenska-spel/api-clients/interfaces/svenskaspel-draw-interfaces';
 import { Storage } from '../storage';
@@ -10,6 +9,7 @@ import { formatBets } from '../formatter';
 import FileStoreHelper from './file-store-helper';
 
 import isError from 'lodash.iserror';
+import { GameType } from '../../interfaces';
 
 export default class FileStore implements Storage {
   private readonly draw_helper: DrawHelper;

@@ -1,13 +1,8 @@
 import optimist from 'optimist';
 import { ScriptWrapper } from '../script-wrapper';
-import DrawProvider from '../../svenska-spel/draw/draw-provider';
-import LinesProvider from '../../lines/lines-provider';
-import LineSorter from '../../lines/line-sorter';
 import { ScriptFactory } from '../script-factory';
 import { BaseInput } from '../command-line-interfaces';
-import { combinedFilters } from '../../filters/filters';
-import FileStore from '../../storage/file-store/file-store';
-import { Storage } from '../../storage/storage';
+import { combinedFilters, DrawProvider, FileStore, LineSorter, LinesProvider, Storage } from '@pot-bot/core';
 
 interface Input extends BaseInput {
   number_of_lines: string;

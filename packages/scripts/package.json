@@ -1,0 +1,34 @@
+{
+  "name": "@pot-bot/scripts",
+  "version": "0.4.1",
+  "private": true,
+  "workspaces": {
+    "nohoist": [
+      "**"
+    ]
+  },
+  "description": "Scripts for generating bets and analyzes",
+  "main": "dist/index.js",
+  "author": "Simon Kotlinski",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kotlinski/pot-bot.git",
+    "directory": "packages/scripts"
+  },
+  "homepage": "https://github.com/kotlinski/pot-bot",
+  "scripts": {
+    "generate-bets": "cross-env NODE_ENV=dev ts-node src/script/main.ts --script generate_bets",
+    "analyze-filter": "cross-env NODE_ENV=dev ts-node tipset/src/script/main.ts --script analyze_filter",
+    "find-deadlines": "cross-env NODE_ENV=dev ts-node tipset/src/script/main.ts --script find_deadlines --game_type stryktipset"
+  },
+  "dependencies": {
+    "@pot-bot/core": "*",
+    "dayjs": "^1.10.7"
+  },
+  "devDependencies": {
+    "@types/optimist": "0.0.29",
+    "@types/progress": "^2.0.3",
+    "csv": "^6.0.5",
+    "optimist": "^0.6.1"
+  }
+}
