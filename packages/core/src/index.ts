@@ -2,8 +2,7 @@ import { combinedFilters } from './filters/filters';
 import { GameType } from './interfaces';
 import LineSorter from './lines/line-sorter';
 import LinesProvider from './lines/lines-provider';
-import FileStore from './storage/file-store/file-store';
-import { getFormattedToday } from './storage/formatter';
+import { formatBets, getFormattedToday } from './storage/formatter';
 import { Storage } from './storage/storage';
 import { ApiResult } from './svenska-spel/api-clients/interfaces/api-interfaces';
 import { SvenskaSpelDraw } from './svenska-spel/api-clients/interfaces/svenskaspel-draw-interfaces';
@@ -24,10 +23,10 @@ export {
   getFormattedToday,
   SvenskaSpelResult,
   Line,
-  FileStore,
   ResultProvider,
   LineSorter,
   combinedFilters,
   LinesProvider,
   ApiResult,
+  formatBets,
 };

@@ -1,15 +1,9 @@
 import { ensureDir, outputFile, outputJSON } from 'fs-extra';
-import DrawHelper from '../../svenska-spel/draw/draw-helper';
 import loadJsonFile from 'load-json-file';
-import { SvenskaSpelDraw } from '../../svenska-spel/api-clients/interfaces/svenskaspel-draw-interfaces';
-import { Storage } from '../storage';
-import { SvenskaSpelResult } from '../../svenska-spel/api-clients/interfaces/svenskaspel-result-interfaces';
-import { Line } from '../../svenska-spel/interfaces';
-import { formatBets } from '../formatter';
 import FileStoreHelper from './file-store-helper';
 
 import isError from 'lodash.iserror';
-import { GameType } from '../../interfaces';
+import { DrawHelper, formatBets, GameType, Line, Storage, SvenskaSpelDraw, SvenskaSpelResult } from '@pot-bot/core';
 
 export default class FileStore implements Storage {
   private readonly draw_helper: DrawHelper;

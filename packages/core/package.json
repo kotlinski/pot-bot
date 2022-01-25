@@ -19,8 +19,6 @@
     "axios": "^0.25.0",
     "config": "^3.3.7",
     "dayjs": "^1.10.7",
-    "fs-extra": "^9.0.1",
-    "load-json-file": "6.2.0",
     "lodash.iserror": "^3.1.1",
     "path": "^0.12.7",
     "os": "^0.1.1"
@@ -29,6 +27,7 @@
     "@types/config": "^0.0.41",
     "@types/fs-extra": "^9.0.1",
     "@types/lodash.iserror": "^3.1.6",
-    "p-map": "^4.0.0"
+    "p-map": "^4.0.0",
+    "fs-extra": "^9.0.1"
   }
 }

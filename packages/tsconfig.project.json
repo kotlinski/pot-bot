@@ -5,6 +5,9 @@
       "path": "./core/tsconfig.json"
     },
     {
+      "path": "./local-store/tsconfig.json"
+    },
+    {
       "path": "./dropbox/tsconfig.json"
     },
     {
