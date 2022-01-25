@@ -1,9 +1,5 @@
 import { ensureDir, existsSync, outputJSON } from 'fs-extra';
-import { SvenskaSpelResult } from '../../svenska-spel/api-clients/interfaces/svenskaspel-result-interfaces';
-import { SvenskaSpelDraw } from '../../svenska-spel/api-clients/interfaces/svenskaspel-draw-interfaces';
-import { getFormattedToday } from '../formatter';
-import DrawHelper from '../../svenska-spel/draw/draw-helper';
-import { GameType } from '../../interfaces';
+import { DrawHelper, GameType, getFormattedToday, SvenskaSpelDraw, SvenskaSpelResult } from '@pot-bot/core';
 
 export default class FileStoreHelper {
   constructor(readonly game_type: GameType, readonly draw_helper: DrawHelper) {}

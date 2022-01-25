@@ -2,7 +2,8 @@ import optimist from 'optimist';
 import { ScriptWrapper } from '../script-wrapper';
 import { ScriptFactory } from '../script-factory';
 import { BaseInput } from '../command-line-interfaces';
-import { combinedFilters, DrawProvider, FileStore, LineSorter, LinesProvider, Storage } from '@pot-bot/core';
+import { combinedFilters, DrawProvider, LineSorter, LinesProvider, Storage } from '@pot-bot/core';
+import { FileStore } from '@pot-bot/local-store';
 
 interface Input extends BaseInput {
   number_of_lines: string;

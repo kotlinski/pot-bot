@@ -23,7 +23,9 @@
   },
   "dependencies": {
     "@pot-bot/core": "*",
-    "dayjs": "^1.10.7"
+    "@pot-bot/local-store": "*",
+    "dayjs": "^1.10.7",
+    "fs-extra": "^9.0.1"
   },
   "devDependencies": {
     "@types/optimist": "0.0.29",

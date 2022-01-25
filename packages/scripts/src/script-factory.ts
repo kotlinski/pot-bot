@@ -5,7 +5,8 @@ import AnalyzeFilter from './scripts/analyze-filter';
 import optimist from 'optimist';
 import config from 'config';
 import FindDeadlines from './scripts/find-deadlines';
-import { DrawProvider, FileStore, ResultProvider, Storage, SvenskaSpelApiClient } from '@pot-bot/core';
+import { DrawProvider, ResultProvider, Storage, SvenskaSpelApiClient } from '@pot-bot/core';
+import { FileStore } from '@pot-bot/local-store';
 
 interface ApiKeyInput extends BaseInput {
   api_key: string;
