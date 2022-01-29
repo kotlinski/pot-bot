@@ -24,13 +24,15 @@
   "dependencies": {
     "@pot-bot/core": "*",
     "@pot-bot/local-store": "*",
+    "config": "^3.3.7",
     "dayjs": "^1.10.7",
-    "fs-extra": "^9.0.1"
+    "fs-extra": "^9.0.1",
+    "p-map": "4"
   },
   "devDependencies": {
+    "@types/config": "^0.0.41",
     "@types/optimist": "0.0.29",
-    "@types/progress": "^2.0.3",
-    "csv": "^6.0.5",
+    "@types/p-map": "^2.0.0",
     "optimist": "^0.6.1"
   }
 }
