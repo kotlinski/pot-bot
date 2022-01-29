@@ -19,9 +19,9 @@ Optional parameters:
 --svenskaspel_api_key <api-key>
 ```
 
-### Analyze current draw
+### Generate lines to bet on
 
-> yarn run analyze-current-draw --game_type <stryktipset|europatipset> --number_of_lines <150>
+> yarn run generate-bets --game_type <stryktipset|europatipset> --number_of_lines <100>
 
 ## Dev
 
@@ -36,8 +36,6 @@ To find missing or unused dependencies
 Fetch draw
 
 > yarn run fetch-current-draw --game_type stryktipset
-
-//
 
 ## Other
 
