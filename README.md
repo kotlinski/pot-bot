@@ -19,21 +19,23 @@ Optional parameters:
 --svenskaspel_api_key <api-key>
 ```
 
-### Analyze current draw
+### Generate lines to bet on
 
-> yarn run analyze-current-draw --game_type <stryktipset|europatipset> --number_of_lines <150>
+> yarn run generate-bets --game_type <stryktipset|europatipset> --number_of_lines <100>
 
 ## Dev
 
 Run with
 
-> npm run build; node ./build/scripts/fetch-current-draw.ts
+> yarn
 
-> npm run build
-> NODE_ENV=dev && npm run build
-> npm run analyze -- --drawNumber 4632
+To find missing or unused dependencies
 
-//
+> yarn depcheck
+
+Fetch draw
+
+> yarn run fetch-current-draw --game_type stryktipset
 
 ## Other
 

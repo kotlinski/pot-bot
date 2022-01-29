@@ -3,7 +3,9 @@
   "version": "0.4.1",
   "private": true,
   "workspaces": {
-    "nohoist": ["**"]
+    "nohoist": [
+      "**"
+    ]
   },
   "description": "Store draws as local files",
   "main": "dist/index.js",
@@ -16,9 +18,11 @@
   "homepage": "https://github.com/kotlinski/pot-bot",
   "dependencies": {
     "@pot-bot/core": "*",
+    "fs-extra": "^9.0.1",
     "load-json-file": "6.2.0",
-    "fs-extra": "^9.0.1"
+    "lodash.iserror": "^3.1.1"
   },
   "devDependencies": {
+    "@types/lodash.iserror": "^3.1.6"
   }
 }
