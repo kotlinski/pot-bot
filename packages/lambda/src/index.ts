@@ -1,4 +1,4 @@
-import { DrawProvider, GameType, SvenskaSpelApiClient } from '@pot-bot/core';
+import { DrawProvider, GameType, ResultProvider, SvenskaSpelApiClient } from '@pot-bot/core';
 import { DropboxStore } from '@pot-bot/dropbox';
 
 interface LambdaInput {
@@ -18,8 +18,13 @@ export async function handler(context: LambdaInput): Promise<void> {
     const svenska_spel_api_client = new SvenskaSpelApiClient(svenska_spel_api_key, context.game_type);
     const dropbox_storage = new DropboxStore(context.game_type, dropbox_access_token);
     const draw_provider = new DrawProvider(svenska_spel_api_client, dropbox_storage);
+
     const draw = await draw_provider.getDraw();
-    console.log(`Draw number ${draw.draw_number} was stored in dropbox`);
+    console.log(`Draw number ${draw.draw_number} was uploaded to dropbox`);
+    const previous_draw_number = draw.draw_number - 1;
+    const result_provider = new ResultProvider(svenska_spel_api_client, dropbox_storage);
+    const result = await result_provider.getResult(previous_draw_number);
+    console.log(`Last weeks results, draw number ${result.draw_number}, was uploaded to dropbox`);
   } catch (e) {
     console.error('Failed fetching current draw');
     throw e;
