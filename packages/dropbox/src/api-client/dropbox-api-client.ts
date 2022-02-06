@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SvenskaSpelDraw } from '@pot-bot/core';
+import { SvenskaSpelDraw, SvenskaSpelResult } from '@pot-bot/core';
 
 export default class DropboxApiClient {
   readonly BASE_URL: string;
@@ -7,7 +7,13 @@ export default class DropboxApiClient {
     this.BASE_URL = `https://content.dropboxapi.com/2/files/upload`;
   }
 
+  public async storeResult(result: SvenskaSpelResult, path: string): Promise<void> {
+    return this.store(result, path);
+  }
   public async storeDraw(draw: SvenskaSpelDraw, path: string): Promise<void> {
+    return this.store(draw, path);
+  }
+  private async store(draw: SvenskaSpelDraw | SvenskaSpelResult, path: string): Promise<void> {
     console.log(`Pushing file to dropbox`);
     const path_regex = new RegExp('(/(.|[\\r\\n])*)|(ns:[0-9]+(/.*)?)|(id:.*)');
     if (!path_regex.test(path)) {

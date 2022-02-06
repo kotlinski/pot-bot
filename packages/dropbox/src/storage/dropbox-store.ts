@@ -12,7 +12,7 @@ export default class DropboxStore implements Storage {
 
   public async storeDraw(draw: SvenskaSpelDraw): Promise<void> {
     if (this.draw_helper.isCurrentDraw(draw)) {
-      const base_folder = `/${this.game_type}/old/${draw.drawNumber}`;
+      const base_folder = this.getBaseFolder(draw);
       await this.api_client.storeDraw(draw, `/${base_folder}/draw-history/${getFormattedToday()}.json`);
       await this.api_client.storeDraw(draw, `/${base_folder}/draw.json`);
     }
@@ -23,8 +23,13 @@ export default class DropboxStore implements Storage {
     return undefined;
   }
 
-  public async storeResult(_result: SvenskaSpelResult): Promise<void> {
-    throw new Error('not implemented');
+  public async storeResult(result: SvenskaSpelResult): Promise<void> {
+    const base_folder = this.getBaseFolder(result);
+    await this.api_client.storeResult(result, `/${base_folder}/result.json`);
+  }
+
+  private getBaseFolder(result: { drawNumber: number }) {
+    return `/${this.game_type}/old/${result.drawNumber}`;
   }
 
   public async getResult(_draw_number?: number): Promise<SvenskaSpelResult | undefined> {
