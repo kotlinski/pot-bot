@@ -9,40 +9,40 @@ export default class FileStore implements Storage {
   private readonly draw_helper: DrawHelper;
   private readonly store_helper: FileStoreHelper;
 
-  constructor(private readonly game_type: GameType) {
+  constructor(private readonly game_type: GameType, private readonly root_dir: string = './draws') {
     this.draw_helper = new DrawHelper();
     this.store_helper = new FileStoreHelper(game_type, this.draw_helper);
   }
 
   public async storeDraw(draw: SvenskaSpelDraw): Promise<void> {
-    const base_dirs = [`./draws/${this.game_type}/old/${draw.drawNumber}`];
+    const base_dirs = [`${this.root_dir}/${this.game_type}/old/${draw.drawNumber}`];
     if (this.draw_helper.isCurrentDraw(draw)) {
-      base_dirs.push(`./draws/${this.game_type}/current`);
+      base_dirs.push(`${this.root_dir}/${this.game_type}/current`);
     }
     await this.store_helper.storeDrawToBaseDirs(base_dirs, draw);
-    await this.store_helper.storeToDrawHistory(draw);
+    await this.store_helper.storeToDrawHistory(this.root_dir, draw);
   }
 
   public async getDraw(draw_number?: number): Promise<SvenskaSpelDraw | undefined> {
     try {
       if (draw_number) {
-        return await loadJsonFile<SvenskaSpelDraw>(`./draws/${this.game_type}/old/${draw_number}/draw.json`);
+        return await loadJsonFile<SvenskaSpelDraw>(`${this.root_dir}/${this.game_type}/old/${draw_number}/draw.json`);
       } else {
-        return await loadJsonFile<SvenskaSpelDraw>(`./draws/${this.game_type}/current/draw.json`);
+        return await loadJsonFile<SvenskaSpelDraw>(`${this.root_dir}/${this.game_type}/current/draw.json`);
       }
     } catch (error) {
       if (isError(error)) {
-        console.error(`getDraw, error code: ${error.name}`);
+        console.error(`getDraw, error code: ${error.name}, ${error.message}`);
       }
       return undefined;
     }
   }
 
   public async storeResult(result: SvenskaSpelResult): Promise<void> {
-    const base_dirs = [`./draws/${this.game_type}/old/${result.drawNumber}`];
+    const base_dirs = [`${this.root_dir}/${this.game_type}/old/${result.drawNumber}`];
     const current_draw = await this.getDraw();
     if (current_draw !== undefined && result.drawNumber === current_draw.drawNumber) {
-      base_dirs.push(`./draws/${this.game_type}/current`);
+      base_dirs.push(`${this.root_dir}/${this.game_type}/current`);
     }
     await this.store_helper.storeResultToBaseDirs(base_dirs, result);
   }
@@ -50,9 +50,9 @@ export default class FileStore implements Storage {
   public async getResult(draw_number?: number): Promise<SvenskaSpelResult | undefined> {
     try {
       if (draw_number) {
-        return await loadJsonFile<SvenskaSpelResult>(`./draws/${this.game_type}/old/${draw_number}/result.json`);
+        return await loadJsonFile<SvenskaSpelResult>(`${this.root_dir}/${this.game_type}/old/${draw_number}/result.json`);
       } else {
-        return await loadJsonFile<SvenskaSpelResult>(`./draws/${this.game_type}/current/result.json`);
+        return await loadJsonFile<SvenskaSpelResult>(`${this.root_dir}/${this.game_type}/current/result.json`);
       }
     } catch (error) {
       if (isError(error)) {
@@ -64,7 +64,7 @@ export default class FileStore implements Storage {
 
   public async storeBets(lines: Line[], draw_number: number): Promise<void> {
     for (const sub_folder of ['current', `old/${draw_number}`]) {
-      const base_dir = `./draws/${this.game_type}/${sub_folder}`;
+      const base_dir = `${this.root_dir}/${this.game_type}/${sub_folder}`;
       await ensureDir(base_dir);
       await outputJSON(`${base_dir}/bets.json`, lines, { spaces: 2 });
       const bets = formatBets(this.game_type, lines);

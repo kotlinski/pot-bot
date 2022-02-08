@@ -11,8 +11,8 @@ export default class FileStoreHelper {
     }
   }
 
-  public async storeToDrawHistory(draw: SvenskaSpelDraw): Promise<void> {
-    const base_dir = `./draws/${this.game_type}/old/${draw.drawNumber}/draw-history`;
+  public async storeToDrawHistory(root_dir: string, draw: SvenskaSpelDraw): Promise<void> {
+    const base_dir = `${root_dir}/${this.game_type}/old/${draw.drawNumber}/draw-history`;
     await ensureDir(`${base_dir}`);
     await outputJSON(`${base_dir}/${getFormattedToday()}.json`, draw, { spaces: 2 });
   }

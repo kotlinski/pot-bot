@@ -16,7 +16,7 @@ export class ScriptFactory {
   private readonly file_store: Storage;
   constructor() {
     const input = optimist.demand('game_type').argv as ApiKeyInput;
-    this.file_store = new FileStore(input.game_type);
+    this.file_store = new FileStore(input.game_type, '/Users/simon/Dropbox/Apps/pot-bot');
   }
 
   public create(script: ScriptName): ScriptWrapper {
