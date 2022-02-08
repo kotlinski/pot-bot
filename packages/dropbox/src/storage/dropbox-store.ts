@@ -15,6 +15,9 @@ export default class DropboxStore implements Storage {
       const base_folder = this.getBaseFolder(draw);
       await this.api_client.storeDraw(draw, `/${base_folder}/draw-history/${getFormattedToday()}.json`);
       await this.api_client.storeDraw(draw, `/${base_folder}/draw.json`);
+      if (this.draw_helper.isBeforeCloseTime(draw)) {
+        await this.api_client.storeDraw(draw, `/${base_folder}/draw-before-deadline.json`);
+      }
     }
   }
 

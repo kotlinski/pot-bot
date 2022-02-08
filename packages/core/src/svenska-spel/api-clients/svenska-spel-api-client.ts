@@ -11,22 +11,33 @@ export default class SvenskaSpelApiClient {
     this.draw_helper = new DrawHelper();
   }
 
-  public async fetchDraw(id?: number): Promise<SvenskaSpelDraw> {
+  public async fetchUpcomingDraw(): Promise<SvenskaSpelDraw> {
+    return this.fetchDraw('upcoming');
+  }
+  public async fetchDraw(id?: number | string): Promise<SvenskaSpelDraw> {
     console.log(`Fetching draw from svenskaspel:  + ${this.BASE_URL}/${id ?? ''}`);
     const url = `${this.BASE_URL}/${id ?? ''}?accesskey=${this.api_key}`;
     try {
-      if (id) {
+      if (id && id !== 'upcoming') {
         const response = await axios.get<SvenskaSpelApiDraw>(url);
         return response.data.draw;
       } else {
         const response = await axios.get<SvenskaSpelApiDraws>(url);
-        return response.data.draws[0];
+        return SvenskaSpelApiClient.verifyResponse(response.data.draws);
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         console.log(`could not fetch draw, status: ${error.response.status}`, error.response.data);
       }
       throw error;
+    }
+  }
+
+  private static verifyResponse(draws: SvenskaSpelDraw[]): SvenskaSpelDraw {
+    if (draws.length > 0) {
+      return draws[0];
+    } else {
+      throw new Error('no draws found');
     }
   }
 
