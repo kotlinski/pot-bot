@@ -36,7 +36,8 @@ export default class DropboxStore implements Storage {
   }
 
   public async getResult(_draw_number?: number): Promise<SvenskaSpelResult | undefined> {
-    throw new Error('not implemented');
+    console.warn('getResult() is not yet implemented, dropbox-store');
+    return undefined;
   }
 
   public async storeBets(_lines: Line[], _draw_number: number): Promise<void> {
