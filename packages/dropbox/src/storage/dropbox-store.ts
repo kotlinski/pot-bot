@@ -13,10 +13,10 @@ export default class DropboxStore implements Storage {
   public async storeDraw(draw: SvenskaSpelDraw): Promise<void> {
     if (this.draw_helper.isCurrentDraw(draw)) {
       const base_folder = this.getBaseFolder(draw);
-      await this.api_client.storeDraw(draw, `/${base_folder}/draw-history/${getFormattedToday()}.json`);
-      await this.api_client.storeDraw(draw, `/${base_folder}/draw.json`);
+      await this.api_client.storeDraw(draw, `${base_folder}/draw-history/${getFormattedToday()}.json`);
+      await this.api_client.storeDraw(draw, `${base_folder}/draw.json`);
       if (this.draw_helper.isBeforeCloseTime(draw)) {
-        await this.api_client.storeDraw(draw, `/${base_folder}/draw-before-deadline.json`);
+        await this.api_client.storeDraw(draw, `${base_folder}/draw-before-deadline.json`);
       }
     }
   }
@@ -28,7 +28,7 @@ export default class DropboxStore implements Storage {
 
   public async storeResult(result: SvenskaSpelResult): Promise<void> {
     const base_folder = this.getBaseFolder(result);
-    await this.api_client.storeResult(result, `/${base_folder}/result.json`);
+    await this.api_client.storeResult(result, `${base_folder}/result.json`);
   }
 
   private getBaseFolder(result: { drawNumber: number }) {
