@@ -22,7 +22,7 @@ describe('dropbox-api-client', () => {
         headers: {
           'Authorization': 'Bearer dropbox-test-token',
           'Content-Type': 'text/plain; charset=dropbox-cors-hack',
-          'Dropbox-API-Arg': '{"path":"/draw.json","mode":"add","autorename":false}',
+          'Dropbox-API-Arg': '{"path":"/draw.json","mode":"overwrite","autorename":false}',
         },
       });
     });

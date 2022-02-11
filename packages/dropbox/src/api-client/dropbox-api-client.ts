@@ -23,7 +23,7 @@ export default class DropboxApiClient {
       return await axios.post(this.BASE_URL, JSON.stringify(draw, null, 2), {
         headers: {
           'Authorization': `Bearer ${this.access_token}`,
-          'Dropbox-API-Arg': JSON.stringify({ path, mode: 'add', autorename: false }),
+          'Dropbox-API-Arg': JSON.stringify({ path, mode: 'overwrite', autorename: false }),
           'Content-Type': 'text/plain; charset=dropbox-cors-hack',
         },
       });
