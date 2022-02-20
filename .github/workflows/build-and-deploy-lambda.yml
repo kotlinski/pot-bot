@@ -4,6 +4,9 @@ on:
 
 env:
   NODE_VERSION: '14'
+  ZIP_FILE_NAME: 'lambda-code.zip'
+  S3_BUCKET: 'pot-bot-lambda-code'
+  FUNCTION_NAME: 'storeDrawAndResults'
 
 jobs:
   lint-and-test:
@@ -33,9 +36,18 @@ jobs:
       - name: Move node_modules to build-directory
         run: cp -RL packages/lambda/node_modules packages/lambda/dist/ || exit 0
         shell: bash
-      - name: Upload lambda artifact
-        uses: actions/upload-artifact@v2
+      - name: Zip build folder
+        run: | 
+          cd packages/lambda/dist
+          zip -b . ../../../${ZIP_FILE_NAME} * -r
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          name: lambda
-          path: packages/lambda/dist
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+      - name: Upload to S3
+        run: aws s3 cp ${ZIP_FILE_NAME} s3://${S3_BUCKET}/${ZIP_FILE_NAME}
+      - name: Update the pot-bot lambda function code
+        run: aws lambda update-function-code --function-name ${FUNCTION_NAME} --s3-bucket ${S3_BUCKET} --s3-key ${ZIP_FILE_NAME}
 
